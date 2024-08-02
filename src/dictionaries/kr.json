@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "navlinks": {
+      "streams": "스트림",
+      "members": "멤버",
+      "updates": "업데이트",
+      "socials": "SNS 플랫폼",
+      "shop": "QSMP 샵"
+    },
+    "newsletter": "뉴스레터",
+    "newsletter-modal": {
+      "title": "업데이트를 유지하세요",
+      "paragraph": {
+        "first": "QSMP의 짜릿한 모험과 그 너머에 대한 내부 특종을 간절히 원하십니까? QSMP 뉴스레터에 가입하세요. 단순한 옵션이 아니라 행동의 핵심에 대한 생명줄입니다. 🏝️",
+        "second": "구독하세요. 아니면 정보가 없는 사람들을 기다리고 있는 미스터리와 위험을 모른 채 어둠 속에 남아있으세요. 🖤"
+      },
+      "dropdown": {
+        "title": "언어 선택",
+        "en": "영어",
+        "es": "스페인어",
+        "fr": "프랑스어",
+        "de": "독일어",
+        "pt": "포르투갈어",
+        "kr": "한국어"
+      },
+      "placeholder": "어떤 이메일 주소로?",
+      "button": "구독"
+    },
+    "counter": "전체 뷰어"
+  },
+  "stream": {
+    "title": "QSMP 멤버들을 보세요",
+    "eventTitle": "QSMP 연옥 2 토너먼트 보기",
+    "live": "라이브",
+    "paragraph": {
+      "first": "현재 QSMP에는 온라인 사용자가 없지만, 여기에 QSMP 콘텐츠가 더 있습니다!"
+    },
+    "button": {
+      "twitch": "라이브로 보세요",
+      "youtube": "비디오 보세요"
+    }
+  },
+  "timer": {
+    "paragraph": "매주 금요일 오후 1시(PST)에 QSMP 스트리밍! 스트리밍을 놓치지 않도록 트위치 채널을 구독하세요!",
+    "button": "트위치에서 우리를 팔로우하세요"
+  },
+  "members": {
+    "title": "QSMP 멤버들",
+    "filter": "모든 언어",
+    "live": "라이브"
+  },
+  "youtube": {
+    "title": "QSMP 로어에 빠졌나요?",
+    "paragraph": {
+      "first": "QSMP 정보 유투브 채널의 시작을 알리게 되어 기쁩니다! QSMP의 모든 흥미로운 이벤트와 스토리를 계속 업데이트할 수 있는 완벽한 가이드입니다! 🏝",
+      "second": "우리의 매력적인 숙주이자 완전히 편견 없는 호스트 쿠쿠루초와 함께 재미있는 휴식과 통찰력을 얻으세요. 지금 구독하면 우리는 당신이 완전히 섬을 즐길 수 있도록 할 것입니다! 🎉"
+    },
+    "button": "채널 구독"
+  },
+  "tweets": {
+    "title": "최신 뉴스를 따라가세요",
+    "paragraph": {
+      "first": "모든 QSMP 뉴스와 통찰력을 위해 트위터 커뮤니티에 가입하세요! 저희를 팔로우하고 QSMP의 일원이 되십시오.🌴",
+      "second": "QSMP 섬을 완전히 즐기실 수 있도록 하겠습니다! 🏝 ️"
+    },
+    "button": "트위터 팔로우"
+  },
+  "socials": {
+    "title": "공식 QSMP 계정",
+    "paragraph": {
+      "first": "이것이 모든 공식 QSMP 계정입니다! 우리의 최신 뉴스와 업데이트를 따라가지 않으면... 예기치 않은 결과로 이어질 수 있습니다.",
+      "second": "QSMP의 알려지지 않은 요소에 취약하게 남고 싶진 않으시겠죠? 🏝️"
+    }
+  },
+  "footer": {
+    "paragraph": "제공: 콰키티 스튜디오"
+  },
+  "widget": {
+    "title": "더 많은 QSMP를 탐색하세요."
+  },
+  "about": {
+    "title": "What is the QSMP?",
+    "paragraph": "The QSMP is the world's first multilingual Minecraft server. Our main objective is to unite content creators and cultures from around the world to create the world's first international content creation space by breaking language barriers through an innovative tool created in Minecraft by Quackity Studios."
+  }
+}

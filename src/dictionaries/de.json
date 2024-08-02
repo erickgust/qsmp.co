@@ -1,0 +1,85 @@
+{
+  "nav": {
+    "navlinks": {
+      "streams": "Livestreams",
+      "members": "Mitglieder",
+      "updates": "Updates",
+      "socials": "Soziale Netzwerke",
+      "shop": "QSMP Shop"
+    },
+    "newsletter": "Newsletter",
+    "newsletter-modal": {
+      "title": "BLEIB AUF DEM LAUFENDEN",
+      "paragraph": {
+        "first": "Neugierig auf Insider-Informationen der spannenden Abenteuer vom QSMP und mehr? Trete dem QSMP Newsletter bei! Es ist nicht nur eine Option—es ist deine Lebensader zum Herzstück des Geschehens. 🏝️",
+        "second": "Trete bei. Oder bleib im Dunkeln, ahnungslos gegenüber den Mysterien und Gefahren, die auf die Unwissenden warten. 🖤"
+      },
+      "dropdown": {
+        "title": "Wähle deine Sprache",
+        "en": "Englisch",
+        "es": "Spanisch",
+        "de": "Deutsch",
+        "fr": "Französisch",
+        "pt": "Portugiesisch",
+        "kr": "Koreanisch"
+      },
+      "placeholder": "An welche Email Adresse?",
+      "button": "Abonnieren"
+    },
+    "counter": "Zuschauer insgesamt"
+  },
+  "stream": {
+    "title": "SCHAUT EUCH DIE LIVESTREAMS DER QSMP MITGLIEDER AN",
+    "eventTitle": "SCHAUT EUCH DAS QSMP PURGATORY 2 TURNIER AN",
+    "live": "Live",
+    "paragraph": {
+      "first": "Momentan ist niemand online auf dem QSMP. Dennoch kann man sich hier weitere QSMP Inhalte anschauen!"
+    },
+    "button": {
+      "twitch": "Schaue Live",
+      "youtube": "Video anschauen"
+    }
+  },
+  "timer": {
+    "paragraph": "QSMP Livestreams, jeden Freitag um 22 Uhr mitteleuropäische Zeit (13 Uhr PST)! Folge unserem Twitch Kanal um keine Livestreams zu verpassen!",
+    "button": "FOLGE UNS AUF TWITCH"
+  },
+  "members": {
+    "title": "QSMP Mitglieder",
+    "filter": "Alle Sprachen",
+    "live": "Live"
+  },
+  "youtube": {
+    "title": "VERWIRRT VOM QSMP LORE?",
+    "paragraph": {
+      "first": "Wir sind begeistert den Start unseres QSMP Info Kanals anzukündigen! Es ist dein perfekter Leitfaden, um informiert zu bleiben mit allen spannenden Events und Geschichten vom QSMP! 🏝️",
+      "second": "Schließt euch unserem charmanten und definitiv unparteiischem Gastgeber, Cucurucho, an, für lustige Zusammenfassungen und Einblicke. Abonniert jetzt und wir werden sicher stellen, dass du die Insel komplett genießen wirst! 🎉"
+    },
+    "button": "ABONNIERE UNSEREN KANAL"
+  },
+  "tweets": {
+    "title": "SEID AUF DEM NEUESTEN STAND MIT DEN AKTUELLSTEN QSMP NACHRICHTEN!",
+    "paragraph": {
+      "first": "Trete unserer Twitter Community bei für alle QSMP Nachrichten und Einblicke! Folge uns und sei Teil vom QSMP. 🌴",
+      "second": "Wir werden sicher gehen, dass du die QSMP Insel komplett genießen wirst! 🏝️"
+    },
+    "button": "FOLGE UNS AUF TWITTER"
+  },
+  "socials": {
+    "title": "OFFIZIELLE QSMP ACCOUNTS",
+    "paragraph": {
+      "first": "Das sind alle offiziellen QSMP Accounts! Sagen wir einfach mal, nicht auf dem Laufenden zu bleiben mit unseren neuesten Nachrichten und Updates könnte zu… unvorhersehbaren Konsequenzen führen.",
+      "second": "Du würdest nicht gerne im Dunkeln gelassen werden, wehrlos gegenüber der unbekannten Elemente vom QSMP, oder? 🏝️"
+    }
+  },
+  "footer": {
+    "paragraph": "Entwickelt von"
+  },
+  "widget": {
+    "title": "Entdecken Sie mehr QSMP"
+  },
+  "about": {
+    "title": "What is the QSMP?",
+    "paragraph": "The QSMP is the world's first multilingual Minecraft server. Our main objective is to unite content creators and cultures from around the world to create the world's first international content creation space by breaking language barriers through an innovative tool created in Minecraft by Quackity Studios."
+  }
+}
