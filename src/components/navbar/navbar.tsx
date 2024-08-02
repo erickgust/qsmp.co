@@ -213,11 +213,11 @@ export function Navbar({
           <div className="flex items-center min-[900px]:border-r-0">
             <div className="border-r py-1 min-w-max">
               <Image
-                src="/qsmp-logo.png"
+                src="/small-qsmp-logo.png"
                 alt="QSMP Logo"
-                width={57}
-                height={48}
-                className="my-3 mx-4 xl:mx-8 w-14"
+                width={100}
+                height={100}
+                className="my-3 mx-4 xl:mx-8 h-12 w-auto"
               />
             </div>
 
@@ -332,11 +332,11 @@ export function Navbar({
               <div className="flex justify-between items-center border">
                 <div className="border-r py-1">
                   <Image
-                    src="/qsmp-logo.png"
+                    src="/small-qsmp-logo.png"
                     alt="QSMP Logo"
-                    width={57}
-                    height={48}
-                    className="my-3 mx-4 xl:mx-8 w-14"
+                    width={100}
+                    height={100}
+                    className="my-3 mx-4 xl:mx-8 h-12 w-auto"
                   />
                 </div>
 
