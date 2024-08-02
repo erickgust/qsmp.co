@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /auth/login
+Disallow: /pt-br/auth/login
+Disallow: /en/auth/login
+Disallow: /es/auth/login
+Disallow: /de/auth/login
+Disallow: /fr/auth/login
+Allow: /
