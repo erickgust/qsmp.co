@@ -685,7 +685,7 @@ export const members: Member[] = [
       character: "/members/Bagi Card Banner.png",
     },
     info: {
-      languages: ["PT"],
+      languages: ["PT-BR"],
       channelLink: [{
         url: "https://www.twitch.tv/bagi",
         label: "twitch"
@@ -712,7 +712,7 @@ export const members: Member[] = [
       character: "/members/Cellbit Card Banner.png",
     },
     info: {
-      languages: ["PT"],
+      languages: ["PT-BR"],
       channelLink: [{
         url: "https://www.twitch.tv/cellbit",
         label: "twitch"
@@ -739,7 +739,7 @@ export const members: Member[] = [
       character: "/members/Felps Card Banner.png",
     },
     info: {
-      languages: ["PT"],
+      languages: ["PT-BR"],
       channelLink: [{
         url: "https://www.twitch.tv/Felps",
         label: "twitch"
@@ -820,7 +820,7 @@ export const members: Member[] = [
       character: "/members/Mike Card Banner.png",
     },
     info: {
-      languages: ["PT"],
+      languages: ["PT-BR"],
       channelLink: [{
         url: "https://www.twitch.tv/linkthemike",
         label: "twitch"
@@ -847,7 +847,7 @@ export const members: Member[] = [
       character: "/members/Pac Card Banner.png",
     },
     info: {
-      languages: ["PT"],
+      languages: ["PT-BR"],
       channelLink: [{
         url: "https://www.twitch.tv/peqitw",
         label: "twitch"
