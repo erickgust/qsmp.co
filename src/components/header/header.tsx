@@ -36,20 +36,22 @@ export function Header({ dictionary }: HeaderProps) {
         />
 
         <Image
-          className="absolute top-6 left-8 sm:top-8 sm:left-10 z-10 object-contain w-auto"
+          className="absolute top-6 left-8 sm:top-8 sm:left-10 z-10 object-contain w-auto h-16"
           src="/small-qsmp-logo.png"
           alt="QSMP Logo"
-          height={60}
-          width={72}
+          height={200}
+          width={200}
+          quality={100}
           priority
         />
 
         <Image
-          className="absolute top-6 right-8 sm:top-8 sm:right-10 z-10 object-contain w-auto"
+          className="absolute top-6 right-8 sm:top-8 sm:right-10 z-10 object-contain w-auto h-16"
           src="/square-studios-logo.png"
           alt="Quackity Studios Logo"
-          height={60}
-          width={60}
+          height={200}
+          width={200}
+          quality={100}
           priority
         />
       </div>
