@@ -58,7 +58,11 @@ export function MembersSection({
       return true;
     }
 
-    return selectedLanguages.includes(member.info.languages.flat()[0]);
+    const hasSelectedLanguage = selectedLanguages.some((language) =>
+      member.info.languages.includes(language)
+    );
+
+    return hasSelectedLanguage;
   });
 
   return (
