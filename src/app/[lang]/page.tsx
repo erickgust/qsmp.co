@@ -11,7 +11,6 @@ import { streamResponseSchema } from "@/utils/schemas/stream-schema";
 import { ServerMemberSection } from "@/components/member-section/server-member-section";
 import { ServerStreamSection } from "@/components/stream-section/server-stream-section";
 import { cookies } from "next/headers";
-import { Widget } from "@/components/widget";
 
 type HomeProps = {
   params: {
@@ -40,8 +39,6 @@ export default async function Home({ params: { lang } }: HomeProps) {
       </main>
 
       <Footer dictionary={dictionary.footer} />
-
-      <Widget dictionary={dictionary.widget} />
     </>
   );
 }
