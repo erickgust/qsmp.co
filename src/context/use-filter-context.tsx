@@ -9,7 +9,7 @@ type Language = {
 };
 
 const languages: Language[] = Array.from(
-  new Set(members.flatMap((member) => member.info.languages)),
+  new Set(members.flatMap((member) => member.languages)),
   (label) => ({ label }),
 );
 
