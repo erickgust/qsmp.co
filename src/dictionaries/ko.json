@@ -45,10 +45,7 @@
     "title": "QSMP 멤버들",
     "filter": "모든 언어",
     "live": "라이브",
-    "seeLive": "라이브 보기",
-    "seeChannel": "채널 보기",
-    "profileAlt": "{name}의 프로필 사진",
-    "characterAlt": "{name}의 캐릭터 이미지",
+    "characterAlt": "{name}의 마인크래프트 캐릭터",
     "flagAlt": "{name}의 국기"
   },
   "youtube": {

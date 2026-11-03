@@ -45,10 +45,7 @@
     "title": "QSMP Mitglieder",
     "filter": "Alle Sprachen",
     "live": "Live",
-    "seeLive": "Live ansehen",
-    "seeChannel": "Kanal ansehen",
-    "profileAlt": "Profilbild von {name}",
-    "characterAlt": "Charakterbild von {name}",
+    "characterAlt": "Minecraft-Charakter von {name}",
     "flagAlt": "Flagge von {name}"
   },
   "youtube": {
