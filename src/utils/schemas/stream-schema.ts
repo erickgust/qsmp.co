@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { platformSchema } from "./member-schema";
+
 const streamSchema = z.object({
   id: z.number(),
   name: z.string(),
@@ -13,11 +15,7 @@ const streamSchema = z.object({
     }),
   language: z.string(),
   description: z.string(),
-  platform: z.union([
-    z.literal("twitch"),
-    z.literal("afreeca"),
-    z.literal("chzzk")
-  ]).optional(),
+  platform: platformSchema.optional(),
 });
 
 const videoSchema = z.object({
