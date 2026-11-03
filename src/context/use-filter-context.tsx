@@ -2,18 +2,16 @@
 
 import React, { createContext, useContext, useState } from "react";
 
+import { members } from "@/components/member-section/members";
+
 type Language = {
   label: string;
 };
 
-const languages: Language[] = [
-  { label: "ES" },
-  { label: "DE" },
-  { label: "PT-BR" },
-  { label: "FR" },
-  { label: "EN" },
-  { label: "KR" },
-];
+const languages: Language[] = Array.from(
+  new Set(members.flatMap((member) => member.info.languages)),
+  (label) => ({ label }),
+);
 
 const FilterContext = createContext<
   | {
@@ -55,7 +53,7 @@ export const useFilter = () => {
   const context = useContext(FilterContext);
 
   if (!context) {
-    throw new Error("useFilter deve ser usado dentro de um FilterProvider");
+    throw new Error("useFilter must be used within a FilterProvider");
   }
   return context;
 };

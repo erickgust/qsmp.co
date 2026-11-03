@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 
 import { Heading } from "../ui/heading";
@@ -16,13 +17,12 @@ import { members } from "./members";
 
 type MembersSectionProps = {
   membersData: MemberResponse;
-  dictionary: Dictionary["members"];
 };
 
 export function MembersSection({
   membersData,
-  dictionary,
 }: MembersSectionProps) {
+  const t = useTranslations("members");
   const {
     data: { data },
   } = useQuery({
@@ -72,15 +72,15 @@ export function MembersSection({
     >
       <div className="max-w-5.5xl mx-auto">
         <div className="w-full gap-10 flex flex-col sm:flex-row md:justify-between items-center my-10 md:mb-10">
-          <Heading>{dictionary.title}</Heading>
+          <Heading>{t("title")}</Heading>
 
-          <FilterDropdown dictionary={dictionary} />
+          <FilterDropdown />
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 md:gap-6 gap-8">
           {!isLoading &&
             filteredData.map((member) => (
-              <MemberCard key={member.id} dictionary={dictionary} {...member} />
+              <MemberCard key={member.id} {...member} />
             ))}
         </div>
       </div>

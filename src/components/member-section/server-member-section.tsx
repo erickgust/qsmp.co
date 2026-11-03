@@ -8,12 +8,8 @@ async function getMembersData() {
   return parsedData;
 }
 
-type MemberSectionProps = {
-  dictionary: Dictionary["members"];
-};
-
-export async function ServerMemberSection({ dictionary }: MemberSectionProps) {
+export async function ServerMemberSection() {
   const membersData = await getMembersData();
 
-  return <MembersSection membersData={membersData} dictionary={dictionary} />;
+  return <MembersSection membersData={membersData} />;
 }

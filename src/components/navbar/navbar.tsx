@@ -22,13 +22,10 @@ import { ExternalLinkButton } from "../ui/button/external-button";
 
 import CloseIcon from "@/assets/icons/close";
 import MenuMobileIcon from "@/assets/icons/menu-mobile";
-import { GermanyFlag } from "@/assets/icons/flags/de";
-import { UnitedKingdomFlag } from "@/assets/icons/flags/en";
-import { SpainFlag } from "@/assets/icons/flags/es";
-import { FranceFlag } from "@/assets/icons/flags/fr";
-import { BrazilFlag } from "@/assets/icons/flags/pt-br";
 import { useEvent } from "@/context/use-is-event";
-import { KoreanFlag } from "@/assets/icons/flags/kr";
+import { useLocale, useTranslations } from "next-intl";
+import { routing } from "@/i18n/routing";
+import { flags } from "@/i18n/flags";
 
 type NavbarProps = {
   isMenuMobileOpen: boolean;
@@ -36,19 +33,6 @@ type NavbarProps = {
 
   toggleMenuMobileModal: () => void;
   toggleNewsletterModal: () => void;
-
-  dictionary: Dictionary["nav"];
-};
-
-const getDefaultLang = (tag: string) => {
-  if (tag === "en") return "English";
-  if (tag === "fr") return "French";
-  if (tag === "pt") return "Portuguese";
-  if (tag === "de") return "German";
-  if (tag === "es") return "Spanish";
-  if (tag === "kr") return "Korean";
-
-  return "English";
 };
 
 export function Navbar({
@@ -56,48 +40,29 @@ export function Navbar({
   toggleNewsletterModal,
   isMenuMobileOpen,
   toggleMenuMobileModal,
-  dictionary,
 }: NavbarProps) {
   const { isEvent } = useEvent();
+  const t = useTranslations("nav");
+  const locale = useLocale();
   const menuItems = [
-    { label: dictionary.navlinks.streams, href: "#streams" },
-    { label: dictionary.navlinks.members, href: "#members" },
-    { label: dictionary.navlinks.updates, href: "#updates" },
-    { label: dictionary.navlinks.socials, href: "#socials" },
+    { label: t("navlinks.streams"), href: "#streams" },
+    { label: t("navlinks.members"), href: "#members" },
+    { label: t("navlinks.updates"), href: "#updates" },
+    { label: t("navlinks.socials"), href: "#socials" },
   ];
 
-  const languages = [
-    {
-      label: dictionary["newsletter-modal"].dropdown.en,
-      icon: <UnitedKingdomFlag className="min-w-fit" />,
-      tag: "en",
-    },
-    {
-      label: dictionary["newsletter-modal"].dropdown.fr,
-      icon: <FranceFlag className="min-w-fit" />,
-      tag: "fr",
-    },
-    {
-      label: dictionary["newsletter-modal"].dropdown.pt,
-      icon: <BrazilFlag className="min-w-fit" />,
-      tag: "pt",
-    },
-    {
-      label: dictionary["newsletter-modal"].dropdown.de,
-      icon: <GermanyFlag className="min-w-fit" />,
-      tag: "de",
-    },
-    {
-      label: dictionary["newsletter-modal"].dropdown.es,
-      icon: <SpainFlag className="min-w-fit" />,
-      tag: "es",
-    },
-    {
-      label: dictionary["newsletter-modal"].dropdown.kr,
-      icon: <KoreanFlag className="min-w-fit" />,
-      tag: "kr",
-    },
-  ] as const;
+  // Intl already knows every language name in every locale; CLDR lowercases most of them ("inglés")
+  const languageNames = new Intl.DisplayNames([locale], { type: "language" });
+  const languages: Language[] = routing.locales.map((tag) => {
+    const Flag = flags[tag];
+    const name = languageNames.of(tag === "pt-br" ? "pt" : tag) ?? tag;
+
+    return {
+      label: name.charAt(0).toLocaleUpperCase(locale) + name.slice(1),
+      icon: <Flag className="min-w-fit" />,
+      tag,
+    };
+  });
 
   const [navHeight, setNavHeight] = useState(80);
   const [isSticky, setIsSticky] = useState(false);
@@ -106,7 +71,7 @@ export function Navbar({
 
   const [email, setEmail] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(
-    languages[0],
+    () => languages.find((language) => language.tag === locale) ?? languages[0],
   );
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 900;
@@ -226,7 +191,6 @@ export function Navbar({
                 <TotalCurrentViewers
                   loading={false}
                   totalViewers={totalViewers}
-                  dictionary={dictionary}
                 />
               </div>
             )}
@@ -258,7 +222,7 @@ export function Navbar({
             >
               <NewsletterIcon />
 
-              {dictionary.newsletter}
+              {t("newsletter")}
             </button>
 
             <LanguagesDropdown />
@@ -271,7 +235,7 @@ export function Navbar({
             <div className="flex flex-col gap-6">
               <div className="flex justify-between items-start">
                 <Heading className="text-2xl">
-                  {dictionary["newsletter-modal"].title}
+                  {t("newsletter-modal.title")}
                 </Heading>
 
                 <button
@@ -284,10 +248,10 @@ export function Navbar({
               </div>
 
               <p className="mb-6 text-pretty">
-                {dictionary["newsletter-modal"].paragraph.first}
+                {t("newsletter-modal.paragraph.first")}
 
                 <span className="inline-block mt-2">
-                  {dictionary["newsletter-modal"].paragraph.second}
+                  {t("newsletter-modal.paragraph.second")}
                 </span>
               </p>
             </div>
@@ -304,7 +268,7 @@ export function Navbar({
                 <input
                   type="email"
                   className="border w-full p-4"
-                  placeholder={dictionary["newsletter-modal"].placeholder}
+                  placeholder={t("newsletter-modal.placeholder")}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -316,7 +280,7 @@ export function Navbar({
                 as="button"
                 type="submit"
               >
-                {dictionary["newsletter-modal"].button}
+                {t("newsletter-modal.button")}
               </ExternalLinkButton>
             </form>
           </Modal>
@@ -372,7 +336,7 @@ export function Navbar({
                     className="text-xl hover:bg-[#F0F6FF] uppercase px-8 h-20 w-full flex items-center gap-2 text-[#1F1E33]"
                   >
                     <NewsletterIcon className="size-6" />
-                    Newsletter
+                    {t("newsletter")}
                   </button>
 
                   <LanguagesDropdown />
@@ -392,7 +356,6 @@ export function Navbar({
             <TotalCurrentViewers
               loading={false}
               totalViewers={totalViewers}
-              dictionary={dictionary}
             />
           </div>
         )}

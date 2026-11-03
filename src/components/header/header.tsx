@@ -5,11 +5,7 @@ import { useState } from "react";
 import { Navbar } from "../navbar/navbar";
 import Image from "next/image";
 
-interface HeaderProps {
-  dictionary: Dictionary["nav"];
-}
-
-export function Header({ dictionary }: HeaderProps) {
+export function Header() {
   const [isNewsletterModalOpen, setIsModalNewsletterOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -61,7 +57,6 @@ export function Header({ dictionary }: HeaderProps) {
         toggleMenuMobileModal={toggleMenuMobile}
         isNewsletterModalOpen={isNewsletterModalOpen}
         toggleNewsletterModal={toggleNewsletterModal}
-        dictionary={dictionary}
       />
     </header>
   );

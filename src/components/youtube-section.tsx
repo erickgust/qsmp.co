@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { z } from "zod";
 import { ExternalLinkButton } from "./ui/button/external-button";
 import { Heading } from "./ui/heading";
@@ -5,29 +6,20 @@ import { Paragraph } from "./ui/paragraph";
 import { YoutubeEmbed } from "./youtube-embed";
 import { defaultVideos } from "./stream-section/defaultVideos";
 
-interface YoutubeButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-  dictionary: Dictionary["youtube"];
-}
-
 function YoutubeButton({
-  dictionary,
   className = "",
-  ...props
-}: YoutubeButtonProps) {
+  children,
+}: React.ComponentPropsWithoutRef<"button">) {
   return (
     <ExternalLinkButton
       colors="dark"
       className={className}
       href="https://www.youtube.com/@QSMPInfo/?sub_confirmation=1"
     >
-      {dictionary.button}
+      {children}
     </ExternalLinkButton>
   );
 }
-
-type YoutubeSectionProps = {
-  dictionary: Dictionary["youtube"];
-};
 
 async function getYoutubeData() {
   try {
@@ -55,7 +47,8 @@ async function getYoutubeData() {
   }
 }
 
-export async function YoutubeSection({ dictionary }: YoutubeSectionProps) {
+export async function YoutubeSection() {
+  const t = await getTranslations("youtube");
   const video = await getYoutubeData();
 
   return (
@@ -66,18 +59,17 @@ export async function YoutubeSection({ dictionary }: YoutubeSectionProps) {
       <div className="flex max-w-5.5xl mx-auto flex-col md:flex-row">
         <div className="flex-1 md:pr-8">
           <Heading className="text-white mb-6 md:max-w-sm">
-            {dictionary.title}
+            {t("title")}
           </Heading>
 
           <div className="flex flex-col gap-2 md:max-w-md">
-            <Paragraph>{dictionary.paragraph.first}</Paragraph>
-            <Paragraph>{dictionary.paragraph.second}</Paragraph>
+            <Paragraph>{t("paragraph.first")}</Paragraph>
+            <Paragraph>{t("paragraph.second")}</Paragraph>
           </div>
 
-          <YoutubeButton
-            dictionary={dictionary}
-            className="max-md:hidden mt-8"
-          />
+          <YoutubeButton className="max-md:hidden mt-8">
+            {t("button")}
+          </YoutubeButton>
         </div>
 
         <div className="flex flex-1 flex-col md:flex-row items-stretch xs:items-center md:justify-end md:items-center">
@@ -85,10 +77,9 @@ export async function YoutubeSection({ dictionary }: YoutubeSectionProps) {
             <YoutubeEmbed id={video.id} title={video.title} />
           </div>
 
-          <YoutubeButton
-            dictionary={dictionary}
-            className="block md:hidden xs:max-md:px-8"
-          />
+          <YoutubeButton className="block md:hidden xs:max-md:px-8">
+            {t("button")}
+          </YoutubeButton>
         </div>
       </div>
     </section>

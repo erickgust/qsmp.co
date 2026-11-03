@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
 import useEmblaCarousel from "embla-carousel-react";
 import { useCallback, useRef, useState } from "react";
@@ -24,10 +25,10 @@ export type ThumbsRef = <ViewportElement extends HTMLElement>(
 
 type StreamSectionProps = {
   members: Members;
-  dictionary: Dictionary["stream"];
 };
 
-export function StreamSection({ members, dictionary }: StreamSectionProps) {
+export function StreamSection({ members }: StreamSectionProps) {
+  const t = useTranslations("stream");
   const { handleIsEvent, isEvent } = useEvent();
 
   const { data: streamData } = useQuery({
@@ -97,12 +98,12 @@ export function StreamSection({ members, dictionary }: StreamSectionProps) {
 
         <div className="max-w-5.5xl mx-auto space-y-6">
           <Heading className="sm:w-4/5 md:w-3/4">
-            {isEvent ? dictionary.eventTitle : dictionary.title}
+            {isEvent ? t("eventTitle") : t("title")}
           </Heading>
 
           {!isLoading && streamData.type === "youtube" && (
             <p className="text-[#535170] hidden md:inline-block">
-              {dictionary.paragraph.first}
+              {t("paragraph.first")}
             </p>
           )}
 
@@ -124,7 +125,6 @@ export function StreamSection({ members, dictionary }: StreamSectionProps) {
 
       <div className="relative">
         <EmblaCarousel
-          dictionary={dictionary}
           thumbsApi={thumbsApi}
           desktopThumbsApi={desktopThumbsApi}
           slides={streamData}
@@ -141,7 +141,7 @@ export function StreamSection({ members, dictionary }: StreamSectionProps) {
           <div className="absolute top-1/2 -translate-y-1/2 left-8 md:left-20 h-min">
             <IconButton
               icon={<ArrowBack />}
-              label="Previous"
+              label={t("previous")}
               colors="dark"
               type="button"
               onClick={carouselRef.current?.scrollPrev}
@@ -156,7 +156,7 @@ export function StreamSection({ members, dictionary }: StreamSectionProps) {
           <div className="absolute top-1/2 -translate-y-1/2 right-8 md:right-20 h-min">
             <IconButton
               icon={<ArrowNext />}
-              label="Next"
+              label={t("next")}
               colors="dark"
               type="button"
               onClick={carouselRef.current?.scrollNext}

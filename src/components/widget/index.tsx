@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { ArrowOutwardRounded } from "@/assets/icons/arrow-outward";
 import { ExploreOutlined } from "@/assets/icons/explore";
 import * as Popover from "@radix-ui/react-popover";
@@ -55,11 +56,8 @@ function WidgetLink({
   );
 }
 
-type WidgetProps = {
-  dictionary: Dictionary["widget"];
-};
-
-export function Widget({ dictionary }: WidgetProps) {
+export function Widget() {
+  const t = useTranslations("widget");
   const [open, setOpen] = useState(false);
   const [unmounted, setUnmounted] = useState(true);
   const [triggerRef, { width: triggerWidth }] = useMeasure();
@@ -135,7 +133,7 @@ export function Widget({ dictionary }: WidgetProps) {
             }}
           >
             <ExploreOutlined />
-            <span className="whitespace-nowrap hidden sm:inline">{dictionary.title}</span>
+            <span className="whitespace-nowrap hidden sm:inline">{t("title")}</span>
           </button>
         </Popover.Trigger>
         {transition((styles, item) => {
@@ -154,7 +152,7 @@ export function Widget({ dictionary }: WidgetProps) {
                   <Popover.Close asChild>
                     <button type="button" className="flex items-center justify-center gap-2 bg-transparent cursor-pointer text-widget-text">
                       <ExploreOutlined />
-                      <span className="whitespace-nowrap">{dictionary.title}</span>
+                      <span className="whitespace-nowrap">{t("title")}</span>
                     </button>
                   </Popover.Close>
                   <animated.div style={{ height: styles.height }}>

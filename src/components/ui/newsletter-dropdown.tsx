@@ -1,11 +1,12 @@
 "use client";
 
 import React, { useCallback, useEffect, useState } from "react";
+import { useTranslations, type Locale } from "next-intl";
 
 export type Language = {
   label: string;
   icon: React.ReactNode;
-  tag: "en" | "pt" | "es" | "fr" | "de" | "kr";
+  tag: Locale;
 };
 
 type NewsletterDropdownProps = {
@@ -22,6 +23,7 @@ export function NewsletterDropdown({
   handleLanguageSelect,
   selectedLanguage,
 }: NewsletterDropdownProps) {
+  const t = useTranslations("nav.newsletter-modal.dropdown");
   const [isOpen, setIsOpen] = useState(false);
   const [isSmallHeight, setIsSmallHeight] = useState(false);
 
@@ -91,7 +93,7 @@ export function NewsletterDropdown({
             role="menu"
             aria-orientation="vertical"
             aria-labelledby="options-menu"
-            title="Select a language"
+            title={t("title")}
           >
             {languages.map((language) => (
               <button

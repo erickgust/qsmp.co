@@ -1,12 +1,10 @@
+import { useTranslations } from "next-intl";
 import { ArrowUp } from "@/assets/icons/arrow-up";
 import { useFilter } from "@/context/use-filter-context";
 import React, { useState } from "react";
 
-interface FilterDropdownProps {
-  dictionary: Dictionary["members"];
-}
-
-export function FilterDropdown({ dictionary }: FilterDropdownProps) {
+export function FilterDropdown() {
+  const t = useTranslations("members");
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => {
@@ -30,7 +28,7 @@ export function FilterDropdown({ dictionary }: FilterDropdownProps) {
               selectedLanguages.join(", ")
             ) : (
               <p className="text-lg">
-                {dictionary.filter}
+                {t("filter")}
               </p>
             )}
 

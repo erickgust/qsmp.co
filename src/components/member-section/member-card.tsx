@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 
 import { TwitterIcon } from "@/assets/icons/socials/twitter";
@@ -12,17 +13,15 @@ import { IconButton, SocialButton } from "../ui/button";
 import { AfreecaIcon } from "@/assets/icons/socials/afreeca";
 import { NaverIcon } from "@/assets/icons/socials/naver";
 
-interface MemberCardProps extends MembersData {
-  dictionary: Dictionary["members"];
-}
+type MemberCardProps = MembersData;
 
 export function MemberCard({
   name,
-  dictionary,
   image,
   info,
   isLive,
 }: MemberCardProps) {
+  const t = useTranslations("members");
   const languages = info.languages.flat();
 
   const twitter = info.socialLinks.flat().map((social) => social)[0];
@@ -52,7 +51,7 @@ export function MemberCard({
       <div className="relative h-[236px]">
         <Image
           src={image.profile}
-          alt={`Profile picture of ${name}`}
+          alt={t("profileAlt", { name })}
           loading="lazy"
           quality={100}
           className={`size-full object-cover absolute top-0 group-hover:opacity-0 transition-opacity duration-500 bg-white  `}
@@ -62,7 +61,7 @@ export function MemberCard({
 
         <Image
           src={image.character}
-          alt={`Character picture of ${name}`}
+          alt={t("characterAlt", { name })}
           quality={100}
           loading="lazy"
           className={`size-full object-cover group-hover:opacity-100 transition-opacity`}
@@ -72,14 +71,14 @@ export function MemberCard({
 
         {isLive && (
           <p className="absolute top-6 left-4 xxs:left-6 sm:left-4 sm:top-4 text-sm sm:text-xs py-1 px-3 sm:px-2 text-white uppercase bg-[#FF3D3D]">
-            {dictionary.live}
+            {t("live")}
           </p>
         )}
 
         <div className="absolute h-7 sm:h-6 bottom-6 left-4 xxs:left-6 sm:left-4 sm:bottom-4 flex items-center">
           <Image
             src={info.flag.url}
-            alt={`${name} flag`}
+            alt={t("flagAlt", { name })}
             loading="lazy"
             width={43}
             height={32}
@@ -227,7 +226,7 @@ export function MemberCard({
                 href={youtube.url}
                 colors={"youtube"}
               >
-                {isLive ? "See live" : "See channel"}
+                {isLive ? t("seeLive") : t("seeChannel")}
               </SocialButton>
             </div>
           )}

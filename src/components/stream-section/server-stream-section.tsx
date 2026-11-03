@@ -11,15 +11,13 @@ async function getStreamData(isEvent?: boolean) {
 }
 
 type StreamSectionProps = {
-  dictionary: Dictionary["stream"];
   isEvent?: boolean;
 };
 
 export async function ServerStreamSection({
-  dictionary,
   isEvent,
 }: StreamSectionProps) {
   const streamData = await getStreamData(isEvent);
 
-  return <StreamSection members={streamData} dictionary={dictionary} />;
+  return <StreamSection members={streamData} />;
 }

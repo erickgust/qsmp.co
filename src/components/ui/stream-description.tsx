@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { GroupIcon } from "@/assets/icons/group";
 import { LangIcon } from "@/assets/icons/lang";
@@ -13,8 +14,6 @@ type StreamDescriptionProps = {
   language?: string;
   description: string;
   isLive?: boolean;
-
-  dictionary: Dictionary["stream"];
 };
 
 export function StreamDescription({
@@ -24,8 +23,8 @@ export function StreamDescription({
   url,
   channel,
   isLive,
-  dictionary,
 }: StreamDescriptionProps) {
+  const t = useTranslations("stream");
   const formatter = new Intl.NumberFormat("en-US");
   const viewerCountFormatted = formatter
     .format(viewerCount || 0)
@@ -63,7 +62,7 @@ export function StreamDescription({
           {Boolean(isLive) && (
             <div className="group flex gap-2 text-sm md:text-xs font-medium flex-wrap">
               <span className="py-2 md:py-1 px-3.5 md:px-3 bg-red-500 text-white uppercase">
-                {dictionary.live}
+                {t("live")}
               </span>
 
               <span className="py-2 md:py-1 px-3.5 md:px-3 bg-[#0B0640] flex text-white gap-2 md:gap-1 items-center">
@@ -87,7 +86,7 @@ export function StreamDescription({
 
         <div className="sm:ml-auto">
           <ExternalLinkButton colors={isLive ? "red" : "purple"} href={url}>
-            {isLive ? `${dictionary.button.twitch}` : `${dictionary.button.youtube}`}
+            {isLive ? t("button.twitch") : t("button.youtube")}
           </ExternalLinkButton>
         </div>
       </div>

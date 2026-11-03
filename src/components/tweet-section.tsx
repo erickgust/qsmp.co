@@ -1,3 +1,4 @@
+import { getTranslations } from "next-intl/server";
 import { Inter } from "next/font/google";
 import { EmbeddedTweet, type TwitterComponents } from "react-tweet";
 // import { getTweet, type Tweet } from "react-tweet/api";
@@ -15,18 +16,14 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-interface TwitterButtonProps extends React.ComponentPropsWithoutRef<"button"> {
-  dictionary: Dictionary["tweets"];
-}
-
-function TwitterButton({ dictionary, ...props }: TwitterButtonProps) {
+function TwitterButton(props: React.ComponentPropsWithoutRef<"button">) {
   return (
     <ExternalLinkButton
       colors="blue"
       className={clsx("self-start", props.className)}
       href="https://twitter.com/QuackityStudios"
     >
-      {dictionary.button}
+      {props.children}
     </ExternalLinkButton>
   );
 }
@@ -43,17 +40,13 @@ async function getTweets(ids: string[]) {
   return tweets;
 }
 
-type TweetSectionProps = {
-  tweetIds: string[];
-  dictionary: Dictionary["tweets"];
-};
-
 export const components: TwitterComponents = {
   AvatarImg: (props) => <Image {...props} alt="" />,
   MediaImg: (props) => <Image {...props} alt="" fill unoptimized />,
 };
 
-export async function TweetSection({ dictionary }: TweetSectionProps) {
+export async function TweetSection() {
+  const t = await getTranslations("tweets");
   const tweets = await getTweets([
     "1755318541778075702",
     "1749962949291081766",
@@ -64,7 +57,7 @@ export async function TweetSection({ dictionary }: TweetSectionProps) {
   return (
     <section className="py-14 sm:py-16 lg:pb-0 bg-white px-8 scroll-mt-36">
       <div className="flex flex-col-reverse lg:flex-row gap-10 lg:gap-0 lg:justify-between max-w-5.5xl mx-auto overflow-y-hidden lg:max-h-[37.5rem] ">
-        <TwitterButton dictionary={dictionary} className="sm:hidden mt-0" />
+        <TwitterButton className="sm:hidden mt-0">{t("button")}</TwitterButton>
 
         <div
           data-theme="light"
@@ -90,22 +83,21 @@ export async function TweetSection({ dictionary }: TweetSectionProps) {
         </div>
 
         <div className="w-fit flex flex-col lg:my-24 lg:max-w-[40ch]">
-          <Heading className="mb-6">{dictionary.title}</Heading>
+          <Heading className="mb-6">{t("title")}</Heading>
 
           <div className="flex flex-col gap-2">
             <Paragraph className="!text-[#535170]">
-              {dictionary.paragraph.first}
+              {t("paragraph.first")}
             </Paragraph>
 
             <Paragraph className="!text-[#535170]">
-              {dictionary.paragraph.second}
+              {t("paragraph.second")}
             </Paragraph>
           </div>
 
-          <TwitterButton
-            dictionary={dictionary}
-            className="max-sm:hidden mt-8"
-          />
+          <TwitterButton className="max-sm:hidden mt-8">
+            {t("button")}
+          </TwitterButton>
         </div>
       </div>
     </section>

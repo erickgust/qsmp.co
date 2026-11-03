@@ -33,8 +33,6 @@ type PropType = {
   onSelectIndex: (index: number) => void;
   setPrevBtnDisabled: (disabled: boolean) => void;
   setNextBtnDisabled: (disabled: boolean) => void;
-
-  dictionary: Dictionary["stream"];
 };
 
 const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
@@ -48,7 +46,6 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
     isLoading,
     setPrevBtnDisabled,
     setNextBtnDisabled,
-    dictionary,
   } = props;
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     Autoplay({
@@ -179,7 +176,6 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
 
                 <div className="hidden relative group-data-[selected=true]:inline-block">
                   <StreamDescription
-                    dictionary={dictionary}
                     description={member.description}
                     language={member.language}
                     url={`https://twitch.tv/${member.userName}`}
@@ -209,7 +205,6 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
 
                 <div className="hidden relative group-data-[selected=true]:inline-block">
                   <StreamDescription
-                    dictionary={dictionary}
                     description={video.description}
                     url={`https://www.youtube.com/watch?v=${video.id}`}
                     channel={{
