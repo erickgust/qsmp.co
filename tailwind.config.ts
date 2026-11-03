@@ -107,9 +107,6 @@ const config = {
           "slide-from-bottom 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both",
       },
       colors: {
-        "widget-text": "var(--widget-text)",
-        "widget-bg": "var(--widget-bg)",
-        "widget-border": "var(--widget-border)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
