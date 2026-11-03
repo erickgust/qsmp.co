@@ -96,14 +96,6 @@ const config = {
             opacity: "1",
           },
         },
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
       },
       animation: {
         "slide-in-bottom":
@@ -113,8 +105,6 @@ const config = {
         "slide-from-left": "slide-from-left 0.3s ease both",
         "slide-from-bottom":
           "slide-from-bottom 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both",
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
       },
       colors: {
         "widget-text": "var(--widget-text)",
