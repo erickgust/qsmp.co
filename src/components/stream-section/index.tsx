@@ -17,7 +17,6 @@ import { ArrowNext } from "@/assets/icons/arrow-next";
 import { Members } from "@/app/[lang]/page";
 import { streamResponseSchema } from "@/utils/schemas/stream-schema";
 import { defaultVideos } from "./defaultVideos";
-import { useEvent } from "@/context/use-is-event";
 
 export type ThumbsRef = <ViewportElement extends HTMLElement>(
   instance: ViewportElement | null
@@ -29,23 +28,11 @@ type StreamSectionProps = {
 
 export function StreamSection({ members }: StreamSectionProps) {
   const t = useTranslations("stream");
-  const { handleIsEvent, isEvent } = useEvent();
 
   const { data: streamData } = useQuery({
-    queryKey: ["stream", isEvent],
-    queryFn: async () => {
-      const data = {
-        type: "youtube",
-        data: defaultVideos,
-      };
-
-      const parsedData = streamResponseSchema.parse(data);
-      const type = "youtube" as const;
-
-      return isEvent && parsedData.data.length === 0
-        ? { type, data: defaultVideos }
-        : parsedData;
-    },
+    queryKey: ["stream"],
+    queryFn: async () =>
+      streamResponseSchema.parse({ type: "youtube", data: defaultVideos }),
     initialData: members,
     staleTime: 1000 * 60 * 5, // 5 minutes
   });
@@ -78,27 +65,9 @@ export function StreamSection({ members }: StreamSectionProps) {
   return (
     <section className="scroll-mt-8 py-12 md:py-16" id="streams">
       <div className="px-8 mb-8">
-        {/* <div className='max-w-5.5xl mx-auto space-x-2 mb-2 uppercase'>
-          <button
-            onClick={() => handleIsEvent(false)}
-            data-selected={!isEvent}
-            className='text-[#D7DFEC] data-[selected=true]:text-[#1F1E33] text-sm font-pixel font-bold'
-          >
-            QSMP
-          </button>
-
-          <button
-            onClick={() => handleIsEvent(true)}
-            data-selected={isEvent}
-            className='text-[#D7DFEC] data-[selected=true]:text-[#1F1E33] text-sm font-pixel font-bold'
-          >
-            Purgatory 2 Tournament
-          </button>
-        </div> */}
-
         <div className="max-w-5.5xl mx-auto space-y-6">
           <Heading className="sm:w-4/5 md:w-3/4">
-            {isEvent ? t("eventTitle") : t("title")}
+            {t("title")}
           </Heading>
 
           {!isLoading && streamData.type === "youtube" && (

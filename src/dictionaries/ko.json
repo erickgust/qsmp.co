@@ -25,7 +25,6 @@
   },
   "stream": {
     "title": "QSMP 멤버들을 보세요",
-    "eventTitle": "QSMP 연옥 2 토너먼트 보기",
     "live": "라이브",
     "paragraph": {
       "first": "현재 QSMP에는 온라인 사용자가 없지만, 여기에 QSMP 콘텐츠가 더 있습니다!"
@@ -73,9 +72,6 @@
   },
   "footer": {
     "paragraph": "제공: 콰키티 스튜디오"
-  },
-  "widget": {
-    "title": "더 많은 QSMP를 탐색하세요."
   },
   "about": {
     "title": "What is the QSMP?",

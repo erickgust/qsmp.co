@@ -1,6 +1,5 @@
 import { useFormatter, useTranslations } from "next-intl";
 import { BroadcastIcon } from "@/assets/icons/broadcast";
-import { useEvent } from "@/context/use-is-event";
 
 type TotalViewersProps = {
   loading: boolean;
@@ -12,7 +11,6 @@ export function TotalCurrentViewers({
   totalViewers,
 }: TotalViewersProps) {
   const t = useTranslations("nav");
-  const { isEvent } = useEvent();
 
   const totalViewersFormatted = useFormatter().number(totalViewers);
 
@@ -22,7 +20,7 @@ export function TotalCurrentViewers({
 
       <span className="whitespace-nowrap">{totalViewersFormatted}</span>
       <span className="whitespace-nowrap">
-        {isEvent ? "Purgatory 2 \nTotal Viewers" : t("counter")}
+        {t("counter")}
       </span>
     </p>
   );

@@ -11,7 +11,6 @@ import { FilterProvider } from "@/context/use-filter-context";
 import { ToasterProvider } from "@/providers/ToasterProvider";
 import { routing } from "@/i18n/routing";
 import Providers from "../providers";
-import { EventProvider } from "@/context/use-is-event";
 
 const dm_sans = DM_Sans({
   subsets: ["latin"],
@@ -70,11 +69,9 @@ export default function RootLayout({
       <body>
         <NextIntlClientProvider>
           <FilterProvider>
-            <EventProvider>
-              <ToasterProvider />
+            <ToasterProvider />
 
-              <Providers>{children}</Providers>
-            </EventProvider>
+            <Providers>{children}</Providers>
           </FilterProvider>
         </NextIntlClientProvider>
       </body>

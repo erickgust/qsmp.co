@@ -22,7 +22,6 @@ import { ExternalLinkButton } from "../ui/button/external-button";
 
 import CloseIcon from "@/assets/icons/close";
 import MenuMobileIcon from "@/assets/icons/menu-mobile";
-import { useEvent } from "@/context/use-is-event";
 import { useLocale, useTranslations } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { flags } from "@/i18n/flags";
@@ -42,7 +41,6 @@ export function Navbar({
   isMenuMobileOpen,
   toggleMenuMobileModal,
 }: NavbarProps) {
-  const { isEvent } = useEvent();
   const t = useTranslations("nav");
   const locale = useLocale();
   const menuItems = [

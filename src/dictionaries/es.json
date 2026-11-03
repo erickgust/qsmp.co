@@ -25,7 +25,6 @@
   },
   "stream": {
     "title": "VE A LOS MIEMBROS DEL QSMP",
-    "eventTitle": "MIRA EL TORNEO QSMP PURGATORY 2",
     "live": "En Vivo",
     "paragraph": {
       "first": "Por el momento no hay nadie en el QSMP, pero aquí hay mas contenido del QSMP!"
@@ -73,9 +72,6 @@
   },
   "footer": {
     "paragraph": "Desarrollado por"
-  },
-  "widget": {
-    "title": "Explora más el QSMP"
   },
   "about": {
     "title": "¿Qué es el QSMP?",

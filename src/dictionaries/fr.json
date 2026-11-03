@@ -25,7 +25,6 @@
   },
   "stream": {
     "title": "REGARDEZ LES MEMBRES DU QSMP",
-    "eventTitle": "Regardez le tournoi Purgatory 2 du QSMP",
     "live": "En direct",
     "paragraph": {
       "first": "Il n'y a actuellement personne en ligne sur le QSMP. Cependant, vous pouvez jeter un œil aux autres contenus du QSMP !"
@@ -73,9 +72,6 @@
   },
   "footer": {
     "paragraph": "Développé par"
-  },
-  "widget": {
-    "title": "Découvrir plus du QSMP"
   },
   "about": {
     "title": "What is the QSMP?",
