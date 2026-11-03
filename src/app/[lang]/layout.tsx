@@ -3,10 +3,13 @@ import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
 import localFont from "next/font/local";
 
-import { LanguageProvider } from "@/context/use-language-context";
+import { notFound } from "next/navigation";
+import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { setRequestLocale } from "next-intl/server";
+
 import { FilterProvider } from "@/context/use-filter-context";
 import { ToasterProvider } from "@/providers/ToasterProvider";
-import { langs } from "@/lib/get-dictionary";
+import { routing } from "@/i18n/routing";
 import Providers from "../providers";
 import { EventProvider } from "@/context/use-is-event";
 
@@ -37,7 +40,7 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return langs.map((lang) => ({
+  return routing.locales.map((lang) => ({
     lang,
   }));
 }
@@ -51,6 +54,10 @@ export default function RootLayout({
     lang: string;
   };
 }) {
+  if (!hasLocale(routing.locales, params.lang)) notFound();
+
+  setRequestLocale(params.lang);
+
   return (
     <html
       lang={params.lang}
@@ -60,17 +67,17 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
 
-      <FilterProvider>
-        <LanguageProvider>
-          <EventProvider>
-            <body>
+      <body>
+        <NextIntlClientProvider>
+          <FilterProvider>
+            <EventProvider>
               <ToasterProvider />
 
               <Providers>{children}</Providers>
-            </body>
-          </EventProvider>
-        </LanguageProvider>
-      </FilterProvider>
+            </EventProvider>
+          </FilterProvider>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
