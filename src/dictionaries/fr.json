@@ -15,13 +15,7 @@
         "second": "Abonnez-vous. Ou restez dans la pénombre, en continuant de tout ignorer des mystères et des dangers qui attendent les mal informés. 🖤"
       },
       "dropdown": {
-        "title": "Sélectionnez votre langue",
-        "en": "Anglais",
-        "fr": "Français",
-        "de": "Allemand",
-        "es": "Espagnol",
-        "pt": "Portugais",
-        "kr": "Coréen"
+        "title": "Sélectionnez votre langue"
       },
       "placeholder": "À quelle adresse mail?",
       "button": "S'abonner"
@@ -38,7 +32,9 @@
     "button": {
       "twitch": "Voir en direct",
       "youtube": "Voir la vidéo"
-    }
+    },
+    "previous": "Précédent",
+    "next": "Suivant"
   },
   "timer": {
     "paragraph": "Streams officiels QSMP tous les vendredis à 22h ! Assurez-vous de vous abonner à notre chaîne Twitch pour ne manquer aucun stream!",
@@ -47,7 +43,12 @@
   "members": {
     "title": "Membres du QSMP",
     "filter": "Toutes les langues",
-    "live": "En direct"
+    "live": "En direct",
+    "seeLive": "Voir en direct",
+    "seeChannel": "Voir la chaîne",
+    "profileAlt": "Photo de profil de {name}",
+    "characterAlt": "Image du personnage de {name}",
+    "flagAlt": "Drapeau de {name}"
   },
   "youtube": {
     "title": "PERDU AVEC LE LORE DU QSMP?",
@@ -55,7 +56,6 @@
       "first": "Nous sommes heureux de vous annoncer le lancement de notre chaîne YouTube QSMP Info! Il s'agit du guide parfait pour se tenir à jour concernant tous les événements et les histoires passionnantes se déroulant sur le QSMP! 🏝️",
       "second": "Retrouvez notre charmant et totalement impartial présentateur, Cucurucho, pour d'amusants récapitulatifs et divers aperçus de l'île. Abonnez-vous dès maintenant et nous veillerons à ce que vous profitiez pleinement de l'île! 🎉"
     },
-    "placeholder": "MISSING TRANSLATION",
     "button": "ABONNEZ-VOUS À NOTRE CHAÎNE"
   },
   "tweets": {

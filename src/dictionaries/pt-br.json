@@ -15,13 +15,7 @@
         "second": "Se inscreva. Ou apenas fique passando vontade sem saber nenhum dos mistérios que o aguarda. 🖤"
       },
       "dropdown": {
-        "title": "Escolha a sua língua",
-        "en": "Inglês",
-        "es": "Espanhol",
-        "de": "Alemão",
-        "fr": "Francês",
-        "pt": "Português",
-        "kr": "Coreano"
+        "title": "Escolha a sua língua"
       },
       "placeholder": "Para qual endereço de email?",
       "button": "Subscrever"
@@ -38,7 +32,9 @@
     "button": {
       "twitch": "Ver a live",
       "youtube": "Ver o vídeo"
-    }
+    },
+    "previous": "Anterior",
+    "next": "Próximo"
   },
   "timer": {
     "paragraph": "Lives do QSMP todas as Sexta-Feiras às 6 da tarde, horário de Brasília (1 PM PST)! Nos siga na Twitch para nunca perder as lives!",
@@ -47,7 +43,12 @@
   "members": {
     "title": "Membros do QSMP",
     "filter": "Todas as línguas",
-    "live": "Ao vivo"
+    "live": "Ao vivo",
+    "seeLive": "Ver a live",
+    "seeChannel": "Ver o canal",
+    "profileAlt": "Foto de perfil de {name}",
+    "characterAlt": "Imagem do personagem de {name}",
+    "flagAlt": "Bandeira de {name}"
   },
   "youtube": {
     "title": "PERDIDO NO LORE DO QSMP?",
@@ -75,7 +76,6 @@
   "footer": {
     "paragraph": "Distribuído por"
   },
-
   "widget": {
     "title": "Explore mais do QSMP"
   },

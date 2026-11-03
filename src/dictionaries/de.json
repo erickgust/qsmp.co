@@ -15,13 +15,7 @@
         "second": "Trete bei. Oder bleib im Dunkeln, ahnungslos gegenüber den Mysterien und Gefahren, die auf die Unwissenden warten. 🖤"
       },
       "dropdown": {
-        "title": "Wähle deine Sprache",
-        "en": "Englisch",
-        "es": "Spanisch",
-        "de": "Deutsch",
-        "fr": "Französisch",
-        "pt": "Portugiesisch",
-        "kr": "Koreanisch"
+        "title": "Wähle deine Sprache"
       },
       "placeholder": "An welche Email Adresse?",
       "button": "Abonnieren"
@@ -38,7 +32,9 @@
     "button": {
       "twitch": "Schaue Live",
       "youtube": "Video anschauen"
-    }
+    },
+    "previous": "Zurück",
+    "next": "Weiter"
   },
   "timer": {
     "paragraph": "QSMP Livestreams, jeden Freitag um 22 Uhr mitteleuropäische Zeit (13 Uhr PST)! Folge unserem Twitch Kanal um keine Livestreams zu verpassen!",
@@ -47,7 +43,12 @@
   "members": {
     "title": "QSMP Mitglieder",
     "filter": "Alle Sprachen",
-    "live": "Live"
+    "live": "Live",
+    "seeLive": "Live ansehen",
+    "seeChannel": "Kanal ansehen",
+    "profileAlt": "Profilbild von {name}",
+    "characterAlt": "Charakterbild von {name}",
+    "flagAlt": "Flagge von {name}"
   },
   "youtube": {
     "title": "VERWIRRT VOM QSMP LORE?",
