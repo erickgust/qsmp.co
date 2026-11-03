@@ -106,7 +106,7 @@ export function Navbar({
 
   const [email, setEmail] = useState("");
   const [selectedLanguage, setSelectedLanguage] = useState<Language>(
-    languages[0]
+    languages[0],
   );
 
   const isMobile = typeof window !== "undefined" && window.innerWidth < 900;
@@ -241,7 +241,7 @@ export function Navbar({
           </button>
 
           <div className="hidden items-center min-[900px]:flex">
-            <div className=" flex items-center border-l border-r h-20 px-8 2xl:px-10 font-bold">
+            <div className=" flex items-center border-l border-r h-20 px-8 2xl:px-10">
               {menuItems.map((link) => (
                 <NavbarLink
                   href={link.href}
@@ -254,7 +254,7 @@ export function Navbar({
             <button
               type="button"
               onClick={toggleNewsletterModal}
-              className="text-xs 2xl:text-sm hover:bg-[#F0F6FF] uppercase border-r px-6 2xl:px-10 h-20 flex items-center gap-2 text-[#1F1E33] font-bold"
+              className="text-xs hover:bg-[#F0F6FF] uppercase border-r px-6 2xl:px-10 h-20 flex items-center gap-2 text-[#1F1E33]"
             >
               <NewsletterIcon />
 
@@ -386,7 +386,7 @@ export function Navbar({
           <div
             className={clsx(
               "flex items-center w-full justify-center h-20 text-[#1F1E33] xl:hidden transition-all absolute translate-y-full top-0 bg-white z-20 border-y",
-              showTotalViewers ? "flex" : "hidden"
+              showTotalViewers ? "flex" : "hidden",
             )}
           >
             <TotalCurrentViewers

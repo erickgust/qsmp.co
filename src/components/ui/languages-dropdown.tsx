@@ -26,7 +26,7 @@ export function LanguagesDropdown() {
       });
     },
 
-    [selectLanguage]
+    [selectLanguage],
   );
 
   const redirectedPathName = useCallback(
@@ -38,11 +38,11 @@ export function LanguagesDropdown() {
 
       return segments.join("/");
     },
-    [pathname]
+    [pathname],
   );
 
   return (
-    <div className="relative inline-block text-left md:font-bold">
+    <div className="relative inline-block text-left">
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
@@ -61,7 +61,7 @@ export function LanguagesDropdown() {
               ?.icon
           }
 
-          <p className="text-xl min-[900px]:text-xs 2xl:text-sm uppercase">
+          <p className="text-xl min-[900px]:text-xs uppercase">
             {selectedLanguage}
           </p>
         </span>
@@ -73,7 +73,7 @@ export function LanguagesDropdown() {
       </button>
 
       {isOpen && (
-        <div className="origin-top-right absolute bottom-0 min-[850px]:bottom-auto w-full border bg-white animate-slide-from-top z-30 text-xl min-[900px]:text-xs 2xl:text-sm">
+        <div className="origin-top-right absolute bottom-0 min-[850px]:bottom-auto w-full border bg-white animate-slide-from-top z-30 text-xl min-[900px]:text-xs">
           <div
             role="menu"
             aria-orientation="vertical"
@@ -84,7 +84,7 @@ export function LanguagesDropdown() {
                 key={language.label}
                 onClick={() => handleLanguageSelect(language.label)}
                 href={redirectedPathName(language.label)}
-                className="flex items-center gap-2 py-8 px-7 text-xl min-[900px]:text-xs 2xl:text-sm border-b text-gray-700 hover:bg-[#F0F6FF] hover:text-gray-900 w-full"
+                className="flex items-center gap-2 py-8 px-7 text-xl min-[900px]:text-xs border-b text-gray-700 hover:bg-[#F0F6FF] hover:text-gray-900 w-full"
                 role="menuitem"
               >
                 {language.icon}

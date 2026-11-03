@@ -20,38 +20,38 @@ const languages = i18n.locales.map((locale) => {
     case "de":
       return {
         label: "de",
-        icon: <GermanyFlag />,
+        icon: <GermanyFlag width={24} height={18} />,
       };
     case "en":
       return {
         label: "en",
-        icon: <UnitedKingdomFlag />,
+        icon: <UnitedKingdomFlag width={24} height={18} />,
       };
     case "es":
       return {
         label: "es",
-        icon: <SpainFlag />,
+        icon: <SpainFlag width={24} height={18} />,
       };
     case "fr":
       return {
         label: "fr",
-        icon: <FranceFlag />,
+        icon: <FranceFlag width={24} height={18} />,
       };
     case "pt-br":
       return {
         label: "pt-br",
-        icon: <BrazilFlag />,
+        icon: <BrazilFlag width={24} height={18} />,
       };
     case "kr":
       return {
         label: "kr",
-        icon: <KoreanFlag />,
+        icon: <KoreanFlag width={24} height={18} />,
       };
 
     default:
       return {
         label: "en",
-        icon: <UnitedKingdomFlag />,
+        icon: <UnitedKingdomFlag width={24} height={18} />,
       };
   }
 });

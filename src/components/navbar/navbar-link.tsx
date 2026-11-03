@@ -11,7 +11,7 @@ export function NavbarLink({ label, href, target }: NavbarProps) {
   return (
     <a
       target={target}
-      className="text-xs 2xl:text-sm uppercase text-[#1F1E33] hover:text-[#604DD8] group flex gap-2 items-center transition-colors py-[22px] pl-6"
+      className="text-xs uppercase text-[#1F1E33] hover:text-[#604DD8] group flex gap-2 items-center transition-colors py-[22px] pl-6"
       href={href}
     >
       <span>{label}</span>
