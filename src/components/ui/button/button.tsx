@@ -112,7 +112,7 @@ export const button = cva([
         'hover:bg-[#399BFF]',
         'before:bg-[#399BFF]'
       ],
-      naver: [
+      chzzk: [
         'text-white',
         'bg-[#00BF74]',
         'sm:bg-[#00E289]',
