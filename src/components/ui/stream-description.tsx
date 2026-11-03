@@ -1,4 +1,4 @@
-import { useTranslations } from "next-intl";
+import { useFormatter, useTranslations } from "next-intl";
 import Image from "next/image";
 import { GroupIcon } from "@/assets/icons/group";
 import { LangIcon } from "@/assets/icons/lang";
@@ -25,11 +25,7 @@ export function StreamDescription({
   isLive,
 }: StreamDescriptionProps) {
   const t = useTranslations("stream");
-  const formatter = new Intl.NumberFormat("en-US");
-  const viewerCountFormatted = formatter
-    .format(viewerCount || 0)
-    .split(",")
-    .join(" ");
+  const viewerCountFormatted = useFormatter().number(viewerCount || 0);
 
   return (
     <div
