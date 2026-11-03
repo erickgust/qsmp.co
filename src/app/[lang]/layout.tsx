@@ -5,11 +5,12 @@ import localFont from "next/font/local";
 
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 import { FilterProvider } from "@/context/use-filter-context";
 import { ToasterProvider } from "@/providers/ToasterProvider";
 import { routing } from "@/i18n/routing";
+import { siteUrl } from "@/lib/site-url";
 import Providers from "../providers";
 
 const dm_sans = DM_Sans({
@@ -32,11 +33,38 @@ const pixeloidSans = localFont({
   display: "swap",
 });
 
-export const metadata: Metadata = {
-  title: "QSMP - The World's First Multilingual Minecraft server by Quackity",
-  description:
-    "Welcome to the QSMP, the world's first multilingual Minecraft server created by Quackity featuring real-time live translation. The QSMP unites one of the biggest international and global communities ever created by a Minecraft server. Watch the QSMP to engage with players from around the world in an unprecedented, multilingual gaming adventure.",
-};
+const hreflang = (locale: string) => (locale === "pt-br" ? "pt-BR" : locale);
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { lang: string };
+}): Promise<Metadata> {
+  const locale = hasLocale(routing.locales, params.lang) ? params.lang : routing.defaultLocale;
+  const t = await getTranslations({ locale, namespace: "metadata" });
+
+  return {
+    metadataBase: new URL(siteUrl),
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: `/${locale}/`,
+      languages: {
+        ...Object.fromEntries(routing.locales.map((locale) => [hreflang(locale), `/${locale}/`])),
+        "x-default": `/${routing.defaultLocale}/`,
+      },
+    },
+    openGraph: {
+      type: "website",
+      siteName: "QSMP",
+      title: t("title"),
+      description: t("description"),
+      url: `/${locale}/`,
+      locale: hreflang(locale).replace("-", "_"),
+    },
+    twitter: { card: "summary_large_image" },
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((lang) => ({
