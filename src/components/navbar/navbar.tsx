@@ -184,8 +184,9 @@ export function Navbar({
               <Image
                 src="/small-qsmp-logo.png"
                 alt="QSMP Logo"
-                width={100}
-                height={100}
+                // 3x the 57x48 display size, see the hero logo in header.tsx
+                width={172}
+                height={144}
                 className="my-3 mx-4 xl:mx-8 h-12 w-auto"
               />
             </div>
@@ -303,8 +304,8 @@ export function Navbar({
                   <Image
                     src="/small-qsmp-logo.png"
                     alt="QSMP Logo"
-                    width={100}
-                    height={100}
+                    width={172}
+                    height={144}
                     className="my-3 mx-4 xl:mx-8 h-12 w-auto"
                   />
                 </div>

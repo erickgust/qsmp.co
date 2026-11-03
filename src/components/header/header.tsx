@@ -31,13 +31,13 @@ export function Header() {
           preload="metadata"
         />
 
+        {/* Declared at 3x its 76x64 display size: the browser blurs this detailed logo when shrinking a barely larger image */}
         <Image
           className="absolute top-6 left-8 sm:top-8 sm:left-10 z-10 object-contain w-auto h-16"
           src="/small-qsmp-logo.png"
           alt="QSMP Logo"
-          height={200}
-          width={200}
-          quality={100}
+          height={192}
+          width={229}
           priority
         />
 
@@ -45,9 +45,8 @@ export function Header() {
           className="absolute top-6 right-8 sm:top-8 sm:right-10 z-10 object-contain w-auto h-16"
           src="/square-studios-logo.png"
           alt="Quackity Studios Logo"
-          height={200}
-          width={200}
-          quality={100}
+          height={64}
+          width={64}
           priority
         />
       </div>

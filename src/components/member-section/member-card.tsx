@@ -53,7 +53,7 @@ export function MemberCard({
           src={image.profile}
           alt={t("profileAlt", { name })}
           loading="lazy"
-          quality={100}
+          quality={85}
           className={`size-full object-cover absolute top-0 group-hover:opacity-0 transition-opacity duration-500 bg-white  `}
           width={412}
           height={236}
@@ -62,7 +62,7 @@ export function MemberCard({
         <Image
           src={image.character}
           alt={t("characterAlt", { name })}
-          quality={100}
+          quality={85}
           loading="lazy"
           className={`size-full object-cover group-hover:opacity-100 transition-opacity`}
           width={412}
