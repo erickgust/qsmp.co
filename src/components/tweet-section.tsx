@@ -41,8 +41,8 @@ async function getTweets(ids: string[]) {
 }
 
 export const components: TwitterComponents = {
-  AvatarImg: (props) => <Image {...props} alt="" />,
-  MediaImg: (props) => <Image {...props} alt="" fill unoptimized />,
+  AvatarImg: (props) => <Image {...props} alt={props.alt} />,
+  MediaImg: (props) => <Image {...props} alt={props.alt} fill unoptimized />,
 };
 
 export async function TweetSection() {

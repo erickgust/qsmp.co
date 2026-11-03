@@ -27,7 +27,7 @@ export default function Home({ params: { lang } }: HomeProps) {
       <Header />
 
       {/* padding top 80 on mobile, 0 on desktop because of viewers component */}
-      <main className="pt-20 xl:pt-0">
+      <main id="main" className="pt-20 xl:pt-0">
         <ServerStreamSection />
         <TimerSection />
         <ServerMemberSection />

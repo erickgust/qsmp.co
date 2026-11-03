@@ -21,7 +21,12 @@
       "button": "구독",
       "demo": "감사합니다! 이 사이트는 포트폴리오 데모이므로 이메일은 전송되거나 저장되지 않았습니다."
     },
-    "counter": "전체 뷰어"
+    "counter": "전체 뷰어",
+    "menu": "메뉴",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "close": "닫기",
+    "language": "언어"
   },
   "stream": {
     "title": "QSMP 멤버들을 보세요",
@@ -76,5 +81,8 @@
   "about": {
     "title": "What is the QSMP?",
     "paragraph": "The QSMP is the world's first multilingual Minecraft server. Our main objective is to unite content creators and cultures from around the world to create the world's first international content creation space by breaking language barriers through an innovative tool created in Minecraft by Quackity Studios."
+  },
+  "header": {
+    "skipToContent": "본문으로 건너뛰기"
   }
 }

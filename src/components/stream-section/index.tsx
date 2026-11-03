@@ -138,7 +138,7 @@ export function StreamSection({ members }: StreamSectionProps) {
           </div>
 
           <div className="flex md:hidden px-9 mx-12 sm:mx-8 justify-center items-center">
-            <div ref={mobileThumbsRef} className="overflow-hidden">
+            <div ref={mobileThumbsRef} className="overflow-hidden min-w-0">
               <CarouselNav
                 items={streamData}
                 onSelectedIndex={handleSelectIndex}

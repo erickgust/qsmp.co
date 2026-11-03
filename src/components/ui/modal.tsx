@@ -1,30 +1,35 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
+import clsx from "clsx";
 
-interface ModalProps {
+type ModalProps = {
   isOpen: boolean;
   toggleModal: () => void;
 
   children: React.ReactNode;
-}
+} & React.ComponentPropsWithoutRef<"dialog">;
 
-export function Modal({ isOpen, toggleModal, children }: ModalProps) {
-  const modalClasses = isOpen ? "block" : "hidden";
+// Children must fill the dialog (padding goes on them) so a click on the dialog itself is a backdrop click
+export function Modal({ isOpen, toggleModal, children, className, ...props }: ModalProps) {
+  const ref = useRef<HTMLDialogElement>(null);
 
-  function clickingOutside(event: React.MouseEvent<HTMLDivElement>) {
-    if (event.target === event.currentTarget) {
-      toggleModal();
-    }
-  }
+  useEffect(() => {
+    const dialog = ref.current;
+    if (!dialog) return;
+
+    if (isOpen && !dialog.open) dialog.showModal();
+    if (!isOpen && dialog.open) dialog.close();
+  }, [isOpen]);
 
   return (
-    <div
-      onClick={clickingOutside}
-      id="modal"
-      className={`fixed inset-0 h-full z-50 flex items-center justify-center ${modalClasses} bg-neutral-900/70`}
+    <dialog
+      ref={ref}
+      // Escape closes the dialog natively, bypassing React state
+      onClose={() => isOpen && toggleModal()}
+      onClick={(event) => event.target === event.currentTarget && toggleModal()}
+      className={clsx("backdrop:bg-neutral-900/70", className)}
+      {...props}
     >
-      <div className="relative md:max-w-4xl bg-white p-8 md:px-16 md:py-14 shadow-lg w-10/12">
-        {children}
-      </div>
-    </div>
+      {children}
+    </dialog>
   );
 }

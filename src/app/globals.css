@@ -81,8 +81,12 @@ html {
   -moz-osx-font-smoothing: grayscale;
 
   height: 100%;
+}
 
-  scroll-behavior: smooth;
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 @media (min-width: 768px) {

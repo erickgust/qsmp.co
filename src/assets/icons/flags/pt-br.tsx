@@ -1,6 +1,7 @@
-import { SVGProps } from "react";
+import { SVGProps, useId } from "react";
 
 export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
+  const uid = useId().replace(/:/g, "");
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,11 +11,11 @@ export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <defs>
-        <path id="flagpackBr0" fill="#fff" d="M0 0h32v24H0z"></path>
+        <path id={`${uid}-0`} fill="#fff" d="M0 0h32v24H0z"></path>
       </defs>
       <g fill="none">
-        <g clipPath="url(#flagpackBr4)">
-          <use href="#flagpackBr0"></use>
+        <g clipPath={`url(#${uid}-4)`}>
+          <use href={`#${uid}-0`}></use>
           <path
             fill="#093"
             fillRule="evenodd"
@@ -22,7 +23,7 @@ export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
             clipRule="evenodd"
           ></path>
           <mask
-            id="flagpackBr1"
+            id={`${uid}-1`}
             width="32"
             height="24"
             x="0"
@@ -39,14 +40,14 @@ export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
               clipRule="evenodd"
             ></path>
           </mask>
-          <g mask="url(#flagpackBr1)">
-            <g fillRule="evenodd" clipRule="evenodd" filter="url(#flagpackBr5)">
+          <g mask={`url(#${uid}-1)`}>
+            <g fillRule="evenodd" clipRule="evenodd" filter={`url(#${uid}-5)`}>
               <path
                 fill="#FFD221"
                 d="m15.927 3.704l12.202 8.504L15.76 20.17L3.809 12.043l12.118-8.339Z"
               ></path>
               <path
-                fill="url(#flagpackBr3)"
+                fill={`url(#${uid}-3)`}
                 d="m15.927 3.704l12.202 8.504L15.76 20.17L3.809 12.043l12.118-8.339Z"
               ></path>
             </g>
@@ -57,7 +58,7 @@ export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
               clipRule="evenodd"
             ></path>
             <mask
-              id="flagpackBr2"
+              id={`${uid}-2`}
               width="10"
               height="11"
               x="11"
@@ -74,7 +75,7 @@ export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
                 clipRule="evenodd"
               ></path>
             </mask>
-            <g mask="url(#flagpackBr2)">
+            <g mask={`url(#${uid}-2)`}>
               <path
                 fill="#F7FCFF"
                 fillRule="evenodd"
@@ -94,7 +95,7 @@ export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
         </g>
         <defs>
           <linearGradient
-            id="flagpackBr3"
+            id={`${uid}-3`}
             x1="32"
             x2="32"
             y1="24"
@@ -104,11 +105,11 @@ export function BrazilFlag(props: SVGProps<SVGSVGElement>) {
             <stop stopColor="#FFC600"></stop>
             <stop offset="1" stopColor="#FFDE42"></stop>
           </linearGradient>
-          <clipPath id="flagpackBr4">
-            <use href="#flagpackBr0"></use>
+          <clipPath id={`${uid}-4`}>
+            <use href={`#${uid}-0`}></use>
           </clipPath>
           <filter
-            id="flagpackBr5"
+            id={`${uid}-5`}
             width="24.32"
             height="16.467"
             x="3.809"

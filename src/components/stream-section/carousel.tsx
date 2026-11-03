@@ -144,6 +144,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                   {member.platform == "afreeca" ? (
                     <iframe
                       src={`https://play.afreecatv.com/${member.userName}/embed`}
+                      title={member.name}
                       frameBorder="0"
                       allowFullScreen
                       className="w-full h-full"

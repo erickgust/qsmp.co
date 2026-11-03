@@ -3,14 +3,14 @@ import clsx from "clsx";
 type HeadingProps = {
   children: React.ReactNode;
   className?: string;
-} & JSX.IntrinsicElements["h1"];
+} & JSX.IntrinsicElements["h2"];
 
-export function Heading({ children, className }: HeadingProps) {
+export function Heading({ children, className, ...props }: HeadingProps) {
   const classes = clsx("text-2.5xl font-pixel font-bold uppercase text-[#1F1E33] text-balance", className);
 
   return (
-    <h1 className={classes}>
+    <h2 className={classes} {...props}>
       {children}
-    </h1>
+    </h2>
   );
 }

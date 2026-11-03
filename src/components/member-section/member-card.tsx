@@ -20,7 +20,6 @@ type PlatformConfig = {
   iconClassName?: string;
 };
 
-// Button colour variants share these keys, so `colors={channel.platform}` needs no lookup
 const platforms: Record<Platform, PlatformConfig> = {
   twitch: { label: "Twitch", Icon: TwitchIcon },
   chzzk: { label: "Chzzk", Icon: NaverIcon, iconClassName: "sm:-mt-0.5" },

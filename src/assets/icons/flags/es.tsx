@@ -1,6 +1,7 @@
-import { SVGProps } from "react";
+import { SVGProps, useId } from "react";
 
 export function SpainFlag(props: SVGProps<SVGSVGElement>) {
+  const uid = useId().replace(/:/g, "");
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -10,11 +11,11 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
       {...props}
     >
       <defs>
-        <path id="flagpackEs0" fill="#fff" d="M0 0h32v24H0z"></path>
+        <path id={`${uid}-0`} fill="#fff" d="M0 0h32v24H0z"></path>
       </defs>
       <g fill="none">
-        <g clipPath="url(#flagpackEs5)">
-          <use href="#flagpackEs0"></use>
+        <g clipPath={`url(#${uid}-5)`}>
+          <use href={`#${uid}-0`}></use>
           <path
             fill="#FFB400"
             fillRule="evenodd"
@@ -22,7 +23,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
             clipRule="evenodd"
           ></path>
           <mask
-            id="flagpackEs1"
+            id={`${uid}-1`}
             width="32"
             height="24"
             x="0"
@@ -39,7 +40,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
               clipRule="evenodd"
             ></path>
           </mask>
-          <g mask="url(#flagpackEs1)">
+          <g mask={`url(#${uid}-1)`}>
             <path
               fill="#C51918"
               fillRule="evenodd"
@@ -66,7 +67,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
               clipRule="evenodd"
             ></path>
             <mask
-              id="flagpackEs2"
+              id={`${uid}-2`}
               width="3"
               height="2"
               x="4"
@@ -83,7 +84,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
                 clipRule="evenodd"
               ></path>
             </mask>
-            <g fill="#fff" mask="url(#flagpackEs2)">
+            <g fill="#fff" mask={`url(#${uid}-2)`}>
               <path d="m4.542 17.712l-.044-.107a1.33 1.33 0 0 1 .546-.122c.118 0 .18.017.284.063a.49.49 0 0 0 .24.054a.49.49 0 0 0 .24-.054a.593.593 0 0 1 .285-.063c.182 0 .364.04.546.122l-.044.107a1.227 1.227 0 0 0-.502-.112a.49.49 0 0 0-.24.054a.593.593 0 0 1-.285.063a.593.593 0 0 1-.284-.063a.49.49 0 0 0-.24-.054c-.167 0-.334.037-.502.112Zm0-.336l-.044-.107a1.33 1.33 0 0 1 .546-.122c.118 0 .18.017.284.063a.49.49 0 0 0 .24.054a.49.49 0 0 0 .24-.054a.593.593 0 0 1 .285-.063c.182 0 .364.04.546.122l-.044.107a1.227 1.227 0 0 0-.502-.112a.49.49 0 0 0-.24.054a.593.593 0 0 1-.285.063a.593.593 0 0 1-.284-.063a.49.49 0 0 0-.24-.054c-.167 0-.334.037-.502.112Z"></path>
             </g>
             <path fill="#F1F9FF" d="M15.984 10.272h1.12v5.824h-1.12z"></path>
@@ -106,7 +107,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
               clipRule="evenodd"
             ></path>
             <mask
-              id="flagpackEs3"
+              id={`${uid}-3`}
               width="3"
               height="2"
               x="15"
@@ -123,7 +124,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
                 clipRule="evenodd"
               ></path>
             </mask>
-            <g fill="#fff" mask="url(#flagpackEs3)">
+            <g fill="#fff" mask={`url(#${uid}-3)`}>
               <path d="m15.518 17.712l-.044-.107a1.33 1.33 0 0 1 .546-.122c.118 0 .18.017.284.063a.49.49 0 0 0 .24.054a.49.49 0 0 0 .24-.054a.593.593 0 0 1 .285-.063c.182 0 .364.04.546.122l-.044.107a1.227 1.227 0 0 0-.502-.112a.49.49 0 0 0-.24.054a.593.593 0 0 1-.285.063a.593.593 0 0 1-.284-.063a.49.49 0 0 0-.24-.054c-.167 0-.334.037-.502.112Zm0-.336l-.044-.107a1.33 1.33 0 0 1 .546-.122c.118 0 .18.017.284.063a.49.49 0 0 0 .24.054a.49.49 0 0 0 .24-.054a.593.593 0 0 1 .285-.063c.182 0 .364.04.546.122l-.044.107a1.227 1.227 0 0 0-.502-.112a.49.49 0 0 0-.24.054a.593.593 0 0 1-.285.063a.593.593 0 0 1-.284-.063a.49.49 0 0 0-.24-.054c-.167 0-.334.037-.502.112Z"></path>
             </g>
             <path
@@ -201,7 +202,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
               opacity=".3"
             ></path>
             <mask
-              id="flagpackEs4"
+              id={`${uid}-4`}
               width="8"
               height="9"
               x="7"
@@ -218,7 +219,7 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
                 clipRule="evenodd"
               ></path>
             </mask>
-            <g mask="url(#flagpackEs4)">
+            <g mask={`url(#${uid}-4)`}>
               <path fill="#FFC034" d="M7.472 13.296h3.696v4.368H7.472z"></path>
               <path
                 fill="#AD1619"
@@ -269,8 +270,8 @@ export function SpainFlag(props: SVGProps<SVGSVGElement>) {
           </g>
         </g>
         <defs>
-          <clipPath id="flagpackEs5">
-            <use href="#flagpackEs0"></use>
+          <clipPath id={`${uid}-5`}>
+            <use href={`#${uid}-0`}></use>
           </clipPath>
         </defs>
       </g>

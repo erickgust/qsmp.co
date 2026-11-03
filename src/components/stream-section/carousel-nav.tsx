@@ -20,18 +20,20 @@ export function CarouselNav({
   const hasData = data.length > 0 && !isLoading
 
   return (
-    <div className="flex md:gap-6 items-center py-1.5 leading-none">
+    <div className="flex md:gap-2.5 items-center py-1.5 leading-none">
       {type === 'youtube' && hasData && (
         data.map((video, index) => (
           <button
             key={video.id}
+            type="button"
             onClick={() => onSelectedIndex(index)}
+            aria-label={video.title}
+            aria-current={index === selectedIndex ? "true" : undefined}
             data-selected={index === selectedIndex}
-            className="min-w-2.5 data-[selected=true]:min-w-3.5
-              size-2.5 bg-[#F0F6FF] data-[selected=true]:bg-[#1F1E33]
-              data-[selected=true]:size-3.5 max-md:mx-2
-            "
-          />
+            className="group shrink-0 flex items-center justify-center size-6 max-md:mx-px"
+          >
+            <span className="size-2.5 bg-[#F0F6FF] group-data-[selected=true]:size-3.5 group-data-[selected=true]:bg-[#1F1E33]" />
+          </button>
         ))
       )}
 
@@ -39,7 +41,9 @@ export function CarouselNav({
         data.map((member, index) => (
           <button
             key={member.id}
+            type="button"
             onClick={() => onSelectedIndex(index)}
+            aria-current={index === selectedIndex ? "true" : undefined}
             data-selected={index === selectedIndex}
             className="
               overflow-hidden min-w-fit size-10 data-[selected=true]:ring-[#FF3D3D]

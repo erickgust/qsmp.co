@@ -1,6 +1,7 @@
-import { SVGProps } from "react";
+import { SVGProps, useId } from "react";
 
 export function KoreanFlag(props: SVGProps<SVGSVGElement>) {
+  const uid = useId().replace(/:/g, "");
 	return (
 		<svg
 			xmlns="http://www.w3.org/2000/svg"
@@ -11,11 +12,11 @@ export function KoreanFlag(props: SVGProps<SVGSVGElement>) {
 		>
 			<title>Korean Flag</title>
 			<defs>
-				<path id="flagpackKr0" fill="#fff" d="M0 0h32v24H0z" />
+				<path id={`${uid}-0`} fill="#fff" d="M0 0h32v24H0z" />
 			</defs>
 			<g fill="none">
-				<g clipPath="url(#flagpackKr3)">
-					<use href="#flagpackKr0" />
+				<g clipPath={`url(#${uid}-3)`}>
+					<use href={`#${uid}-0`} />
 					<path
 						fill="#F7FCFF"
 						fillRule="evenodd"
@@ -23,7 +24,7 @@ export function KoreanFlag(props: SVGProps<SVGSVGElement>) {
 						clipRule="evenodd"
 					/>
 					<mask
-						id="flagpackKr1"
+						id={`${uid}-1`}
 						width="32"
 						height="24"
 						x="0"
@@ -40,7 +41,7 @@ export function KoreanFlag(props: SVGProps<SVGSVGElement>) {
 							clipRule="evenodd"
 						/>
 					</mask>
-					<g mask="url(#flagpackKr1)">
+					<g mask={`url(#${uid}-1)`}>
 						<path
 							fill="#3D58DB"
 							fillRule="evenodd"
@@ -48,7 +49,7 @@ export function KoreanFlag(props: SVGProps<SVGSVGElement>) {
 							clipRule="evenodd"
 						/>
 						<mask
-							id="flagpackKr2"
+							id={`${uid}-2`}
 							width="12"
 							height="14"
 							x="10"
@@ -65,7 +66,7 @@ export function KoreanFlag(props: SVGProps<SVGSVGElement>) {
 								clipRule="evenodd"
 							/>
 						</mask>
-						<g mask="url(#flagpackKr2)">
+						<g mask={`url(#${uid}-2)`}>
 							<path
 								fill="#E31D1C"
 								fillRule="evenodd"
@@ -82,8 +83,8 @@ export function KoreanFlag(props: SVGProps<SVGSVGElement>) {
 					</g>
 				</g>
 				<defs>
-					<clipPath id="flagpackKr3">
-						<use href="#flagpackKr0" />
+					<clipPath id={`${uid}-3`}>
+						<use href={`#${uid}-0`} />
 					</clipPath>
 				</defs>
 			</g>

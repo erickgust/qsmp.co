@@ -50,7 +50,7 @@ export function Navbar({
     { label: t("navlinks.socials"), href: "#socials" },
   ];
 
-  // Intl already knows every language name in every locale; CLDR lowercases most of them ("inglés")
+  // CLDR lowercases most language names ("inglés")
   const languageNames = new Intl.DisplayNames([locale], { type: "language" });
   const languages: Language[] = routing.locales.map((tag) => {
     const Flag = flags[tag];
@@ -58,7 +58,7 @@ export function Navbar({
 
     return {
       label: name.charAt(0).toLocaleUpperCase(locale) + name.slice(1),
-      icon: <Flag className="min-w-fit" />,
+      icon: <Flag className="min-w-fit" aria-hidden="true" />,
       tag,
     };
   });
@@ -79,7 +79,6 @@ export function Navbar({
     setSelectedLanguage(language);
   }, []);
 
-  // The newsletter API was removed for the portfolio version, so submitting only explains that
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     toast(t("newsletter-modal.demo"));
@@ -182,7 +181,7 @@ export function Navbar({
               <Image
                 src="/small-qsmp-logo.png"
                 alt="QSMP Logo"
-                // 3x the 57x48 display size, see the hero logo in header.tsx
+                // 3x the display size, see header.tsx
                 width={172}
                 height={144}
                 className="my-3 mx-4 xl:mx-8 h-12 w-auto"
@@ -202,9 +201,12 @@ export function Navbar({
           <button
             type="button"
             onClick={toggleMenuMobileModal}
+            aria-label={t("openMenu")}
+            aria-haspopup="dialog"
+            aria-expanded={isMenuMobileOpen}
             className="flex min-[900px]:hidden items-center px-9 py-7 border-l border-r-0 "
           >
-            <MenuMobileIcon className="size-6" />
+            <MenuMobileIcon className="size-6" aria-hidden="true" />
           </button>
 
           <div className="hidden items-center min-[900px]:flex">
@@ -223,7 +225,7 @@ export function Navbar({
               onClick={toggleNewsletterModal}
               className="text-xs hover:bg-[#F0F6FF] uppercase border-r px-6 2xl:px-10 h-20 flex items-center gap-2 text-[#1F1E33]"
             >
-              <NewsletterIcon />
+              <NewsletterIcon aria-hidden="true" />
 
               {t("newsletter")}
             </button>
@@ -234,67 +236,79 @@ export function Navbar({
           <Modal
             isOpen={isNewsletterModalOpen}
             toggleModal={toggleNewsletterModal}
+            aria-labelledby="newsletter-title"
+            className="md:max-w-4xl bg-white shadow-lg w-10/12"
           >
-            <div className="flex flex-col gap-6">
-              <div className="flex justify-between items-start">
-                <Heading className="text-2xl">
-                  {t("newsletter-modal.title")}
-                </Heading>
+            <div className="relative p-8 md:px-16 md:py-14">
+              <div className="flex flex-col gap-6">
+                <div className="flex justify-between items-start">
+                  <Heading id="newsletter-title" className="text-2xl">
+                    {t("newsletter-modal.title")}
+                  </Heading>
 
-                <button
-                  type="button"
-                  onClick={toggleNewsletterModal}
-                  className="md:absolute md:right-8 md:top-8 pl-2 ml-1"
+                  <button
+                    type="button"
+                    onClick={toggleNewsletterModal}
+                    aria-label={t("close")}
+                    className="md:absolute md:right-8 md:top-8 pl-2 ml-1"
+                  >
+                    <CloseIcon className="size-6" aria-hidden="true" />
+                  </button>
+                </div>
+
+                <p className="mb-6 text-pretty">
+                  {t("newsletter-modal.paragraph.first")}
+
+                  <span className="inline-block mt-2">
+                    {t("newsletter-modal.paragraph.second")}
+                  </span>
+                </p>
+              </div>
+
+              <form onSubmit={handleSubmit} className="flex flex-col">
+                <div className="flex flex-col md:flex-row gap-6 w-full">
+                  <NewsletterDropdown
+                    selectedLanguage={selectedLanguage}
+                    handleLanguageSelect={handleLanguageSelect}
+                    className="justify-between md:justify-center"
+                    languages={languages}
+                  />
+
+                  <label htmlFor="newsletter-email" className="sr-only">
+                    {t("newsletter-modal.placeholder")}
+                  </label>
+                  <input
+                    id="newsletter-email"
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    className="border w-full p-4"
+                    placeholder={t("newsletter-modal.placeholder")}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
+                <ExternalLinkButton
+                  colors="blue"
+                  className="mt-6 self-end"
+                  as="button"
+                  type="submit"
                 >
-                  <CloseIcon className="size-6" />
-                </button>
-              </div>
-
-              <p className="mb-6 text-pretty">
-                {t("newsletter-modal.paragraph.first")}
-
-                <span className="inline-block mt-2">
-                  {t("newsletter-modal.paragraph.second")}
-                </span>
-              </p>
+                  {t("newsletter-modal.button")}
+                </ExternalLinkButton>
+              </form>
             </div>
-
-            <form onSubmit={handleSubmit} className="flex flex-col">
-              <div className="flex flex-col md:flex-row gap-6 w-full">
-                <NewsletterDropdown
-                  selectedLanguage={selectedLanguage}
-                  handleLanguageSelect={handleLanguageSelect}
-                  className="justify-between md:justify-center"
-                  languages={languages}
-                />
-
-                <input
-                  type="email"
-                  required
-                  className="border w-full p-4"
-                  placeholder={t("newsletter-modal.placeholder")}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <ExternalLinkButton
-                colors="blue"
-                className="mt-6 self-end"
-                as="button"
-                type="submit"
-              >
-                {t("newsletter-modal.button")}
-              </ExternalLinkButton>
-            </form>
           </Modal>
 
           {/* Mobile menu */}
 
-          <div
-            className={`${
-              isMenuMobileOpen ? "fixed min-[900px]:hidden" : "hidden"
-            } inset-0 w-screen h-screen supports-[height:100dvh]:h-dvh z-50 flex items-center justify-center bg-neutral-900/70 transition-all `}
+          <Modal
+            isOpen={isMenuMobileOpen}
+            toggleModal={toggleMenuMobileModal}
+            aria-label={t("menu")}
+            className="m-0 w-screen max-w-none h-screen supports-[height:100dvh]:h-dvh max-h-none bg-white"
           >
             <div className="relative bg-[#ffffff] w-screen h-full shadow-lg">
               <div className="flex justify-between items-center border">
@@ -311,9 +325,10 @@ export function Navbar({
                 <button
                   type="button"
                   onClick={toggleMenuMobileModal}
+                  aria-label={t("closeMenu")}
                   className="items-center px-9 py-7 border-l border-r-0"
                 >
-                  <CloseIcon className="size-6" />
+                  <CloseIcon className="size-6" aria-hidden="true" />
                 </button>
               </div>
 
@@ -335,11 +350,12 @@ export function Navbar({
                     type="button"
                     onClick={() => {
                       toggleMenuMobileModal();
-                      toggleNewsletterModal();
+                      // Open after the menu dialog has closed and handed focus back
+                      requestAnimationFrame(toggleNewsletterModal);
                     }}
                     className="text-xl hover:bg-[#F0F6FF] uppercase px-8 h-20 w-full flex items-center gap-2 text-[#1F1E33]"
                   >
-                    <NewsletterIcon className="size-6" />
+                    <NewsletterIcon className="size-6" aria-hidden="true" />
                     {t("newsletter")}
                   </button>
 
@@ -347,7 +363,7 @@ export function Navbar({
                 </div>
               </div>
             </div>
-          </div>
+          </Modal>
         </div>
 
         {totalViewers > 0 && (

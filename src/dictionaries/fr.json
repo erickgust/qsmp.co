@@ -21,7 +21,12 @@
       "button": "S'abonner",
       "demo": "Merci ! Ce site est une démo de portfolio, ton e-mail n'a donc été ni envoyé ni enregistré."
     },
-    "counter": "spectateurs au total"
+    "counter": "spectateurs au total",
+    "menu": "Menu",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "close": "Fermer",
+    "language": "Langue"
   },
   "stream": {
     "title": "REGARDEZ LES MEMBRES DU QSMP",
@@ -76,5 +81,8 @@
   "about": {
     "title": "What is the QSMP?",
     "paragraph": "The QSMP is the world's first multilingual Minecraft server. Our main objective is to unite content creators and cultures from around the world to create the world's first international content creation space by breaking language barriers through an innovative tool created in Minecraft by Quackity Studios."
+  },
+  "header": {
+    "skipToContent": "Aller au contenu"
   }
 }
