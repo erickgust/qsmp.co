@@ -1,69 +1,30 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { useQuery } from "@tanstack/react-query";
 
 import { Heading } from "../ui/heading";
 import { MemberCard } from "./member-card";
-import { MembersData } from "@/interfaces/members-data";
 import { FilterDropdown } from "../ui/filter-dropdown";
 import { useFilter } from "@/context/use-filter-context";
-
-import {
-  MemberResponse,
-  membersResponseSchema,
-} from "@/utils/schemas/member-schema";
-import { members } from "./members";
+import type { MemberResponse } from "@/utils/schemas/member-schema";
 
 type MembersSectionProps = {
   membersData: MemberResponse;
 };
 
-export function MembersSection({
-  membersData,
-}: MembersSectionProps) {
+export function MembersSection({ membersData }: MembersSectionProps) {
   const t = useTranslations("members");
-  const {
-    data: { data },
-  } = useQuery({
-    queryKey: ["members"],
-    queryFn: async () => {
-      const parsedData = membersResponseSchema.parse({ data: members });
-
-      return parsedData;
-    },
-    initialData: membersData,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  });
-
   const { selectedLanguages } = useFilter();
-  const isLoading = false;
 
-  const sortByIsLive = (memberA: MembersData, memberB: MembersData) => {
-    if (memberA.isLive && !memberB.isLive) {
-      return -1;
-    }
-
-    if (!memberA.isLive && memberB.isLive) {
-      return 1;
-    }
-
-    return 0;
-  };
-
-  data.sort(sortByIsLive);
-
-  const filteredData = data.filter((member) => {
-    if (selectedLanguages.length === 0) {
-      return true;
-    }
-
-    const hasSelectedLanguage = selectedLanguages.some((language) =>
-      member.info.languages.includes(language)
+  const visibleMembers = membersData.data
+    .toSorted((a, b) => Number(b.isLive) - Number(a.isLive))
+    .filter(
+      (member) =>
+        selectedLanguages.length === 0 ||
+        member.languages.some((language) =>
+          selectedLanguages.includes(language),
+        ),
     );
-
-    return hasSelectedLanguage;
-  });
 
   return (
     <section
@@ -78,10 +39,9 @@ export function MembersSection({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-4 md:gap-6 gap-8">
-          {!isLoading &&
-            filteredData.map((member) => (
-              <MemberCard key={member.id} {...member} />
-            ))}
+          {visibleMembers.map((member) => (
+            <MemberCard key={member.id} {...member} />
+          ))}
         </div>
       </div>
     </section>
