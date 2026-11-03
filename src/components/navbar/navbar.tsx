@@ -26,6 +26,7 @@ import { useEvent } from "@/context/use-is-event";
 import { useLocale, useTranslations } from "next-intl";
 import { routing } from "@/i18n/routing";
 import { flags } from "@/i18n/flags";
+import toast from "react-hot-toast";
 
 type NavbarProps = {
   isMenuMobileOpen: boolean;
@@ -74,15 +75,18 @@ export function Navbar({
     () => languages.find((language) => language.tag === locale) ?? languages[0],
   );
 
-  const isMobile = typeof window !== "undefined" && window.innerWidth < 900;
   const totalViewers = 24_056;
 
   const handleLanguageSelect = useCallback((language: Language) => {
     setSelectedLanguage(language);
   }, []);
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  // The newsletter API was removed for the portfolio version, so submitting only explains that
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    toast(t("newsletter-modal.demo"));
+    setEmail("");
+    toggleNewsletterModal();
   };
 
   useEffect(() => {
@@ -267,6 +271,7 @@ export function Navbar({
 
                 <input
                   type="email"
+                  required
                   className="border w-full p-4"
                   placeholder={t("newsletter-modal.placeholder")}
                   value={email}
@@ -289,7 +294,7 @@ export function Navbar({
 
           <div
             className={`${
-              isMenuMobileOpen && isMobile ? "fixed" : "hidden"
+              isMenuMobileOpen ? "fixed min-[900px]:hidden" : "hidden"
             } inset-0 w-screen h-screen supports-[height:100dvh]:h-dvh z-50 flex items-center justify-center bg-neutral-900/70 transition-all `}
           >
             <div className="relative bg-[#ffffff] w-screen h-full shadow-lg">

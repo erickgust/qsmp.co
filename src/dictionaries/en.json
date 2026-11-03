@@ -18,7 +18,8 @@
         "title": "Select your language"
       },
       "placeholder": "At what email address?",
-      "button": "Subscribe"
+      "button": "Subscribe",
+      "demo": "Thanks! This site is a portfolio demo, so your email wasn't sent or stored."
     },
     "counter": "Total viewers"
   },

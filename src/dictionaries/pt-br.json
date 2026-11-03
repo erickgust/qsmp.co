@@ -18,7 +18,8 @@
         "title": "Escolha a sua língua"
       },
       "placeholder": "Para qual endereço de email?",
-      "button": "Subscrever"
+      "button": "Subscrever",
+      "demo": "Obrigado! Este site é uma demonstração de portfólio, então seu e-mail não foi enviado nem armazenado."
     },
     "counter": "Espectadores no Total"
   },

@@ -28,11 +28,11 @@ export function FilterProvider({ children }: { children: React.ReactNode }) {
   const [selectedLanguages, setSelectedLanguages] = useState<string[]>([]);
 
   const toggleLanguage = (label: string) => {
-    if (selectedLanguages.includes(label)) {
-      setSelectedLanguages(selectedLanguages.filter((lang) => lang !== label));
-    } else {
-      setSelectedLanguages([...selectedLanguages, label]);
-    }
+    setSelectedLanguages((selected) =>
+      selected.includes(label)
+        ? selected.filter((lang) => lang !== label)
+        : [...selected, label],
+    );
   };
 
   return (

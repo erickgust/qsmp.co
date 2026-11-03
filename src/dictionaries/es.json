@@ -18,7 +18,8 @@
         "title": "Selecciona tu idioma"
       },
       "placeholder": "¿A qué correo electrónico?",
-      "button": "Suscríbete"
+      "button": "Suscríbete",
+      "demo": "¡Gracias! Este sitio es una demo de portafolio, así que tu correo no se envió ni se guardó."
     },
     "counter": "espectadores en total"
   },

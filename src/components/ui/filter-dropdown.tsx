@@ -48,22 +48,19 @@ export function FilterDropdown() {
           aria-labelledby="options-menu"
         >
           {languages.map((language, index) => (
-            <div
+            <label
               key={index}
               className="flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] animate-slide-from-top w-full cursor-pointer"
-              onClick={() => toggleLanguage(language.label)}
-              onChange={() => toggleLanguage(language.label)}
             >
               <input
                 type="checkbox"
                 checked={selectedLanguages.includes(language.label)}
                 onChange={() => toggleLanguage(language.label)}
                 className="form-checkbox size-5 text-blue-600 cursor-pointer css-checkbox"
-                id="terms"
               />
 
               <span>{language.label}</span>
-            </div>
+            </label>
           ))}
         </div>
       )}

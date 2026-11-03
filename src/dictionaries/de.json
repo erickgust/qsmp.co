@@ -18,7 +18,8 @@
         "title": "Wähle deine Sprache"
       },
       "placeholder": "An welche Email Adresse?",
-      "button": "Abonnieren"
+      "button": "Abonnieren",
+      "demo": "Danke! Diese Seite ist eine Portfolio-Demo, deine E-Mail wurde daher weder gesendet noch gespeichert."
     },
     "counter": "Zuschauer insgesamt"
   },

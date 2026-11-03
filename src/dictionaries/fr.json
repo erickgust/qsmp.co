@@ -18,7 +18,8 @@
         "title": "Sélectionnez votre langue"
       },
       "placeholder": "À quelle adresse mail?",
-      "button": "S'abonner"
+      "button": "S'abonner",
+      "demo": "Merci ! Ce site est une démo de portfolio, ton e-mail n'a donc été ni envoyé ni enregistré."
     },
     "counter": "spectateurs au total"
   },
