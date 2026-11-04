@@ -190,7 +190,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
               >
                 <LazyLoad
                   height='420px'
-                  className='max-w-3xl aspect-video !w-full max-md:!h-auto'
+                  className='relative z-10 max-w-3xl aspect-video !w-full max-md:!h-auto'
                 >
                   {member.platform == 'afreeca' ? (
                     <iframe
@@ -259,7 +259,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                 data-index={i}
                 data-selected={i === selectedIndex}
               >
-                <div className='max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
+                <div className='relative z-10 max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
                   <LiteYouTubeEmbed id={video.id} title={video.title} />
                 </div>
 
