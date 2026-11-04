@@ -1,61 +1,67 @@
 import { useTranslations } from 'next-intl'
+import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
+
 import { ArrowUp } from '@/assets/icons/arrow-up'
 import { useFilter } from '@/context/use-filter-context'
-import { useDisclosure } from '@/lib/hooks/useDisclosure'
 
 export function FilterDropdown() {
   const t = useTranslations('members')
-  const { isOpen, rootRef, buttonProps, panelProps } = useDisclosure()
 
   const { languages, selectedLanguages, toggleLanguage } = useFilter()
 
   return (
-    <div
-      ref={rootRef}
-      className='relative inline-block text-left w-full md:w-auto min-w-[250px]'
-    >
-      <div>
-        <button
-          {...buttonProps}
-          className='inline-flex items-center justify-between gap-7 w-full px-6 py-4 bg-[#F0F6FF] border border-[#D7DFEC] font-medium text-[#1F1E33] text-lg'
-        >
-          <span className='flex items-center justify-between w-full gap-2'>
-            {selectedLanguages.length > 0 ? (
-              selectedLanguages.join(', ')
-            ) : (
-              <span className='text-lg'>{t('filter')}</span>
-            )}
+    <DropdownMenu.Root modal={false}>
+      <DropdownMenu.Trigger className='group inline-flex items-center justify-between gap-7 w-full md:w-auto min-w-[250px] px-6 py-4 bg-[#F0F6FF] border border-[#D7DFEC] font-medium text-[#1F1E33] text-lg text-left'>
+        <span className='flex items-center justify-between w-full gap-2'>
+          {selectedLanguages.length > 0 ? (
+            selectedLanguages.join(', ')
+          ) : (
+            <span className='text-lg'>{t('filter')}</span>
+          )}
 
-            <ArrowUp
-              aria-hidden='true'
-              data-open={isOpen}
-              className='size-6 rotate-180 data-[open=true]:rotate-0 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
-            />
-          </span>
-        </button>
-      </div>
+          <ArrowUp
+            aria-hidden='true'
+            className='size-6 rotate-180 group-data-[state=open]:rotate-0 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
+          />
+        </span>
+      </DropdownMenu.Trigger>
 
-      <fieldset
-        {...panelProps}
-        className='origin-top absolute z-10 right-0 w-full bg-[#F0F6FF] ring-1 ring-black ring-opacity-5 motion-safe:animate-dropdown-in motion-reduce:animate-fade-in'
+      <DropdownMenu.Content
+        align='end'
+        collisionPadding={8}
+        className='w-[var(--radix-dropdown-menu-trigger-width)] origin-[var(--radix-dropdown-menu-content-transform-origin)] z-10 bg-[#F0F6FF] ring-1 ring-black ring-opacity-5 data-[state=open]:motion-safe:animate-dropdown-in data-[state=closed]:motion-safe:animate-dropdown-out motion-reduce:animate-fade-in'
       >
-        <legend className='sr-only'>{t('filter')}</legend>
-        {languages.map((language, index) => (
-          <label
-            key={index}
-            className='flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] w-full cursor-pointer'
+        <DropdownMenu.Label className='sr-only'>
+          {t('filter')}
+        </DropdownMenu.Label>
+        {languages.map((language) => (
+          <DropdownMenu.CheckboxItem
+            key={language.label}
+            checked={selectedLanguages.includes(language.label)}
+            onCheckedChange={() => toggleLanguage(language.label)}
+            // Keep the menu open so several languages can be picked in a row
+            onSelect={(event) => event.preventDefault()}
+            className='flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] w-full cursor-pointer outline-none data-[highlighted]:bg-white'
           >
-            <input
-              type='checkbox'
-              checked={selectedLanguages.includes(language.label)}
-              onChange={() => toggleLanguage(language.label)}
-              className='form-checkbox size-5 text-blue-600 cursor-pointer css-checkbox'
-            />
+            <span
+              aria-hidden='true'
+              className='grid place-items-center size-5 shrink-0 border border-gray-500 bg-white text-blue-600'
+            >
+              <DropdownMenu.ItemIndicator>
+                <svg viewBox='0 0 16 16' className='size-4' fill='none'>
+                  <path
+                    d='M3 8.5l3 3 7-7'
+                    stroke='currentColor'
+                    strokeWidth='2'
+                  />
+                </svg>
+              </DropdownMenu.ItemIndicator>
+            </span>
 
             <span>{language.label}</span>
-          </label>
+          </DropdownMenu.CheckboxItem>
         ))}
-      </fieldset>
-    </div>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }

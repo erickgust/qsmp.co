@@ -110,8 +110,9 @@ html {
   transition-duration: 200ms;
 }
 
+/* none, not scale(1): any transform makes the dialog the containing block for the fixed-position dropdown menus, clipping them */
 .dialog-pop[open] {
-  transform: scale(1);
+  transform: none;
 }
 
 @starting-style {
