@@ -178,7 +178,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
   return (
     <div className='relative my-10'>
       <div className='overflow-hidden' ref={emblaRef}>
-        <div className='flex touch-pan-y mx-auto max-w-5.5xl'>
+        <div className='flex touch-pan-y'>
           {hasData &&
             type === 'live' &&
             data.map((member, i) => (
