@@ -60,7 +60,7 @@ export function MemberCard({
 
         <div className='absolute h-7 sm:h-6 bottom-6 left-4 xxs:left-6 sm:left-4 sm:bottom-4 flex items-center'>
           <Image
-            src={`https://api.iconify.design/flagpack:${flag}.svg`}
+            src={`https://api.iconify.design/flagpack/${flag}.svg`}
             alt={t('flagAlt', { name })}
             loading='lazy'
             width={43}
