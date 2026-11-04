@@ -132,14 +132,14 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
             type === 'live' &&
             data.map((member, i) => (
               <div
-                className='embla__slide px-8 md:px-0 group flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
+                className='embla__slide px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center opacity-40 data-[selected=true]:opacity-100 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]'
                 key={i}
                 data-index={i}
                 data-selected={i === selectedIndex}
               >
                 <LazyLoad
                   height='420px'
-                  className='max-w-5.5xl group-data-[selected=true]:max-w-3xl aspect-video !w-full max-md:!h-auto'
+                  className='max-w-3xl aspect-video !w-full max-md:!h-auto'
                 >
                   {member.platform == 'afreeca' ? (
                     <iframe
@@ -155,7 +155,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                       height='420px'
                       width='750px'
                       id={`twitch-player-${member.userName}`}
-                      className='max-w-5.5xl group-data-[selected=true]:max-w-3xl aspect-video !w-full max-md:!h-auto'
+                      className='max-w-3xl aspect-video !w-full max-md:!h-auto'
                       autoplay={false}
                       play={i === selectedIndex}
                       onReady={(player) => {
@@ -180,7 +180,10 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                   )}
                 </LazyLoad>
 
-                <div className='hidden relative group-data-[selected=true]:inline-block'>
+                <div
+                  className='relative inline-block'
+                  inert={i !== selectedIndex}
+                >
                   <StreamDescription
                     description={member.description}
                     language={member.language}
@@ -200,16 +203,19 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
             type === 'youtube' &&
             data.map((video, i) => (
               <div
-                className='embla__slide px-8 md:px-0 group flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
+                className='embla__slide px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center opacity-40 data-[selected=true]:opacity-100 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]'
                 key={i}
                 data-index={i}
                 data-selected={i === selectedIndex}
               >
-                <div className='max-w-5.5xl group-data-[selected=true]:max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
+                <div className='max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
                   <LiteYouTubeEmbed id={video.id} title={video.title} />
                 </div>
 
-                <div className='hidden relative group-data-[selected=true]:inline-block'>
+                <div
+                  className='relative inline-block'
+                  inert={i !== selectedIndex}
+                >
                   <StreamDescription
                     description={video.description}
                     url={`https://www.youtube.com/watch?v=${video.id}`}
