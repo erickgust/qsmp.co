@@ -37,13 +37,13 @@ export function FilterDropdown() {
 
       <fieldset
         {...panelProps}
-        className='origin-top-right absolute z-10 right-0 w-full bg-[#F0F6FF] ring-1 ring-black ring-opacity-5'
+        className='origin-top absolute z-10 right-0 w-full bg-[#F0F6FF] ring-1 ring-black ring-opacity-5 motion-safe:animate-dropdown-in motion-reduce:animate-fade-in'
       >
         <legend className='sr-only'>{t('filter')}</legend>
         {languages.map((language, index) => (
           <label
             key={index}
-            className='flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] motion-safe:animate-slide-from-top w-full cursor-pointer'
+            className='flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] w-full cursor-pointer'
           >
             <input
               type='checkbox'

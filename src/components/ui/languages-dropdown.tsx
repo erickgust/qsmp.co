@@ -50,7 +50,7 @@ export function LanguagesDropdown() {
 
       <ul
         {...panelProps}
-        className='origin-top-right absolute bottom-0 min-[850px]:bottom-auto w-full border bg-white motion-safe:animate-slide-from-top z-30 text-xl min-[900px]:text-xs'
+        className='origin-bottom min-[850px]:origin-top absolute bottom-0 min-[850px]:bottom-auto w-full border bg-white motion-safe:animate-dropdown-in motion-reduce:animate-fade-in z-30 text-xl min-[900px]:text-xs'
       >
         {routing.locales.map((locale) => {
           const Flag = flags[locale]

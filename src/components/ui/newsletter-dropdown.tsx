@@ -87,7 +87,7 @@ export function NewsletterDropdown({
         data-small-height={!isSmallHeight}
         className='
         data-[small-height=true]:h-28
-        origin-top-right absolute bottom-0 min-[850px]:bottom-auto sm:h-fit w-full border bg-white motion-safe:animate-slide-from-top h-48 overflow-y-auto'
+        origin-bottom min-[850px]:origin-top absolute bottom-0 min-[850px]:bottom-auto sm:h-fit w-full border bg-white motion-safe:animate-dropdown-in motion-reduce:animate-fade-in h-48 overflow-y-auto'
       >
         {languages.map((language) => (
           // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- keyboard users close it with Escape or Tab
