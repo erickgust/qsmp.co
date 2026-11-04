@@ -25,7 +25,7 @@ import MenuMobileIcon from '@/assets/icons/menu-mobile'
 import { useLocale, useTranslations } from 'next-intl'
 import { routing } from '@/i18n/routing'
 import { flags } from '@/i18n/flags'
-import toast from 'react-hot-toast'
+import { toast } from 'sonner'
 
 type NavbarProps = {
   isMenuMobileOpen: boolean
