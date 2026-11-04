@@ -48,7 +48,7 @@
     "oxlint": "1.91.0",
     "postcss": "^8",
     "prettier": "3.9.10",
-    "typescript": "5.9.3"
+    "typescript": "7.0.2"
   },
   "lint-staged": {
     "*.{ts,tsx,js,mjs,cjs}": [
