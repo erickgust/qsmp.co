@@ -168,7 +168,7 @@ export function Navbar({
         data-sticky={isSticky}
         className='
         bg-white flex flex-col items-center relative
-        justify-between border-y w-full transition-all
+        justify-between border-y w-full
         data-[sticky=true]:fixed data-[sticky=true]:z-20 data-[sticky=true]:top-0
       '
         ref={navRef}

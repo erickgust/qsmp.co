@@ -165,7 +165,12 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                           player.play()
                         }
 
-                        if (firstLoad.current && playCarousel) {
+                        if (
+                          firstLoad.current &&
+                          playCarousel &&
+                          !window.matchMedia('(prefers-reduced-motion: reduce)')
+                            .matches
+                        ) {
                           playCarousel()
                         }
 

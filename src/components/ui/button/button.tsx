@@ -32,8 +32,8 @@ export const button = cva(
     'before:transition-transform',
     'before:duration-150',
     'before:[transition-timing-function:cubic-bezier(0.25,0.46,0.45,0.94)]',
+    // keeps the GPU-rendered hover position from landing 1px off the CPU-rendered rest position
     'will-change-transform',
-    'before:will-change-transform',
     'max-sm:py-4',
   ],
   {

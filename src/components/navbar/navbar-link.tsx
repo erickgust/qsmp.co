@@ -18,8 +18,8 @@ export function NavbarLink({ label, href, target }: NavbarProps) {
 
       <ArrowToDownIcon
         className='
-          -mt-px opacity-0 group-hover:opacity-100 transition-all
-          transform -translate-x-3 group-hover:translate-x-0 min-w-fit
+          -mt-px opacity-0 group-hover:opacity-100 transition-[opacity,transform]
+          transform -translate-x-3 group-hover:translate-x-0 motion-reduce:translate-x-0 min-w-fit
         '
       />
     </a>
