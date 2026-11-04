@@ -9,7 +9,7 @@ const memberSchema = z.object({
   // flagpack icon name, e.g. "us" or "gb-ukm"
   flag: z.string().regex(/^[a-z]{2}(-[a-z]+)?$/),
   languages: z
-    .array(z.enum(['EN', 'ES', 'PT-BR', 'FR', 'DE', 'KR']))
+    .array(z.enum(['EN', 'ES', 'PT-BR', 'FR', 'DE', 'KO']))
     .nonempty(),
   channel: z.object({ platform: platformSchema, url: z.string().url() }),
   twitter: z.string().url().optional(),

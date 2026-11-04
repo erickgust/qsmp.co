@@ -460,7 +460,7 @@ export const members: MemberInput[] = [
     name: '콩콩 (Kong Kong)',
     characterImage: '/members/KongKong Card Banner.png',
     flag: 'kr',
-    languages: ['KR'],
+    languages: ['KO'],
     channel: {
       platform: 'chzzk',
       url: 'https://chzzk.naver.com/f4c0ddf59bb8e788e393cd5a8a1296b2',
@@ -472,7 +472,7 @@ export const members: MemberInput[] = [
     name: '악어 (Acau)',
     characterImage: '/members/Acau Card Banner.png',
     flag: 'kr',
-    languages: ['KR'],
+    languages: ['KO'],
     channel: {
       platform: 'afreeca',
       url: 'https://bj.afreecatv.com/jdm1197',
@@ -484,7 +484,7 @@ export const members: MemberInput[] = [
     name: '중력 (Jungryeok)',
     characterImage: '/members/Jungryeok Card Banner.png',
     flag: 'kr',
-    languages: ['KR'],
+    languages: ['KO'],
     channel: {
       platform: 'afreeca',
       url: 'https://bj.afreecatv.com/vkzm14',
@@ -496,7 +496,7 @@ export const members: MemberInput[] = [
     name: '양띵 (Yang Dding)',
     characterImage: '/members/YangDding Card Banner.png',
     flag: 'kr',
-    languages: ['KR'],
+    languages: ['KO'],
     channel: {
       platform: 'chzzk',
       url: 'https://chzzk.naver.com/1aeb0ca60649660a2e534592ce480f34',
