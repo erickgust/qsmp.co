@@ -1,13 +1,14 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react'
 
 const usePrevious = <T extends {}>(value: T): T | undefined => {
-  const ref = useRef<T>();
+  const ref = useRef<T | undefined>(undefined)
 
   useEffect(() => {
-    ref.current = value;
-  }, [value]);
+    ref.current = value
+  }, [value])
 
-  return ref.current;
-};
+  // oxlint-disable-next-line react/refs -- returning the previous render's value is this hook's purpose
+  return ref.current
+}
 
-export default usePrevious;
+export default usePrevious

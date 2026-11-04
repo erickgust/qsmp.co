@@ -1,97 +1,99 @@
-import "../globals.css";
-import type { Metadata } from "next";
-import { DM_Sans } from "next/font/google";
-import localFont from "next/font/local";
+import '../globals.css'
+import type { Metadata } from 'next'
+import { DM_Sans } from 'next/font/google'
+import localFont from 'next/font/local'
 
-import { notFound } from "next/navigation";
-import { NextIntlClientProvider, hasLocale } from "next-intl";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { notFound } from 'next/navigation'
+import { NextIntlClientProvider, hasLocale } from 'next-intl'
+import { getTranslations, setRequestLocale } from 'next-intl/server'
 
-import { FilterProvider } from "@/context/use-filter-context";
-import { ToasterProvider } from "@/providers/ToasterProvider";
-import { routing } from "@/i18n/routing";
-import { siteUrl } from "@/lib/site-url";
-import Providers from "../providers";
+import { FilterProvider } from '@/context/use-filter-context'
+import { ToasterProvider } from '@/providers/ToasterProvider'
+import { routing } from '@/i18n/routing'
+import { siteUrl } from '@/lib/site-url'
+import Providers from '../providers'
 
 const dm_sans = DM_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+})
 
 const pixeloidSans = localFont({
   src: [
     {
-      path: "../../assets/fonts/PixeloidSans.ttf",
-      weight: "400",
+      path: '../../assets/fonts/PixeloidSans.ttf',
+      weight: '400',
     },
     {
-      path: "../../assets/fonts/PixeloidSans-Bold.ttf",
-      weight: "700",
+      path: '../../assets/fonts/PixeloidSans-Bold.ttf',
+      weight: '700',
     },
   ],
-  variable: "--font-pixeloid-sans",
-  display: "swap",
-});
+  variable: '--font-pixeloid-sans',
+  display: 'swap',
+})
 
-const hreflang = (locale: string) => (locale === "pt-br" ? "pt-BR" : locale);
+const hreflang = (locale: string) => (locale === 'pt-br' ? 'pt-BR' : locale)
 
 export async function generateMetadata({
   params,
 }: {
-  params: { lang: string };
+  params: Promise<{ lang: string }>
 }): Promise<Metadata> {
-  const locale = hasLocale(routing.locales, params.lang) ? params.lang : routing.defaultLocale;
-  const t = await getTranslations({ locale, namespace: "metadata" });
+  const { lang } = await params
+  const locale = hasLocale(routing.locales, lang) ? lang : routing.defaultLocale
+  const t = await getTranslations({ locale, namespace: 'metadata' })
 
   return {
     metadataBase: new URL(siteUrl),
-    title: t("title"),
-    description: t("description"),
+    title: t('title'),
+    description: t('description'),
     alternates: {
       canonical: `/${locale}/`,
       languages: {
-        ...Object.fromEntries(routing.locales.map((locale) => [hreflang(locale), `/${locale}/`])),
-        "x-default": `/${routing.defaultLocale}/`,
+        ...Object.fromEntries(
+          routing.locales.map((locale) => [hreflang(locale), `/${locale}/`]),
+        ),
+        'x-default': `/${routing.defaultLocale}/`,
       },
     },
     openGraph: {
-      type: "website",
-      siteName: "QSMP",
-      title: t("title"),
-      description: t("description"),
+      type: 'website',
+      siteName: 'QSMP',
+      title: t('title'),
+      description: t('description'),
       url: `/${locale}/`,
-      locale: hreflang(locale).replace("-", "_"),
+      locale: hreflang(locale).replace('-', '_'),
     },
-    twitter: { card: "summary_large_image" },
-  };
+    twitter: { card: 'summary_large_image' },
+  }
 }
 
 export function generateStaticParams() {
   return routing.locales.map((lang) => ({
     lang,
-  }));
+  }))
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params,
 }: {
-  children: React.ReactNode;
-  params: {
-    lang: string;
-  };
+  children: React.ReactNode
+  params: Promise<{ lang: string }>
 }) {
-  if (!hasLocale(routing.locales, params.lang)) notFound();
+  const { lang } = await params
+  if (!hasLocale(routing.locales, lang)) notFound()
 
-  setRequestLocale(params.lang);
+  setRequestLocale(lang)
 
   return (
     <html
-      lang={params.lang}
+      lang={lang}
       className={`${dm_sans.className} ${pixeloidSans.variable}`}
     >
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel='icon' href='/favicon.ico' sizes='any' />
       </head>
 
       <body>
@@ -104,5 +106,5 @@ export default function RootLayout({
         </NextIntlClientProvider>
       </body>
     </html>
-  );
+  )
 }

@@ -1,32 +1,39 @@
-import React, { useEffect, useRef, useCallback, memo } from 'react';
-import useScript from './hooks/useScript';
-import usePrevious from './hooks/usePrevious';
-import { TwitchWindow, TwitchPlayerConstructor, TwitchPlayerInstance } from './types';
+import React, { useEffect, useRef, useCallback, memo } from 'react'
+import useScript from './hooks/useScript'
+import usePrevious from './hooks/usePrevious'
+import {
+  TwitchWindow,
+  TwitchPlayerConstructor,
+  TwitchPlayerInstance,
+} from './types'
 
 export const objectCompareWithIgnoredKeys = (
   o1: Record<string, unknown>,
   o2: Record<string, unknown>,
-  keysToIgnore: string[]
+  keysToIgnore: string[],
 ): boolean => {
   for (const key in o1) {
-    const v1 = o1[key];
-    const v2 = o2[key];
+    const v1 = o1[key]
+    const v2 = o2[key]
 
     if (v1 !== v2 && !keysToIgnore.includes(key)) {
-      return true;
+      return true
     }
   }
 
-  return false;
-};
+  return false
+}
 
 export const clearElementById = (id: string) => {
-  const container = document.getElementById(id);
+  const container = document.getElementById(id)
   if (container) {
-    container.innerHTML = '';
+    container.innerHTML = ''
   }
-};
-export interface TwitchPlayerProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onEnded' | 'onPause' | 'onPlay' | 'onPlaying'> {
+}
+export interface TwitchPlayerProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'onEnded' | 'onPause' | 'onPlay' | 'onPlaying'
+> {
   channel?: string
   parent?: string | string[]
   autoplay?: boolean
@@ -43,16 +50,25 @@ export interface TwitchPlayerProps extends Omit<React.HTMLAttributes<HTMLDivElem
   width?: string | number
 }
 
-const nonReconstructTriggeringProps: (keyof TwitchPlayerProps)[] = ['channel', 'height', 'width', 'play', 'onReady'];
-const shouldReconstructPlayer = (previousProps: TwitchPlayerProps | undefined, props: TwitchPlayerProps): boolean => {
+const nonReconstructTriggeringProps: (keyof TwitchPlayerProps)[] = [
+  'channel',
+  'height',
+  'width',
+  'play',
+  'onReady',
+]
+const shouldReconstructPlayer = (
+  previousProps: TwitchPlayerProps | undefined,
+  props: TwitchPlayerProps,
+): boolean => {
   return objectCompareWithIgnoredKeys(
-    previousProps as Record<string, unknown> ?? {},
+    (previousProps as Record<string, unknown>) ?? {},
     props as Record<string, unknown>,
-    nonReconstructTriggeringProps
-  );
-};
+    nonReconstructTriggeringProps,
+  )
+}
 
-const onReadyDefault = () => null;
+const onReadyDefault = () => null
 
 const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
   const {
@@ -70,70 +86,72 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
     height = 480,
     width = 940,
     ...restOfProps
-  } = props;
+  } = props
 
-  const { loading, error } = useScript('https://player.twitch.tv/js/embed/v1.js');
-  const previousProps = usePrevious(props);
-  const player = useRef<TwitchPlayerInstance>();
+  const { loading, error } = useScript(
+    'https://player.twitch.tv/js/embed/v1.js',
+  )
+  const previousProps = usePrevious(props)
+  const player = useRef<TwitchPlayerInstance | undefined>(undefined)
+  // A ref, so a new inline onReady from the parent doesn't rebuild the player
+  const onReadyRef = useRef(onReady)
+  useEffect(() => {
+    onReadyRef.current = onReady
+  })
 
-  const createPlayer = useCallback((Player: TwitchPlayerConstructor) => {
-    clearElementById(id!);
+  const createPlayer = useCallback(
+    (Player: TwitchPlayerConstructor) => {
+      clearElementById(id!)
 
-    const player = new Player(id!, {
-      channel,
-      parent: typeof parent === 'string' ? [parent] : parent,
-      autoplay,
-      muted,
-      allowfullscreen: allowFullscreen,
-      playsinline: true,
-      controls: !hideControls,
-      height: '100%',
-      width: '100%'
-    });
+      const player = new Player(id!, {
+        channel,
+        parent: typeof parent === 'string' ? [parent] : parent,
+        autoplay,
+        muted,
+        allowfullscreen: allowFullscreen,
+        playsinline: true,
+        controls: !hideControls,
+        height: '100%',
+        width: '100%',
+      })
 
-    player.addEventListener(Player.READY, () => onReady(player));
+      player.addEventListener(Player.READY, () => onReadyRef.current(player))
 
-    return player;
-  }, [
-    channel,
-    parent,
-    autoplay,
-    muted,
-    allowFullscreen,
-    hideControls,
-    id
-  ]);
+      return player
+    },
+    [channel, parent, autoplay, muted, allowFullscreen, hideControls, id],
+  )
 
   useEffect(() => {
     if (loading) {
-      return;
+      return
     }
 
     if (error) {
-      console.error(error);
-      return;
+      console.error(error)
+      return
     }
 
     if (!player.current || shouldReconstructPlayer(previousProps, props)) {
-      player.current = createPlayer((window as TwitchWindow).Twitch!.Player!);
-      return;
+      player.current = createPlayer((window as TwitchWindow).Twitch!.Player!)
+      return
     }
 
     if (channel && previousProps?.channel !== channel) {
-      player.current!.setChannel(channel);
+      player.current!.setChannel(channel)
     }
 
     if (play !== previousProps?.play) {
       if (play) {
-        player.current!.play();
+        player.current!.play()
       } else {
-        player.current!.pause();
+        player.current!.pause()
       }
     }
-  }, [channel, createPlayer, error, loading, play, previousProps, props]);
+  }, [channel, createPlayer, error, loading, play, previousProps, props])
 
   if (loading) {
-    return null;
+    return null
   }
 
   return (
@@ -141,11 +159,11 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
       id={id}
       style={{
         height,
-        width
+        width,
       }}
       {...restOfProps}
     />
-  );
-};
+  )
+}
 
-export default memo(TwitchPlayer);
+export default memo(TwitchPlayer)

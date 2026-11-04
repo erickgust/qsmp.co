@@ -1,27 +1,21 @@
-import { useFormatter, useTranslations } from "next-intl";
-import { BroadcastIcon } from "@/assets/icons/broadcast";
+import { useFormatter, useTranslations } from 'next-intl'
+import { BroadcastIcon } from '@/assets/icons/broadcast'
 
 type TotalViewersProps = {
-  loading: boolean;
-  totalViewers: number;
-};
+  totalViewers: number
+}
 
-export function TotalCurrentViewers({
-  loading,
-  totalViewers,
-}: TotalViewersProps) {
-  const t = useTranslations("nav");
+export function TotalCurrentViewers({ totalViewers }: TotalViewersProps) {
+  const t = useTranslations('nav')
 
-  const totalViewersFormatted = useFormatter().number(totalViewers);
+  const totalViewersFormatted = useFormatter().number(totalViewers)
 
   return (
-    <p className="text-xs flex gap-2 text-[#1F1E33] uppercase items-center">
-      <BroadcastIcon className="-mt-1" />
+    <p className='text-xs flex gap-2 text-[#1F1E33] uppercase items-center'>
+      <BroadcastIcon className='-mt-1' />
 
-      <span className="whitespace-nowrap">{totalViewersFormatted}</span>
-      <span className="whitespace-nowrap">
-        {t("counter")}
-      </span>
+      <span className='whitespace-nowrap'>{totalViewersFormatted}</span>
+      <span className='whitespace-nowrap'>{t('counter')}</span>
     </p>
-  );
+  )
 }
