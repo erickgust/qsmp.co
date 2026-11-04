@@ -29,7 +29,7 @@ export function FilterDropdown() {
             <ArrowUp
               aria-hidden='true'
               data-open={isOpen}
-              className='size-6 rotate-180 data-[open=true]:rotate-0'
+              className='size-6 rotate-180 data-[open=true]:rotate-0 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
             />
           </span>
         </button>

@@ -33,7 +33,8 @@ export function CarouselNav({
             data-selected={index === selectedIndex}
             className='group shrink-0 flex items-center justify-center size-6 max-md:mx-px'
           >
-            <span className='size-2.5 bg-[#F0F6FF] group-data-[selected=true]:size-3.5 group-data-[selected=true]:bg-[#1F1E33]' />
+            {/* Scale instead of resize so the selection animates without layout: 10px / 14px */}
+            <span className='size-3.5 scale-[0.714] bg-[#F0F6FF] group-data-[selected=true]:scale-100 group-data-[selected=true]:bg-[#1F1E33] transition-[transform,background-color] duration-200 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-colors' />
           </button>
         ))}
 

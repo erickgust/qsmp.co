@@ -44,7 +44,7 @@ export function LanguagesDropdown() {
         <ArrowUp
           aria-hidden='true'
           data-open={isOpen}
-          className='data-[open=true]:rotate-180 min-[900px]:rotate-180 min-[900px]:data-[open=true]:rotate-0 size-6 min-[900px]:size-[1.125rem] 2xl:size-5'
+          className='data-[open=true]:rotate-180 min-[900px]:rotate-180 min-[900px]:data-[open=true]:rotate-0 size-6 min-[900px]:size-[1.125rem] 2xl:size-5 transition-transform duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
         />
       </button>
 

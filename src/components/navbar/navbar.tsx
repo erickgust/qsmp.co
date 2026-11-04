@@ -232,7 +232,7 @@ export function Navbar({
             isOpen={isNewsletterModalOpen}
             toggleModal={toggleNewsletterModal}
             aria-labelledby='newsletter-title'
-            className='md:max-w-4xl bg-white shadow-lg w-10/12'
+            className='dialog-pop md:max-w-4xl bg-white shadow-lg w-10/12'
           >
             <div className='relative p-8 md:px-16 md:py-14'>
               <div className='flex flex-col gap-6'>
