@@ -1,6 +1,6 @@
-import { z } from "zod";
+import { z } from 'zod'
 
-import { platformSchema } from "./member-schema";
+import { platformSchema } from './member-schema'
 
 const streamSchema = z.object({
   id: z.number(),
@@ -11,12 +11,12 @@ const streamSchema = z.object({
     .number()
     .or(z.string())
     .transform((val) => {
-      return typeof val === "string" ? 0 : val;
+      return typeof val === 'string' ? 0 : val
     }),
   language: z.string(),
   description: z.string(),
   platform: platformSchema.optional(),
-});
+})
 
 const videoSchema = z.object({
   id: z.string(),
@@ -26,21 +26,21 @@ const videoSchema = z.object({
     name: z.string(),
     avatar: z.string(),
   }),
-});
+})
 
-export type Video = z.infer<typeof videoSchema>;
+export type Video = z.infer<typeof videoSchema>
 
 const videoDataSchema = z.object({
-  type: z.literal("youtube"),
+  type: z.literal('youtube'),
   data: z.array(videoSchema),
-});
+})
 
 const memberDataSchema = z.object({
-  type: z.literal("live"),
+  type: z.literal('live'),
   data: z.array(streamSchema),
-});
+})
 
-export const streamResponseSchema = z.discriminatedUnion("type", [
+export const streamResponseSchema = z.discriminatedUnion('type', [
   videoDataSchema,
   memberDataSchema,
-]);
+])

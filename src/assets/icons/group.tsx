@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react'
 
-export function GroupIcon () {
+export function GroupIcon() {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -16,5 +16,5 @@ export function GroupIcon () {
         ></path>
       </g>
     </svg>
-  );
+  )
 }

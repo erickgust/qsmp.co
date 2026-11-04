@@ -1,14 +1,14 @@
-import { VariantProps } from "cva"
-import { button } from "./button"
-import { ExternalLinkIcon } from "@/assets/icons/external-link"
+import { VariantProps } from 'cva'
+import { button } from './button'
+import { ExternalLinkIcon } from '@/assets/icons/external-link'
 
 type SocialButtonProps = {
   icon: React.ReactNode
   isExternal?: boolean
-} & React.AnchorHTMLAttributes<HTMLAnchorElement>
-  & VariantProps<typeof button>
+} & React.AnchorHTMLAttributes<HTMLAnchorElement> &
+  VariantProps<typeof button>
 
-export function SocialButton ({
+export function SocialButton({
   className,
   colors,
   children,
@@ -24,15 +24,13 @@ export function SocialButton ({
       {...props}
     >
       {icon}
-      <span>
-        {children}
-      </span>
+      <span>{children}</span>
 
       {isExternal && (
         <ExternalLinkIcon
-          className="!ml-auto sm:hidden"
-          aria-hidden="true"
-          focusable="false"
+          className='!ml-auto sm:hidden'
+          aria-hidden='true'
+          focusable='false'
         />
       )}
     </a>

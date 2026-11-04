@@ -79,4 +79,4 @@ export const links = [
     url: 'https://twitter.com/QSMPEvents',
     icon: 'twitter',
   },
-] as const;
+] as const

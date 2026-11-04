@@ -4,36 +4,36 @@ import {
   useEffect,
   useImperativeHandle,
   useRef,
-} from "react";
-import type { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
-import useEmblaCarousel from "embla-carousel-react";
-import Autoplay from "embla-carousel-autoplay";
-import LiteYouTubeEmbed from "react-lite-youtube-embed";
-import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+} from 'react'
+import type { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel'
+import useEmblaCarousel from 'embla-carousel-react'
+import Autoplay from 'embla-carousel-autoplay'
+import LiteYouTubeEmbed from 'react-lite-youtube-embed'
+import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
 
-import { StreamDescription } from "../ui/stream-description";
-import TwitchPlayer from "@/lib/TwitchPlayer";
-import LazyLoad from "react-lazy-load";
-import { Members } from "@/app/[lang]/page";
+import { StreamDescription } from '../ui/stream-description'
+import TwitchPlayer from '@/lib/TwitchPlayer'
+import LazyLoad from 'react-lazy-load'
+import { Members } from '@/app/[lang]/page'
 
 export type CarouselRef = {
-  scrollTo: (index: number) => void;
-  scrollPrev: () => void;
-  scrollNext: () => void;
-};
+  scrollTo: (index: number) => void
+  scrollPrev: () => void
+  scrollNext: () => void
+}
 
 type PropType = {
-  thumbsApi?: EmblaCarouselType;
-  desktopThumbsApi?: EmblaCarouselType;
+  thumbsApi?: EmblaCarouselType
+  desktopThumbsApi?: EmblaCarouselType
 
-  slides: Members;
-  selectedIndex: number;
-  isLoading?: boolean;
-  options?: EmblaOptionsType;
-  onSelectIndex: (index: number) => void;
-  setPrevBtnDisabled: (disabled: boolean) => void;
-  setNextBtnDisabled: (disabled: boolean) => void;
-};
+  slides: Members
+  selectedIndex: number
+  isLoading?: boolean
+  options?: EmblaOptionsType
+  onSelectIndex: (index: number) => void
+  setPrevBtnDisabled: (disabled: boolean) => void
+  setNextBtnDisabled: (disabled: boolean) => void
+}
 
 const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
   const {
@@ -46,7 +46,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
     isLoading,
     setPrevBtnDisabled,
     setNextBtnDisabled,
-  } = props;
+  } = props
   const [emblaRef, emblaApi] = useEmblaCarousel(options, [
     Autoplay({
       delay: 6000,
@@ -54,47 +54,47 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
       playOnInit: false,
       stopOnMouseEnter: true,
     }),
-  ]);
+  ])
 
-  const firstLoad = useRef(true);
-  const { type, data } = slides;
-  const hasData = data.length > 0 && !isLoading;
+  const firstLoad = useRef(true)
+  const { type, data } = slides
+  const hasData = data.length > 0 && !isLoading
 
   const scrollPrev = useCallback(() => {
     if (emblaApi) {
-      emblaApi.plugins().autoplay?.stop();
-      emblaApi.scrollPrev();
+      emblaApi.plugins().autoplay?.stop()
+      emblaApi.scrollPrev()
     }
-  }, [emblaApi]);
+  }, [emblaApi])
 
   const scrollNext = useCallback(() => {
     if (emblaApi) {
-      emblaApi.plugins().autoplay?.stop();
-      emblaApi.scrollNext();
+      emblaApi.plugins().autoplay?.stop()
+      emblaApi.scrollNext()
     }
-  }, [emblaApi]);
+  }, [emblaApi])
 
   const scrollTo = useCallback(
     (index: number) => {
       if (emblaApi && thumbsApi && desktopThumbsApi) {
-        const embla = emblaApi as EmblaCarouselType;
+        const embla = emblaApi as EmblaCarouselType
 
-        embla.plugins().autoplay?.stop();
-        embla.scrollTo(index);
+        embla.plugins().autoplay?.stop()
+        embla.scrollTo(index)
       }
     },
-    [desktopThumbsApi, emblaApi, thumbsApi]
-  );
+    [desktopThumbsApi, emblaApi, thumbsApi],
+  )
 
   const onSelect = useCallback(() => {
-    if (!emblaApi || !thumbsApi || !desktopThumbsApi) return;
+    if (!emblaApi || !thumbsApi || !desktopThumbsApi) return
 
-    thumbsApi.scrollTo(emblaApi.selectedScrollSnap());
-    desktopThumbsApi.scrollTo(emblaApi.selectedScrollSnap());
+    thumbsApi.scrollTo(emblaApi.selectedScrollSnap())
+    desktopThumbsApi.scrollTo(emblaApi.selectedScrollSnap())
 
-    onSelectIndex(emblaApi.selectedScrollSnap());
-    setPrevBtnDisabled(!emblaApi.canScrollPrev());
-    setNextBtnDisabled(!emblaApi.canScrollNext());
+    onSelectIndex(emblaApi.selectedScrollSnap())
+    setPrevBtnDisabled(!emblaApi.canScrollPrev())
+    setNextBtnDisabled(!emblaApi.canScrollNext())
   }, [
     emblaApi,
     thumbsApi,
@@ -102,7 +102,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
     onSelectIndex,
     setPrevBtnDisabled,
     setNextBtnDisabled,
-  ]);
+  ])
 
   useImperativeHandle(
     ref,
@@ -111,71 +111,71 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
       scrollPrev,
       scrollNext,
     }),
-    [scrollNext, scrollPrev, scrollTo]
-  );
+    [scrollNext, scrollPrev, scrollTo],
+  )
 
   useEffect(() => {
-    if (!emblaApi) return;
+    if (!emblaApi) return
 
-    onSelect();
+    onSelect()
 
-    emblaApi.on("init", onSelect);
-    emblaApi.on("reInit", onSelect);
-    emblaApi.on("select", onSelect);
-  }, [emblaApi, onSelect]);
+    emblaApi.on('init', onSelect)
+    emblaApi.on('reInit', onSelect)
+    emblaApi.on('select', onSelect)
+  }, [emblaApi, onSelect])
 
   return (
-    <div className="relative my-10">
-      <div className="overflow-hidden" ref={emblaRef}>
-        <div className="flex touch-pan-y mx-auto max-w-5.5xl">
+    <div className='relative my-10'>
+      <div className='overflow-hidden' ref={emblaRef}>
+        <div className='flex touch-pan-y mx-auto max-w-5.5xl'>
           {hasData &&
-            type === "live" &&
+            type === 'live' &&
             data.map((member, i) => (
               <div
-                className="embla__slide px-8 md:px-0 group flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center"
+                className='embla__slide px-8 md:px-0 group flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
                 key={i}
                 data-index={i}
                 data-selected={i === selectedIndex}
               >
                 <LazyLoad
-                  height="420px"
-                  className="max-w-5.5xl group-data-[selected=true]:max-w-3xl aspect-video !w-full max-md:!h-auto"
+                  height='420px'
+                  className='max-w-5.5xl group-data-[selected=true]:max-w-3xl aspect-video !w-full max-md:!h-auto'
                 >
-                  {member.platform == "afreeca" ? (
+                  {member.platform == 'afreeca' ? (
                     <iframe
                       src={`https://play.afreecatv.com/${member.userName}/embed`}
                       title={member.name}
-                      frameBorder="0"
+                      frameBorder='0'
                       allowFullScreen
-                      className="w-full h-full"
+                      className='w-full h-full'
                     />
                   ) : (
                     <TwitchPlayer
                       channel={member.userName}
-                      height="420px"
-                      width="750px"
+                      height='420px'
+                      width='750px'
                       id={`twitch-player-${member.userName}`}
-                      className="max-w-5.5xl group-data-[selected=true]:max-w-3xl aspect-video !w-full max-md:!h-auto"
+                      className='max-w-5.5xl group-data-[selected=true]:max-w-3xl aspect-video !w-full max-md:!h-auto'
                       autoplay={false}
                       play={i === selectedIndex}
                       onReady={(player) => {
-                        const playCarousel = emblaApi?.plugins().autoplay?.play;
+                        const playCarousel = emblaApi?.plugins().autoplay?.play
 
                         if (i === selectedIndex) {
-                          player.play();
+                          player.play()
                         }
 
                         if (firstLoad.current && playCarousel) {
-                          playCarousel();
+                          playCarousel()
                         }
 
-                        firstLoad.current = false;
+                        firstLoad.current = false
                       }}
                     />
                   )}
                 </LazyLoad>
 
-                <div className="hidden relative group-data-[selected=true]:inline-block">
+                <div className='hidden relative group-data-[selected=true]:inline-block'>
                   <StreamDescription
                     description={member.description}
                     language={member.language}
@@ -192,19 +192,19 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
             ))}
 
           {hasData &&
-            type === "youtube" &&
+            type === 'youtube' &&
             data.map((video, i) => (
               <div
-                className="embla__slide px-8 md:px-0 group flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center"
+                className='embla__slide px-8 md:px-0 group flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
                 key={i}
                 data-index={i}
                 data-selected={i === selectedIndex}
               >
-                <div className="max-w-5.5xl group-data-[selected=true]:max-w-3xl !w-full h-auto md:min-h-full md:max-h-0">
+                <div className='max-w-5.5xl group-data-[selected=true]:max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
                   <LiteYouTubeEmbed id={video.id} title={video.title} />
                 </div>
 
-                <div className="hidden relative group-data-[selected=true]:inline-block">
+                <div className='hidden relative group-data-[selected=true]:inline-block'>
                   <StreamDescription
                     description={video.description}
                     url={`https://www.youtube.com/watch?v=${video.id}`}
@@ -219,9 +219,9 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
         </div>
       </div>
     </div>
-  );
-});
+  )
+})
 
-EmblaCarousel.displayName = "EmblaCarousel";
+EmblaCarousel.displayName = 'EmblaCarousel'
 
-export default EmblaCarousel;
+export default EmblaCarousel

@@ -1,11 +1,11 @@
 type DisplayProps = {
-  label: 'Days' | 'Hours' | 'Minutes' | 'Seconds';
-  value: number;
-  isLast?: boolean;
-};
+  label: 'Days' | 'Hours' | 'Minutes' | 'Seconds'
+  value: number
+  isLast?: boolean
+}
 
 export function Display({ label, value, isLast }: DisplayProps) {
-  const [first, second] = String(value).padStart(2, '0').split('');
+  const [first, second] = String(value).padStart(2, '0').split('')
 
   return (
     <div>
@@ -18,16 +18,12 @@ export function Display({ label, value, isLast }: DisplayProps) {
           {second}
         </div>
 
-        {!isLast && (
-          <span className='mx-2 pl-0.5 sm:mx-3 text-white'>
-            :
-          </span>
-        )}
+        {!isLast && <span className='mx-2 pl-0.5 sm:mx-3 text-white'>:</span>}
       </div>
 
       <span className='text-white mt-2 block text-xs xxs:text-base sm:text-sm'>
         {label}
       </span>
     </div>
-  );
+  )
 }

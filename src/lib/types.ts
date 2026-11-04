@@ -99,7 +99,10 @@ export interface TwitchPlayerConstructorOptions {
 }
 
 export interface TwitchPlayerConstructor {
-  new (id: string, options: TwitchPlayerConstructorOptions): TwitchPlayerInstance
+  new (
+    id: string,
+    options: TwitchPlayerConstructorOptions,
+  ): TwitchPlayerInstance
   CAPTIONS: string
   ENDED: string
   PAUSE: string
