@@ -9,5 +9,5 @@ type YoutubeEmbedProps = {
 }
 
 export function YoutubeEmbed({ id, title }: YoutubeEmbedProps) {
-  return <LiteYouTubeEmbed id={id} title={title} />
+  return <LiteYouTubeEmbed id={id} title={title} lazyLoad />
 }

@@ -260,7 +260,11 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                 data-selected={i === selectedIndex}
               >
                 <div className='relative z-10 max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
-                  <LiteYouTubeEmbed id={video.id} title={video.title} />
+                  <LiteYouTubeEmbed
+                    id={video.id}
+                    title={video.title}
+                    lazyLoad
+                  />
                 </div>
 
                 <div
