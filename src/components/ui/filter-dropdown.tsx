@@ -30,7 +30,7 @@ export function FilterDropdown() {
       <DropdownMenu.Content
         align='end'
         collisionPadding={8}
-        className='w-[var(--radix-dropdown-menu-trigger-width)] origin-[var(--radix-dropdown-menu-content-transform-origin)] z-10 bg-[#F0F6FF] ring-1 ring-black ring-opacity-5 data-[state=open]:motion-safe:animate-dropdown-in data-[state=closed]:motion-safe:animate-dropdown-out motion-reduce:animate-fade-in'
+        className='w-[var(--radix-dropdown-menu-trigger-width)] origin-[var(--radix-dropdown-menu-content-transform-origin)] z-10 bg-[#F0F6FF] ring-1 ring-black ring-opacity-5 data-[state=open]:motion-safe:animate-dropdown-in data-[state=closed]:motion-safe:animate-dropdown-out data-[state=open]:motion-reduce:animate-fade-in'
       >
         <DropdownMenu.Label className='sr-only'>
           {t('filter')}
@@ -46,9 +46,9 @@ export function FilterDropdown() {
           >
             <span
               aria-hidden='true'
-              className='grid place-items-center size-[18px] shrink-0 border border-[#1F1E33] group-data-[state=checked]:border-[#00ADFF]'
+              className='grid place-items-center size-[18px] shrink-0 border border-[#1F1E33] group-data-[state=checked]:border-[#00ADFF] transition-colors duration-150 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)] motion-reduce:transition-none'
             >
-              <DropdownMenu.ItemIndicator className='size-2.5 bg-[#00ADFF]' />
+              <DropdownMenu.ItemIndicator className='size-2.5 bg-[#00ADFF] motion-safe:animate-check-in' />
             </span>
 
             <span>{language.label}</span>

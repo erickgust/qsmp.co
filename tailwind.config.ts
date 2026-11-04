@@ -67,6 +67,10 @@ const config = {
           from: { opacity: '1', transform: 'scale(1)' },
           to: { opacity: '0', transform: 'scale(0.95)' },
         },
+        'check-in': {
+          from: { opacity: '0', transform: 'scale(0.8)' },
+          to: { opacity: '1', transform: 'scale(1)' },
+        },
         'fade-in': {
           from: { opacity: '0' },
           to: { opacity: '1' },
@@ -76,6 +80,7 @@ const config = {
         'dropdown-in': 'dropdown-in 180ms cubic-bezier(0.23, 1, 0.32, 1) both',
         'dropdown-out':
           'dropdown-out 120ms cubic-bezier(0.23, 1, 0.32, 1) both',
+        'check-in': 'check-in 150ms cubic-bezier(0.23, 1, 0.32, 1) both',
         'fade-in': 'fade-in 150ms ease both',
       },
       colors: {
