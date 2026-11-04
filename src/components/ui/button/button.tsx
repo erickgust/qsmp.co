@@ -24,10 +24,14 @@ export const button = cva(
     'sm:hover:translate-y-0.5',
     'sm:before:h-1.5',
     'sm:hover:before:translate-y-1',
+    'sm:active:translate-y-[5px]',
+    'sm:active:before:translate-y-px',
     'transition-transform',
     'duration-150',
+    '[transition-timing-function:cubic-bezier(0.25,0.46,0.45,0.94)]',
     'before:transition-transform',
     'before:duration-150',
+    'before:[transition-timing-function:cubic-bezier(0.25,0.46,0.45,0.94)]',
     'will-change-transform',
     'before:will-change-transform',
     'max-sm:py-4',
@@ -60,6 +64,7 @@ export const button = cva(
           'bg-[#F0F6FF]',
           'sm:bg-white',
           'hover:bg-[#D7DFEC]',
+          'active:bg-[#D7DFEC]',
           'before:bg-[#D7DFEC]',
         ],
         light: [
@@ -67,6 +72,7 @@ export const button = cva(
           'bg-[#F0F6FF]',
           'sm:bg-[#F0F6FF]',
           'hover:bg-[#D7DFEC]',
+          'active:bg-[#D7DFEC]',
           'before:bg-[#D7DFEC]',
         ],
         red: [
@@ -74,6 +80,7 @@ export const button = cva(
           'bg-[#FF3D3D]',
           'sm:bg-[#FF4B4B]',
           'hover:bg-[#EB3939]',
+          'active:bg-[#EB3939]',
           'before:bg-[#EB3939]',
         ],
         purple: [
@@ -81,6 +88,7 @@ export const button = cva(
           'bg-[#604DD8]',
           'sm:bg-[#725EF4]',
           'hover:bg-[#604DD8]',
+          'active:bg-[#604DD8]',
           'before:bg-[#604DD8]',
         ],
         yellow: [
@@ -88,6 +96,7 @@ export const button = cva(
           'bg-[#FFDB43]',
           'sm:bg-[#FFE058]',
           'hover:bg-[#EBC832]',
+          'active:bg-[#EBC832]',
           'before:bg-[#EBC832]',
         ],
         blue: [
@@ -95,6 +104,7 @@ export const button = cva(
           'bg-[#00ADFF]',
           'sm:bg-[#47C4FF]',
           'hover:bg-[#00ADFF]',
+          'active:bg-[#00ADFF]',
           'before:bg-[#00ADFF]',
         ],
         dark: [
@@ -102,6 +112,7 @@ export const button = cva(
           'bg-[#1F1E33]',
           'sm:bg-[#35334C]',
           'hover:bg-[#1F1E33]',
+          'active:bg-[#1F1E33]',
           'before:bg-[#1F1E33]',
         ],
         twitter: [
@@ -109,6 +120,7 @@ export const button = cva(
           'bg-[#1DA1F2]',
           'sm:bg-[#48BAFF]',
           'hover:bg-[#1DA1F2]',
+          'active:bg-[#1DA1F2]',
           'before:bg-[#1DA1F2]',
         ],
         twitch: [
@@ -116,6 +128,7 @@ export const button = cva(
           'bg-[#9146FF]',
           'sm:bg-[#A05FFF]',
           'hover:bg-[#9146FF]',
+          'active:bg-[#9146FF]',
           'before:bg-[#9146FF]',
         ],
         youtube: [
@@ -123,6 +136,7 @@ export const button = cva(
           'bg-[#FF0000]',
           'sm:bg-[#FF4343]',
           'hover:bg-[#FF0000]',
+          'active:bg-[#FF0000]',
           'before:bg-[#FF0000]',
         ],
         afreeca: [
@@ -130,6 +144,7 @@ export const button = cva(
           'bg-[#399BFF]',
           'sm:bg-[#5BACFF]',
           'hover:bg-[#399BFF]',
+          'active:bg-[#399BFF]',
           'before:bg-[#399BFF]',
         ],
         chzzk: [
@@ -137,6 +152,7 @@ export const button = cva(
           'bg-[#00BF74]',
           'sm:bg-[#00E289]',
           'hover:bg-[#00BF74]',
+          'active:bg-[#00BF74]',
           'before:bg-[#00BF74]',
         ],
       },
