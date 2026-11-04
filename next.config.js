@@ -8,8 +8,6 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 7,
     qualities: [60, 75, 85],
     remotePatterns: [
-      { protocol: 'https', hostname: 'pbs.twimg.com' },
-      { protocol: 'https', hostname: 'abs.twimg.com' },
       { protocol: 'https', hostname: 'yt3.ggpht.com' },
       { protocol: 'https', hostname: 'static-cdn.jtvnw.net' },
       { protocol: 'https', hostname: 'nng-phinf.pstatic.net' },

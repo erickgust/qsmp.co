@@ -160,18 +160,9 @@ html {
   animation: wave2 3.6s infinite;
 }
 
-/* react-tweet CSS-module classes, matched without their build-specific hash */
-.tweets
-  .react-tweet-theme
-  [class*='tweet-actions-module__'][class*='__actions'],
-.tweets
-  .react-tweet-theme
-  [class*='tweet-replies-module__'][class*='__replies'],
-.tweets .react-tweet-theme [class*='tweet-header-module__'][class*='__brand'],
-.tweets .react-tweet-theme [class*='tweet-header-module__'][class*='__follow'],
-.tweets
-  .react-tweet-theme
-  [class*='tweet-header-module__'][class*='__separator'] {
+.tweets .react-tweet-theme [class$='_brand'],
+.tweets .react-tweet-theme [class$='_follow'],
+.tweets .react-tweet-theme [class$='_separator'] {
   display: none;
 }
 

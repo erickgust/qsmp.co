@@ -1,13 +1,11 @@
 import { getTranslations } from 'next-intl/server'
 import { Inter } from 'next/font/google'
-import { EmbeddedTweet, type TwitterComponents } from 'react-tweet'
 import clsx from 'clsx'
 
 import { Heading } from './ui/heading'
 import { ExternalLinkButton } from './ui/button'
 import { Paragraph } from './ui/paragraph'
-import { tweets } from '@/tweetData'
-import Image from 'next/image'
+import { Tweet } from '@/lib/tweet'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -27,31 +25,8 @@ function TwitterButton(props: React.ComponentPropsWithoutRef<'button'>) {
   )
 }
 
-async function getTweets(ids: string[]) {
-  // const promises = ids.map(async (id) => {
-  //   const tweet = await getTweet(id);
-  //   return tweet;
-  // }) as Promise<Tweet>[];
-
-  // const res = await Promise.all(promises);
-  // console.log(JSON.stringify(res, null, 2));
-
-  return tweets
-}
-
-export const components: TwitterComponents = {
-  AvatarImg: (props) => <Image {...props} alt={props.alt} />,
-  MediaImg: (props) => <Image {...props} alt={props.alt} fill unoptimized />,
-}
-
 export async function TweetSection() {
   const t = await getTranslations('tweets')
-  const tweets = await getTweets([
-    '1755318541778075702',
-    '1749962949291081766',
-    '1743678987983835566',
-    '1732570074412646520',
-  ])
 
   return (
     <section className='py-14 sm:py-16 lg:pb-0 bg-white px-8 scroll-mt-36'>
@@ -66,18 +41,18 @@ export async function TweetSection() {
             'h-full',
           )}
         >
-          <EmbeddedTweet components={components} tweet={tweets[0]} />
+          <Tweet id='1755318541778075702' />
 
           <span className='hidden lg:block'>
-            <EmbeddedTweet components={components} tweet={tweets[2]} />
+            <Tweet id='1749962949291081766' />
           </span>
 
           <span className='hidden md:block'>
-            <EmbeddedTweet components={components} tweet={tweets[1]} />
+            <Tweet id='1743678987983835566' />
           </span>
 
           <span className='hidden lg:block'>
-            <EmbeddedTweet components={components} tweet={tweets[3]} />
+            <Tweet id='1732570074412646520' />
           </span>
         </div>
 
