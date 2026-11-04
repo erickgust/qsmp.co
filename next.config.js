@@ -28,12 +28,6 @@ const nextConfig = {
         pathname:
           '/ytc/AIf8zZTY3xqmCDjkv4nqNSlGC-_9wdzoYNfiYjmmVxsoyg=s176-c-k-c0x00ffffff-no-rj',
       },
-      {
-        protocol: 'https',
-        hostname: 'yt3.googleusercontent.com',
-        pathname:
-          '/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
-      },
     ],
   },
 }

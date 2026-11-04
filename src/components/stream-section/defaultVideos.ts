@@ -4,8 +4,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'Due to recent events, The Federation Board of Directors has made the difficult and heartbreaking decision to restart Isla Quesadilla.',
@@ -15,8 +14,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'WELCOME TO QSMP 2024. REVOLUTIONIZING THE GLOBAL CONTENT CREATION SPACE. UNITING INTERNATIONAL CREATORS. LAUNCHING FEBRUARY 3.',
@@ -26,8 +24,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'QSMP Rewind 2023 is finally here – lets celebrate a year filled with special, mysterious, exciting and funny moments the QSMP provided us; moments that have connected so many content creators and communities around the world.',
@@ -37,8 +34,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'New eggs have arrived! Join the residents of Quesadilla Island on their journey through parenthood, reliving the best and funniest moments of the past few days. More fun moments are coming soon…',
@@ -48,8 +44,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'The Residents have finally returned to Quesadilla Island! Lets see all the hijinks they get into on their first week home while they await for their eggs to recover. More fun moments are coming soon...',
@@ -59,8 +54,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'Discover all the mysteries surrounding the disappearances that have thrown Quesadilla Island into bewildering chaos. Secrets will be revealed, adventures will be secured and, above all, the residents will be tested.',
@@ -70,8 +64,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'Purgatory was one of the most uncertain chapters for the inhabitants of Quesadilla Island and for the viewers, so we wanted to share the memorable and not so intense moments of this scenario!',
@@ -81,8 +74,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'As Island residents struggle to care for and protect their eggs, and with The Federation intervening in their affairs, the island residents start to distrust one another. Will they continue to drift apart, or can they unite? Find out on this episode of QSMP Info!',
@@ -92,8 +84,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'With new guests arriving to Quesadilla Island, how will they adapt to their new homes? What will they build? What will they discover? Most importantly, what trouble will they get into with Cucurucho? Find out in this latest episode of QSMP Info!',
@@ -103,8 +94,7 @@ export const defaultVideos: Video[] = [
   {
     channel: {
       name: 'QSMP Info',
-      avatar:
-        'https://yt3.googleusercontent.com/cjEUgCIFFMgoIZFMAH5smTLcfPle0p1bbxGgyEiOat9ZZJZmHh53JH4dmtqdnvq3NZVoxWG2QQ=s176-c-k-c0x00ffffff-no-rj',
+      avatar: '/qsmp-info-avatar.jpg',
     },
     description:
       'Cucurucho enters the studio to host the brand-new QSMP Info series! In this episode, we recap the beginning of the QSMP, as the guests arrive by train onto Quesadilla Island after receiving invitations and begin to adapt to their new lives.',
