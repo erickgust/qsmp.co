@@ -160,21 +160,22 @@ html {
   animation: wave2 3.6s infinite;
 }
 
-/*
-.button {
-  transform-style: preserve-3d;
-} */
-
-
-.tweets .react-tweet-theme .tweet-actions_actions__UDw7H,
-.tweets .react-tweet-theme .tweet-replies_replies__PUxl8,
-.tweets .react-tweet-theme .tweet-header_brand__0FLQl,
-.tweets .react-tweet-theme .tweet-header_follow__Fi7bf,
-.tweets .react-tweet-theme .tweet-header_separator__d4pqe {
+/* react-tweet CSS-module classes, matched without their build-specific hash */
+.tweets
+  .react-tweet-theme
+  [class*='tweet-actions-module__'][class*='__actions'],
+.tweets
+  .react-tweet-theme
+  [class*='tweet-replies-module__'][class*='__replies'],
+.tweets .react-tweet-theme [class*='tweet-header-module__'][class*='__brand'],
+.tweets .react-tweet-theme [class*='tweet-header-module__'][class*='__follow'],
+.tweets
+  .react-tweet-theme
+  [class*='tweet-header-module__'][class*='__separator'] {
   display: none;
 }
 
-input[type="checkbox"] {
+input[type='checkbox'] {
   appearance: none;
 
   width: 1.225rem;
@@ -185,14 +186,14 @@ input[type="checkbox"] {
   position: relative;
 }
 
-input[type="checkbox"]:checked {
+input[type='checkbox']:checked {
   border: 1px solid #00adff;
 }
 
-input[type="checkbox"]:checked::before {
+input[type='checkbox']:checked::before {
   position: absolute;
 
-  content: "■";
+  content: '■';
   font-size: 1.2rem;
   color: #00adff;
   top: -6.5px;
