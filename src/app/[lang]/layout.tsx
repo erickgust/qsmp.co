@@ -3,9 +3,8 @@ import type { Metadata } from 'next'
 import { DM_Sans } from 'next/font/google'
 import localFont from 'next/font/local'
 
-import { notFound } from 'next/navigation'
-import { NextIntlClientProvider, hasLocale } from 'next-intl'
-import { getTranslations, setRequestLocale } from 'next-intl/server'
+import { NextIntlClientProvider } from 'next-intl'
+import { getLocale, getTranslations } from 'next-intl/server'
 
 import { FilterProvider } from '@/context/use-filter-context'
 import { ToasterProvider } from '@/providers/ToasterProvider'
@@ -35,14 +34,9 @@ const pixeloidSans = localFont({
 
 const hreflang = (locale: string) => (locale === 'pt-br' ? 'pt-BR' : locale)
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ lang: string }>
-}): Promise<Metadata> {
-  const { lang } = await params
-  const locale = hasLocale(routing.locales, lang) ? lang : routing.defaultLocale
-  const t = await getTranslations({ locale, namespace: 'metadata' })
+export async function generateMetadata(): Promise<Metadata> {
+  const locale = await getLocale()
+  const t = await getTranslations('metadata')
 
   return {
     metadataBase: new URL(siteUrl),
@@ -75,21 +69,12 @@ export function generateStaticParams() {
   }))
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
-  children: React.ReactNode
-  params: Promise<{ lang: string }>
-}) {
-  const { lang } = await params
-  if (!hasLocale(routing.locales, lang)) notFound()
-
-  setRequestLocale(lang)
+export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
+  const locale = await getLocale()
 
   return (
     <html
-      lang={lang}
+      lang={locale}
       className={`${dm_sans.className} ${pixeloidSans.variable}`}
     >
       <head>

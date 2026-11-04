@@ -4,23 +4,14 @@ import { SocialsSection } from '@/components/socials-section/socials-section'
 import { TimerSection } from '@/components/timer-section'
 import { TweetSection } from '@/components/tweet-section'
 import { YoutubeSection } from '@/components/youtube-section'
-import type { Locale } from 'next-intl'
-import { setRequestLocale } from 'next-intl/server'
 import { z } from 'zod'
 import { streamResponseSchema } from '@/utils/schemas/stream-schema'
 import { ServerMemberSection } from '@/components/member-section/server-member-section'
 import { ServerStreamSection } from '@/components/stream-section/server-stream-section'
 
-type HomeProps = {
-  params: Promise<{ lang: Locale }>
-}
-
 export type Members = z.infer<typeof streamResponseSchema>
 
-export default async function Home({ params }: HomeProps) {
-  const { lang } = await params
-  setRequestLocale(lang)
-
+export default function Home() {
   return (
     <>
       <Header />
