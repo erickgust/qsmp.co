@@ -75,7 +75,7 @@ export function StreamDescription({
             </div>
           )}
 
-          <p className='text-[#535170] text-base md:text-sm leading-7 line-clamp-[8] break-all'>
+          <p className='text-[#535170] text-base md:text-sm leading-7 line-clamp-[8] [overflow-wrap:anywhere]'>
             {description}
           </p>
         </div>
