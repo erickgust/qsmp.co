@@ -362,13 +362,19 @@ export function Navbar({
         </div>
 
         {totalViewers > 0 && (
-          <div
-            className={clsx(
-              'flex items-center w-full justify-center h-20 text-[#1F1E33] xl:hidden transition-all absolute translate-y-full top-0 bg-white z-20 border-y',
-              showTotalViewers ? 'flex' : 'hidden',
-            )}
-          >
-            <TotalCurrentViewers totalViewers={totalViewers} />
+          <div className='absolute top-full inset-x-0 z-20 overflow-hidden pointer-events-none xl:hidden'>
+            <div
+              className={clsx(
+                'flex items-center justify-center h-20 text-[#1F1E33] bg-white border-y',
+                'transition-transform duration-200 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]',
+                'motion-reduce:transition-opacity motion-reduce:translate-y-0',
+                showTotalViewers
+                  ? 'translate-y-0'
+                  : '-translate-y-full motion-reduce:opacity-0',
+              )}
+            >
+              <TotalCurrentViewers totalViewers={totalViewers} />
+            </div>
           </div>
         )}
       </nav>
