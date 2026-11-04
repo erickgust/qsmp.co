@@ -121,7 +121,6 @@ const config = {
         { values: theme('translate'), supportsNegativeValues: true },
       )
     }),
-    require('tailwindcss-animate'),
   ],
 } satisfies Config
 export default config
