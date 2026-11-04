@@ -106,10 +106,10 @@ export const button = cva(
         ],
         twitter: [
           'text-white',
-          'bg-[##1DA1F2]',
+          'bg-[#1DA1F2]',
           'sm:bg-[#48BAFF]',
-          'hover:bg-[##1DA1F2]',
-          'before:bg-[##1DA1F2]',
+          'hover:bg-[#1DA1F2]',
+          'before:bg-[#1DA1F2]',
         ],
         twitch: [
           'text-white',
