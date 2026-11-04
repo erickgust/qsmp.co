@@ -16,6 +16,9 @@ import TwitchPlayer from '@/lib/TwitchPlayer'
 import LazyLoad from 'react-lazy-load'
 import { Members } from '@/app/[lang]/page'
 
+const slideDescriptionMotion =
+  'opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]'
+
 export type CarouselRef = {
   scrollTo: (index: number) => void
   scrollPrev: () => void
@@ -124,6 +127,54 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
     emblaApi.on('select', onSelect)
   }, [emblaApi, onSelect])
 
+  useEffect(() => {
+    if (!emblaApi) return
+    const desktop = window.matchMedia('(min-width: 768px)')
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+
+    const tween = () => {
+      const engine = emblaApi.internalEngine()
+      const progress = emblaApi.scrollProgress()
+      const snaps = emblaApi.scrollSnapList()
+      const slides = emblaApi.slideNodes()
+
+      snaps.forEach((snap, snapIndex) => {
+        engine.slideRegistry[snapIndex].forEach((slideIndex) => {
+          let diff = snap - progress
+          // looped slides are drawn one lap away from their snap
+          engine.slideLooper.loopPoints.forEach((point) => {
+            const target = point.target()
+            if (point.index === slideIndex && target !== 0) {
+              diff = target < 0 ? snap - (1 + progress) : snap + (1 - progress)
+            }
+          })
+
+          // the video wrapper is the slide's first child (LazyLoad div / youtube div)
+          const video = slides[slideIndex]
+            .firstElementChild as HTMLElement | null
+          if (!video) return
+          if (!desktop.matches) {
+            video.style.transform = ''
+            return
+          }
+
+          let t = Math.min(Math.abs(diff) * snaps.length, 1)
+          if (reduce.matches) t = Math.round(t)
+          const x = (diff > 0 ? -40 : 368) * t
+          video.style.transform = `translateX(${x}px) scale(${1 - 0.134 * t})`
+        })
+      })
+    }
+
+    tween()
+    emblaApi.on('scroll', tween).on('reInit', tween)
+    desktop.addEventListener('change', tween)
+    return () => {
+      emblaApi.off('scroll', tween).off('reInit', tween)
+      desktop.removeEventListener('change', tween)
+    }
+  }, [emblaApi])
+
   return (
     <div className='relative my-10'>
       <div className='overflow-hidden' ref={emblaRef}>
@@ -132,7 +183,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
             type === 'live' &&
             data.map((member, i) => (
               <div
-                className='embla__slide px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center opacity-40 data-[selected=true]:opacity-100 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]'
+                className='embla__slide group px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
                 key={i}
                 data-index={i}
                 data-selected={i === selectedIndex}
@@ -181,7 +232,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                 </LazyLoad>
 
                 <div
-                  className='relative inline-block'
+                  className={`relative inline-block ${slideDescriptionMotion}`}
                   inert={i !== selectedIndex}
                 >
                   <StreamDescription
@@ -203,7 +254,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
             type === 'youtube' &&
             data.map((video, i) => (
               <div
-                className='embla__slide px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center opacity-40 data-[selected=true]:opacity-100 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]'
+                className='embla__slide group px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
                 key={i}
                 data-index={i}
                 data-selected={i === selectedIndex}
@@ -213,7 +264,7 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                 </div>
 
                 <div
-                  className='relative inline-block'
+                  className={`relative inline-block ${slideDescriptionMotion}`}
                   inert={i !== selectedIndex}
                 >
                   <StreamDescription
