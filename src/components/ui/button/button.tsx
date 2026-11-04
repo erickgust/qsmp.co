@@ -28,6 +28,8 @@ export const button = cva(
     'duration-150',
     'before:transition-transform',
     'before:duration-150',
+    'will-change-transform',
+    'before:will-change-transform',
     'max-sm:py-4',
   ],
   {
