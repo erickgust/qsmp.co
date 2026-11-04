@@ -9,15 +9,16 @@ export function FilterDropdown() {
 
   const { languages, selectedLanguages, toggleLanguage } = useFilter()
 
+  const isNoneSelected = selectedLanguages.length === 0
+  const isAllSelected = selectedLanguages.length === languages.length
+  const triggerLabel =
+    isNoneSelected || isAllSelected ? t('filter') : selectedLanguages.join(', ')
+
   return (
     <DropdownMenu.Root modal={false}>
-      <DropdownMenu.Trigger className='group inline-flex items-center justify-between gap-7 w-full md:w-auto min-w-[250px] px-6 py-4 bg-[#F0F6FF] border border-[#D7DFEC] font-medium text-[#1F1E33] text-lg text-left'>
+      <DropdownMenu.Trigger className='group inline-flex items-center justify-between gap-7 w-full md:w-auto min-w-64 px-6 py-4 bg-[#F0F6FF] border border-[#D7DFEC] font-medium text-[#1F1E33] text-lg text-left'>
         <span className='flex items-center justify-between w-full gap-2'>
-          {selectedLanguages.length > 0 ? (
-            selectedLanguages.join(', ')
-          ) : (
-            <span className='text-lg'>{t('filter')}</span>
-          )}
+          {triggerLabel}
 
           <ArrowUp
             aria-hidden='true'
@@ -41,21 +42,13 @@ export function FilterDropdown() {
             onCheckedChange={() => toggleLanguage(language.label)}
             // Keep the menu open so several languages can be picked in a row
             onSelect={(event) => event.preventDefault()}
-            className='flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] w-full cursor-pointer outline-none data-[highlighted]:bg-white'
+            className='group flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] w-full cursor-pointer outline-none data-[highlighted]:bg-white'
           >
             <span
               aria-hidden='true'
-              className='grid place-items-center size-5 shrink-0 border border-gray-500 bg-white text-blue-600'
+              className='grid place-items-center size-[18px] shrink-0 border border-[#1F1E33] group-data-[state=checked]:border-[#00ADFF]'
             >
-              <DropdownMenu.ItemIndicator>
-                <svg viewBox='0 0 16 16' className='size-4' fill='none'>
-                  <path
-                    d='M3 8.5l3 3 7-7'
-                    stroke='currentColor'
-                    strokeWidth='2'
-                  />
-                </svg>
-              </DropdownMenu.ItemIndicator>
+              <DropdownMenu.ItemIndicator className='size-2.5 bg-[#00ADFF]' />
             </span>
 
             <span>{language.label}</span>
