@@ -160,6 +160,13 @@ html {
   animation: wave2 3.6s infinite;
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .signal-1,
+  .signal-2 {
+    animation: none;
+  }
+}
+
 .tweets .react-tweet-theme [class$='_brand'],
 .tweets .react-tweet-theme [class$='_follow'],
 .tweets .react-tweet-theme [class$='_separator'] {
