@@ -40,7 +40,7 @@ export function SocialMediaItem({ name, icon, url }: SocialMediaItemProps) {
         icon={<Icon aria-hidden='true' />}
         isExternal
         href={url}
-        className='normal-case w-full'
+        className='normal-case w-full gap-x-4 sm:gap-x-2'
       >
         {name}
       </SocialButton>

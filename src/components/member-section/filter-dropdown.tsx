@@ -2,12 +2,20 @@ import { useTranslations } from 'next-intl'
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
 import { ArrowUp } from '@/assets/icons/arrow-up'
-import { useFilter } from '@/context/use-filter-context'
+import type { Language } from '@/utils/schemas/member-schema'
 
-export function FilterDropdown() {
+type FilterDropdownProps = {
+  languages: Language[]
+  selectedLanguages: Language[]
+  toggleLanguage: (language: Language) => void
+}
+
+export function FilterDropdown({
+  languages,
+  selectedLanguages,
+  toggleLanguage,
+}: FilterDropdownProps) {
   const t = useTranslations('members')
-
-  const { languages, selectedLanguages, toggleLanguage } = useFilter()
 
   const isNoneSelected = selectedLanguages.length === 0
   const isAllSelected = selectedLanguages.length === languages.length
@@ -37,9 +45,9 @@ export function FilterDropdown() {
         </DropdownMenu.Label>
         {languages.map((language) => (
           <DropdownMenu.CheckboxItem
-            key={language.label}
-            checked={selectedLanguages.includes(language.label)}
-            onCheckedChange={() => toggleLanguage(language.label)}
+            key={language}
+            checked={selectedLanguages.includes(language)}
+            onCheckedChange={() => toggleLanguage(language)}
             // Keep the menu open so several languages can be picked in a row
             onSelect={(event) => event.preventDefault()}
             className='group flex items-center gap-3 px-4 py-4 border border-[#D7DFEC] w-full cursor-pointer outline-none data-[highlighted]:bg-white'
@@ -51,7 +59,7 @@ export function FilterDropdown() {
               <DropdownMenu.ItemIndicator className='size-2.5 bg-[#00ADFF] motion-safe:animate-check-in' />
             </span>
 
-            <span>{language.label}</span>
+            <span>{language}</span>
           </DropdownMenu.CheckboxItem>
         ))}
       </DropdownMenu.Content>

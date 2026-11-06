@@ -1,15 +1,13 @@
 import { getTranslations } from 'next-intl/server'
-import { z } from 'zod'
-import { ExternalLinkButton } from './ui/button/external-button'
+import { ExternalLinkButton } from './ui/button'
 import { Heading } from './ui/heading'
 import { Paragraph } from './ui/paragraph'
-import { YoutubeEmbed } from './youtube-embed'
+import { YoutubeEmbed } from './ui/youtube-embed'
 import { defaultVideos } from './stream-section/defaultVideos'
 
-function YoutubeButton({
-  className = '',
-  children,
-}: React.ComponentPropsWithoutRef<'button'>) {
+type YoutubeButtonProps = { className?: string; children: React.ReactNode }
+
+function YoutubeButton({ className, children }: YoutubeButtonProps) {
   return (
     <ExternalLinkButton
       colors='dark'
@@ -21,35 +19,9 @@ function YoutubeButton({
   )
 }
 
-async function getYoutubeData() {
-  try {
-    const youtubeSchema = z.object({
-      latestYouTubeVideo: z.object({
-        id: z.string(),
-        title: z.string(),
-      }),
-    })
-
-    const parsedData = youtubeSchema.parse({
-      latestYouTubeVideo: {
-        id: 'qR-GBSpbpR4',
-        title: 'QSMP 2024 - Restarting Isla Quesadilla',
-      },
-    })
-
-    return parsedData.latestYouTubeVideo
-  } catch {
-    console.error('An error occurred while fetching the youtube data.')
-    return {
-      id: defaultVideos[0].id,
-      title: defaultVideos[0].title,
-    }
-  }
-}
-
 export async function YoutubeSection() {
   const t = await getTranslations('youtube')
-  const video = await getYoutubeData()
+  const [latestVideo] = defaultVideos
 
   return (
     <section
@@ -74,7 +46,7 @@ export async function YoutubeSection() {
 
         <div className='flex flex-1 flex-col md:flex-row items-stretch xs:items-center md:justify-end md:items-center'>
           <div className='w-full my-10 md:my-0'>
-            <YoutubeEmbed id={video.id} title={video.title} />
+            <YoutubeEmbed id={latestVideo.id} title={latestVideo.title} />
           </div>
 
           <YoutubeButton className='block md:hidden xs:max-md:px-8'>

@@ -7,10 +7,8 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Toaster } from 'sonner'
 
-import { FilterProvider } from '@/context/use-filter-context'
 import { routing } from '@/i18n/routing'
 import { siteUrl } from '@/lib/site-url'
-import Providers from '../providers'
 
 const dm_sans = DM_Sans({
   subsets: ['latin'],
@@ -32,7 +30,7 @@ const pixeloidSans = localFont({
   display: 'swap',
 })
 
-const hreflang = (locale: string) => (locale === 'pt-br' ? 'pt-BR' : locale)
+const hreflang = (locale: string) => Intl.getCanonicalLocales(locale)[0]
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
@@ -83,11 +81,8 @@ export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
 
       <body>
         <NextIntlClientProvider>
-          <FilterProvider>
-            <Toaster position='top-center' />
-
-            <Providers>{children}</Providers>
-          </FilterProvider>
+          <Toaster position='top-center' />
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>

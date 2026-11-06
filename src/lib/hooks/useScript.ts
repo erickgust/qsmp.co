@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export interface ScriptState {
+interface ScriptState {
   loading: boolean
   error: Error | null
 }

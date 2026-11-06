@@ -1,136 +1,33 @@
-import {
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-} from 'react'
-import type { EmblaOptionsType, EmblaCarouselType } from 'embla-carousel'
-import useEmblaCarousel from 'embla-carousel-react'
-import Autoplay from 'embla-carousel-autoplay'
-import LiteYouTubeEmbed from 'react-lite-youtube-embed'
-import 'react-lite-youtube-embed/dist/LiteYouTubeEmbed.css'
-
-import { StreamDescription } from '../ui/stream-description'
-import TwitchPlayer from '@/lib/TwitchPlayer'
+import { useEffect, useRef } from 'react'
+import type { UseEmblaCarouselType } from 'embla-carousel-react'
 import LazyLoad from 'react-lazy-load'
-import { Members } from '@/app/[lang]/page'
 
-const slideDescriptionMotion =
-  'opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]'
+import { StreamDescription } from './stream-description'
+import { YoutubeEmbed } from '../ui/youtube-embed'
+import TwitchPlayer from '@/lib/TwitchPlayer'
+import type { StreamResponse } from '@/utils/schemas/stream-schema'
 
-export type CarouselRef = {
-  scrollTo: (index: number) => void
-  scrollPrev: () => void
-  scrollNext: () => void
-}
+const reducedMotionQuery = '(prefers-reduced-motion: reduce)'
 
-type PropType = {
-  thumbsApi?: EmblaCarouselType
-  desktopThumbsApi?: EmblaCarouselType
-
-  slides: Members
+type CarouselProps = {
+  emblaRef: UseEmblaCarouselType[0]
+  emblaApi: UseEmblaCarouselType[1]
+  slides: StreamResponse
   selectedIndex: number
-  isLoading?: boolean
-  options?: EmblaOptionsType
-  onSelectIndex: (index: number) => void
-  setPrevBtnDisabled: (disabled: boolean) => void
-  setNextBtnDisabled: (disabled: boolean) => void
 }
 
-const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
-  const {
-    thumbsApi,
-    desktopThumbsApi,
-    slides,
-    options,
-    onSelectIndex,
-    selectedIndex,
-    isLoading,
-    setPrevBtnDisabled,
-    setNextBtnDisabled,
-  } = props
-  const [emblaRef, emblaApi] = useEmblaCarousel(options, [
-    Autoplay({
-      delay: 6000,
-      stopOnInteraction: true,
-      playOnInit: false,
-      stopOnMouseEnter: true,
-    }),
-  ])
-
+export function Carousel({
+  emblaRef,
+  emblaApi,
+  slides,
+  selectedIndex,
+}: CarouselProps) {
   const firstLoad = useRef(true)
-  const { type, data } = slides
-  const hasData = data.length > 0 && !isLoading
-
-  const scrollPrev = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.plugins().autoplay?.stop()
-      emblaApi.scrollPrev()
-    }
-  }, [emblaApi])
-
-  const scrollNext = useCallback(() => {
-    if (emblaApi) {
-      emblaApi.plugins().autoplay?.stop()
-      emblaApi.scrollNext()
-    }
-  }, [emblaApi])
-
-  const scrollTo = useCallback(
-    (index: number) => {
-      if (emblaApi && thumbsApi && desktopThumbsApi) {
-        const embla = emblaApi as EmblaCarouselType
-
-        embla.plugins().autoplay?.stop()
-        embla.scrollTo(index)
-      }
-    },
-    [desktopThumbsApi, emblaApi, thumbsApi],
-  )
-
-  const onSelect = useCallback(() => {
-    if (!emblaApi || !thumbsApi || !desktopThumbsApi) return
-
-    thumbsApi.scrollTo(emblaApi.selectedScrollSnap())
-    desktopThumbsApi.scrollTo(emblaApi.selectedScrollSnap())
-
-    onSelectIndex(emblaApi.selectedScrollSnap())
-    setPrevBtnDisabled(!emblaApi.canScrollPrev())
-    setNextBtnDisabled(!emblaApi.canScrollNext())
-  }, [
-    emblaApi,
-    thumbsApi,
-    desktopThumbsApi,
-    onSelectIndex,
-    setPrevBtnDisabled,
-    setNextBtnDisabled,
-  ])
-
-  useImperativeHandle(
-    ref,
-    () => ({
-      scrollTo,
-      scrollPrev,
-      scrollNext,
-    }),
-    [scrollNext, scrollPrev, scrollTo],
-  )
-
-  useEffect(() => {
-    if (!emblaApi) return
-
-    onSelect()
-
-    emblaApi.on('init', onSelect)
-    emblaApi.on('reInit', onSelect)
-    emblaApi.on('select', onSelect)
-  }, [emblaApi, onSelect])
 
   useEffect(() => {
     if (!emblaApi) return
     const desktop = window.matchMedia('(min-width: 768px)')
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const reduce = window.matchMedia(reducedMotionQuery)
 
     const tween = () => {
       const engine = emblaApi.internalEngine()
@@ -149,19 +46,18 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
             }
           })
 
-          // the video wrapper is the slide's first child (LazyLoad div / youtube div)
-          const video = slides[slideIndex]
+          const media = slides[slideIndex]
             .firstElementChild as HTMLElement | null
-          if (!video) return
+          if (!media) return
           if (!desktop.matches) {
-            video.style.transform = ''
+            media.style.transform = ''
             return
           }
 
           let t = Math.min(Math.abs(diff) * snaps.length, 1)
           if (reduce.matches) t = Math.round(t)
           const x = (diff > 0 ? -40 : 368) * t
-          video.style.transform = `translateX(${x}px) scale(${1 - 0.134 * t})`
+          media.style.transform = `translateX(${x}px) scale(${1 - 0.134 * t})`
         })
       })
     }
@@ -179,98 +75,79 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
     <div className='relative my-10'>
       <div className='overflow-hidden' ref={emblaRef}>
         <div className='flex touch-pan-y'>
-          {hasData &&
-            type === 'live' &&
-            data.map((member, i) => (
-              <div
-                className='embla__slide group px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
+          {slides.type === 'live' &&
+            slides.data.map((member, i) => (
+              <Slide
                 key={i}
-                data-index={i}
-                data-selected={i === selectedIndex}
-              >
-                <LazyLoad
-                  height='420px'
-                  className='relative z-10 max-w-3xl aspect-video !w-full max-md:!h-auto'
-                >
-                  {member.platform == 'afreeca' ? (
-                    <iframe
-                      src={`https://play.afreecatv.com/${member.userName}/embed`}
-                      title={member.name}
-                      frameBorder='0'
-                      allowFullScreen
-                      className='w-full h-full'
-                    />
-                  ) : (
-                    <TwitchPlayer
-                      channel={member.userName}
-                      height='420px'
-                      width='750px'
-                      id={`twitch-player-${member.userName}`}
-                      className='max-w-3xl aspect-video !w-full max-md:!h-auto'
-                      autoplay={false}
-                      play={i === selectedIndex}
-                      onReady={(player) => {
-                        const playCarousel = emblaApi?.plugins().autoplay?.play
+                isSelected={i === selectedIndex}
+                media={
+                  <LazyLoad
+                    height='420px'
+                    className='relative z-10 max-w-3xl aspect-video !w-full max-md:!h-auto'
+                  >
+                    {member.platform == 'afreeca' ? (
+                      <iframe
+                        src={`https://play.afreecatv.com/${member.userName}/embed`}
+                        title={member.name}
+                        frameBorder='0'
+                        allowFullScreen
+                        className='w-full h-full'
+                      />
+                    ) : (
+                      <TwitchPlayer
+                        channel={member.userName}
+                        height='420px'
+                        width='750px'
+                        id={`twitch-player-${member.userName}`}
+                        className='max-w-3xl aspect-video !w-full max-md:!h-auto'
+                        autoplay={false}
+                        play={i === selectedIndex}
+                        onReady={(player) => {
+                          const playCarousel =
+                            emblaApi?.plugins().autoplay?.play
 
-                        if (i === selectedIndex) {
-                          player.play()
-                        }
+                          if (i === selectedIndex) {
+                            player.play()
+                          }
 
-                        if (
-                          firstLoad.current &&
-                          playCarousel &&
-                          !window.matchMedia('(prefers-reduced-motion: reduce)')
-                            .matches
-                        ) {
-                          playCarousel()
-                        }
+                          if (
+                            firstLoad.current &&
+                            playCarousel &&
+                            !window.matchMedia(reducedMotionQuery).matches
+                          ) {
+                            playCarousel()
+                          }
 
-                        firstLoad.current = false
-                      }}
-                    />
-                  )}
-                </LazyLoad>
-
-                <div
-                  className={`relative inline-block ${slideDescriptionMotion}`}
-                  inert={i !== selectedIndex}
-                >
+                          firstLoad.current = false
+                        }}
+                      />
+                    )}
+                  </LazyLoad>
+                }
+                description={
                   <StreamDescription
                     description={member.description}
                     language={member.language}
                     url={`https://twitch.tv/${member.userName}`}
-                    channel={{
-                      image: member.avatar,
-                      name: member.name,
-                    }}
+                    channel={{ image: member.avatar, name: member.name }}
                     viewerCount={member.viewerCount}
-                    isLive={true}
+                    isLive
                   />
-                </div>
-              </div>
+                }
+              />
             ))}
 
-          {hasData &&
-            type === 'youtube' &&
-            data.map((video, i) => (
-              <div
-                className='embla__slide group px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
+          {slides.type === 'youtube' &&
+            slides.data.map((video, i) => (
+              <Slide
                 key={i}
-                data-index={i}
-                data-selected={i === selectedIndex}
-              >
-                <div className='relative z-10 max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
-                  <LiteYouTubeEmbed
-                    id={video.id}
-                    title={video.title}
-                    lazyLoad
-                  />
-                </div>
-
-                <div
-                  className={`relative inline-block ${slideDescriptionMotion}`}
-                  inert={i !== selectedIndex}
-                >
+                isSelected={i === selectedIndex}
+                media={
+                  <div className='relative z-10 max-w-3xl !w-full h-auto md:min-h-full md:max-h-0'>
+                    <YoutubeEmbed id={video.id} title={video.title} />
+                  </div>
+                }
+                description={
                   <StreamDescription
                     description={video.description}
                     url={`https://www.youtube.com/watch?v=${video.id}`}
@@ -279,15 +156,36 @@ const EmblaCarousel = forwardRef<CarouselRef, PropType>((props, ref) => {
                       name: video.channel.name,
                     }}
                   />
-                </div>
-              </div>
+                }
+              />
             ))}
         </div>
       </div>
     </div>
   )
-})
+}
 
-EmblaCarousel.displayName = 'EmblaCarousel'
+type SlideProps = {
+  isSelected: boolean
+  // must render a single element: the tween above moves the slide's first child
+  media: React.ReactNode
+  description: React.ReactNode
+}
 
-export default EmblaCarousel
+function Slide({ isSelected, media, description }: SlideProps) {
+  return (
+    <div
+      data-selected={isSelected}
+      className='group flex-[0_0_100%] md:flex-[0_0_67.5rem] px-8 md:px-0 flex flex-col md:flex-row gap-6 md:mx-12 md:justify-center'
+    >
+      {media}
+
+      <div
+        className='relative inline-block opacity-0 group-data-[selected=true]:opacity-100 transition-opacity duration-300 [transition-timing-function:cubic-bezier(0.23,1,0.32,1)]'
+        inert={!isSelected}
+      >
+        {description}
+      </div>
+    </div>
+  )
+}

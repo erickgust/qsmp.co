@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 type ModalProps = {
   isOpen: boolean
-  toggleModal: () => void
+  onClose: () => void
 
   children: React.ReactNode
 } & React.ComponentPropsWithoutRef<'dialog'>
@@ -11,7 +11,7 @@ type ModalProps = {
 // Children must fill the dialog (padding goes on them) so a click on the dialog itself is a backdrop click
 export function Modal({
   isOpen,
-  toggleModal,
+  onClose,
   children,
   className,
   ...props
@@ -30,9 +30,9 @@ export function Modal({
     // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- the keyboard path is the native Escape
     <dialog
       ref={ref}
-      // Escape closes the dialog natively, bypassing React state
-      onClose={() => isOpen && toggleModal()}
-      onClick={(event) => event.target === event.currentTarget && toggleModal()}
+      // Escape closes the dialog natively, bypassing React state; the close event also fires (async) when isOpen turns false
+      onClose={() => isOpen && onClose()}
+      onClick={(event) => event.target === event.currentTarget && onClose()}
       className={clsx('backdrop:bg-neutral-900/70', className)}
       {...props}
     >

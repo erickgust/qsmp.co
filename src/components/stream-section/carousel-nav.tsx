@@ -1,11 +1,11 @@
 'use client'
 
-import { Members } from '@/app/[lang]/page'
 import Image from 'next/image'
 
+import type { StreamResponse } from '@/utils/schemas/stream-schema'
+
 type CarouselNavProps = {
-  isLoading?: boolean
-  items: Members
+  items: StreamResponse
   selectedIndex: number
   onSelectedIndex: (index: number) => void
 }
@@ -14,15 +14,12 @@ export function CarouselNav({
   items,
   onSelectedIndex,
   selectedIndex,
-  isLoading = false,
 }: CarouselNavProps) {
   const { type, data } = items
-  const hasData = data.length > 0 && !isLoading
 
   return (
     <div className='flex md:gap-2.5 items-center py-1.5 leading-none'>
       {type === 'youtube' &&
-        hasData &&
         data.map((video, index) => (
           <button
             key={video.id}
@@ -39,7 +36,6 @@ export function CarouselNav({
         ))}
 
       {type === 'live' &&
-        hasData &&
         data.map((member, index) => (
           <button
             key={member.id}

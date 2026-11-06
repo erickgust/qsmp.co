@@ -44,3 +44,5 @@ export const streamResponseSchema = z.discriminatedUnion('type', [
   videoDataSchema,
   memberDataSchema,
 ])
+
+export type StreamResponse = z.infer<typeof streamResponseSchema>

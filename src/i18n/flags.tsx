@@ -5,7 +5,7 @@ import { GermanyFlag } from '@/assets/icons/flags/de'
 import { UnitedKingdomFlag } from '@/assets/icons/flags/en'
 import { SpainFlag } from '@/assets/icons/flags/es'
 import { FranceFlag } from '@/assets/icons/flags/fr'
-import { KoreanFlag } from '@/assets/icons/flags/kr'
+import { KoreanFlag } from '@/assets/icons/flags/ko'
 import { BrazilFlag } from '@/assets/icons/flags/pt-br'
 
 export const flags: Record<

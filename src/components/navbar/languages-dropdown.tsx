@@ -10,9 +10,7 @@ import { routing } from '@/i18n/routing'
 import { flags } from '@/i18n/flags'
 
 const nativeName = (locale: string) =>
-  new Intl.DisplayNames([locale], { type: 'language' }).of(
-    locale === 'pt-br' ? 'pt-BR' : locale,
-  )
+  new Intl.DisplayNames([locale], { type: 'language' }).of(locale)
 
 export function LanguagesDropdown() {
   const t = useTranslations('nav')

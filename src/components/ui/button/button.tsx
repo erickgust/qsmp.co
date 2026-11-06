@@ -1,4 +1,4 @@
-import { VariantProps, cva } from 'cva'
+import { cva } from 'cva'
 
 export const button = cva(
   [
@@ -67,14 +67,6 @@ export const button = cva(
           'active:bg-[#D7DFEC]',
           'before:bg-[#D7DFEC]',
         ],
-        light: [
-          'text-[#1F1E33]',
-          'bg-[#F0F6FF]',
-          'sm:bg-[#F0F6FF]',
-          'hover:bg-[#D7DFEC]',
-          'active:bg-[#D7DFEC]',
-          'before:bg-[#D7DFEC]',
-        ],
         red: [
           'text-white',
           'bg-[#FF3D3D]',
@@ -114,14 +106,6 @@ export const button = cva(
           'hover:bg-[#1F1E33]',
           'active:bg-[#1F1E33]',
           'before:bg-[#1F1E33]',
-        ],
-        twitter: [
-          'text-white',
-          'bg-[#1DA1F2]',
-          'sm:bg-[#48BAFF]',
-          'hover:bg-[#1DA1F2]',
-          'active:bg-[#1DA1F2]',
-          'before:bg-[#1DA1F2]',
         ],
         twitch: [
           'text-white',
@@ -169,27 +153,5 @@ export const button = cva(
       intent: 'primary',
       colors: 'white',
     },
-    compoundVariants: [
-      {
-        intent: 'social',
-        colors: 'white',
-        size: 'large',
-        className: 'gap-x-4 sm:gap-x-2',
-      },
-    ],
   },
 )
-
-export interface ButtonProps
-  extends
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof button> {}
-
-export function Button({
-  className,
-  intent = 'primary',
-  colors,
-  ...props
-}: ButtonProps) {
-  return <button className={button({ intent, colors, className })} {...props} />
-}

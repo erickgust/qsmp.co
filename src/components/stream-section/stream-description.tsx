@@ -2,7 +2,7 @@ import { useFormatter, useTranslations } from 'next-intl'
 import Image from 'next/image'
 import { GroupIcon } from '@/assets/icons/group'
 import { LangIcon } from '@/assets/icons/lang'
-import { ExternalLinkButton } from './button/external-button'
+import { ExternalLinkButton } from '../ui/button'
 
 type StreamDescriptionProps = {
   channel: {

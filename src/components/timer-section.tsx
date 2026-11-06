@@ -1,6 +1,6 @@
 import { useTranslations } from 'next-intl'
-import { ExternalLinkButton } from '../ui/button'
-import { Paragraph } from '../ui/paragraph'
+import { ExternalLinkButton } from './ui/button'
+import { Paragraph } from './ui/paragraph'
 
 export function TimerSection() {
   const t = useTranslations('timer')
@@ -21,10 +21,6 @@ export function TimerSection() {
             </ExternalLinkButton>
           </div>
         </div>
-
-        {/* <div className="mx-auto mb-6 xxs:mb-10 md:m-0">
-          <Timer />
-        </div> */}
       </div>
     </section>
   )
