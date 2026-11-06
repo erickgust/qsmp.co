@@ -1,48 +1,22 @@
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-
-import { NewsletterIcon } from '@/assets/icons/newsletter'
-import { NavbarLink } from './navbar-link'
-import { Modal } from '../ui/modal'
-import { Language, NewsletterDropdown } from '../ui/newsletter-dropdown'
+import { useTranslations } from 'next-intl'
 import clsx from 'clsx'
 
-import { Heading } from '../ui/heading'
-
-import { NavbarLinkMobile } from './navbar-link-mobile'
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
-import { LanguagesDropdown } from '../ui/languages-dropdown'
-import { TotalCurrentViewers } from '../total-current-viewers'
-import { ExternalLinkButton } from '../ui/button/external-button'
-
+import { NewsletterIcon } from '@/assets/icons/newsletter'
 import CloseIcon from '@/assets/icons/close'
 import MenuMobileIcon from '@/assets/icons/menu-mobile'
-import { useLocale, useTranslations } from 'next-intl'
-import { routing } from '@/i18n/routing'
-import { flags } from '@/i18n/flags'
-import { toast } from 'sonner'
+import { Modal } from '../ui/modal'
+import { NavbarLink } from './navbar-link'
+import { NavbarLinkMobile } from './navbar-link-mobile'
+import { LanguagesDropdown } from './languages-dropdown'
+import { TotalCurrentViewers } from './total-current-viewers'
+import { NewsletterModal } from './newsletter-modal'
 
-type NavbarProps = {
-  isMenuMobileOpen: boolean
-  isNewsletterModalOpen: boolean
+const totalViewers = 24_056
 
-  toggleMenuMobileModal: () => void
-  toggleNewsletterModal: () => void
-}
-
-export function Navbar({
-  isNewsletterModalOpen,
-  toggleNewsletterModal,
-  isMenuMobileOpen,
-  toggleMenuMobileModal,
-}: NavbarProps) {
+export function Navbar() {
   const t = useTranslations('nav')
-  const locale = useLocale()
   const menuItems = [
     { label: t('navlinks.streams'), href: '#streams' },
     { label: t('navlinks.members'), href: '#members' },
@@ -50,73 +24,32 @@ export function Navbar({
     { label: t('navlinks.socials'), href: '#socials' },
   ]
 
-  // CLDR lowercases most language names ("inglés")
-  const languageNames = new Intl.DisplayNames([locale], { type: 'language' })
-  const languages: Language[] = routing.locales.map((tag) => {
-    const Flag = flags[tag]
-    const name = languageNames.of(tag === 'pt-br' ? 'pt' : tag) ?? tag
-
-    return {
-      label: name.charAt(0).toLocaleUpperCase(locale) + name.slice(1),
-      icon: <Flag className='min-w-fit' aria-hidden='true' />,
-      tag,
-    }
-  })
+  const [openDialog, setOpenDialog] = useState<'menu' | 'newsletter' | null>(
+    null,
+  )
+  const closeDialog = () => setOpenDialog(null)
 
   const [navHeight, setNavHeight] = useState(80)
   const [isSticky, setIsSticky] = useState(false)
   const [showTotalViewers, setShowTotalViewers] = useState(true)
   const navRef = useRef<HTMLElement>(null)
-  const previousScrollPosition = useRef(0)
-
-  const [email, setEmail] = useState('')
-  const [selectedLanguage, setSelectedLanguage] = useState<Language>(
-    () => languages.find((language) => language.tag === locale) ?? languages[0],
-  )
-
-  const totalViewers = 24_056
-
-  const handleLanguageSelect = useCallback((language: Language) => {
-    setSelectedLanguage(language)
-  }, [])
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    toast(t('newsletter-modal.demo'))
-    setEmail('')
-    toggleNewsletterModal()
-  }
+  const navTopRef = useRef<HTMLDivElement>(null)
+  const previousScrollY = useRef(0)
 
   useEffect(() => {
-    const nav = navRef.current
-
-    if (!nav || !nav.previousElementSibling) return
-
-    const { previousElementSibling: prevSibling } = nav
-    const { height: siblingHeight } = prevSibling.getBoundingClientRect()
-
     const handleScroll = () => {
-      if (window.scrollY >= siblingHeight) {
-        setIsSticky(true)
-      } else {
-        setIsSticky(false)
-      }
+      const scrollY = window.scrollY
+      const isPastNavTop = navTopRef.current!.getBoundingClientRect().top <= 0
+      setIsSticky(isPastNavTop)
+
+      if (!isPastNavTop) return
+      setShowTotalViewers(scrollY <= previousScrollY.current)
+      previousScrollY.current = scrollY
     }
 
     window.addEventListener('scroll', handleScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
-  }, [isSticky])
-
-  useEffect(() => {
-    if (isMenuMobileOpen || isNewsletterModalOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'auto'
-    }
-  }, [isMenuMobileOpen, isNewsletterModalOpen])
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   useLayoutEffect(() => {
     function handleResize() {
@@ -133,37 +66,10 @@ export function Navbar({
     }
   }, [])
 
-  useEffect(() => {
-    const nav = navRef.current
-
-    if (!nav || !nav.previousElementSibling) return
-
-    const { previousElementSibling: prevSibling } = nav
-    const { height: siblingHeight } = prevSibling.getBoundingClientRect()
-
-    const handleViewerScroll = () => {
-      const currentScrollPosition = window.scrollY
-
-      if (currentScrollPosition <= siblingHeight) return
-
-      if (previousScrollPosition.current < currentScrollPosition) {
-        setShowTotalViewers(false)
-      } else {
-        setShowTotalViewers(true)
-      }
-
-      previousScrollPosition.current = currentScrollPosition
-    }
-
-    window.addEventListener('scroll', handleViewerScroll)
-
-    return () => {
-      window.removeEventListener('scroll', handleViewerScroll)
-    }
-  }, [])
-
   return (
     <>
+      <div ref={navTopRef} />
+
       <nav
         data-sticky={isSticky}
         className='
@@ -176,14 +82,7 @@ export function Navbar({
         <div className='flex items-center justify-between w-full '>
           <div className='flex items-center min-[900px]:border-r-0'>
             <div className='border-r py-1 min-w-max'>
-              <Image
-                src='/small-qsmp-logo.png'
-                alt='QSMP Logo'
-                // 3x the display size, see header.tsx
-                width={172}
-                height={144}
-                className='my-3 mx-4 xl:mx-8 h-12 w-auto'
-              />
+              <NavLogo />
             </div>
 
             {totalViewers > 0 && (
@@ -195,10 +94,10 @@ export function Navbar({
 
           <button
             type='button'
-            onClick={toggleMenuMobileModal}
+            onClick={() => setOpenDialog('menu')}
             aria-label={t('openMenu')}
             aria-haspopup='dialog'
-            aria-expanded={isMenuMobileOpen}
+            aria-expanded={openDialog === 'menu'}
             className='flex min-[900px]:hidden items-center px-9 py-7 border-l border-r-0 '
           >
             <MenuMobileIcon className='size-6' aria-hidden='true' />
@@ -217,7 +116,7 @@ export function Navbar({
 
             <button
               type='button'
-              onClick={toggleNewsletterModal}
+              onClick={() => setOpenDialog('newsletter')}
               className='text-xs hover:bg-[#F0F6FF] uppercase border-r px-6 2xl:px-10 h-20 flex items-center gap-2 text-[#1F1E33]'
             >
               <NewsletterIcon aria-hidden='true' />
@@ -228,98 +127,26 @@ export function Navbar({
             <LanguagesDropdown />
           </div>
 
-          <Modal
-            isOpen={isNewsletterModalOpen}
-            toggleModal={toggleNewsletterModal}
-            aria-labelledby='newsletter-title'
-            className='dialog-pop md:max-w-4xl bg-white shadow-lg w-10/12'
-          >
-            <div className='relative p-8 md:px-16 md:py-14'>
-              <div className='flex flex-col gap-6'>
-                <div className='flex justify-between items-start'>
-                  <Heading id='newsletter-title' className='text-2xl'>
-                    {t('newsletter-modal.title')}
-                  </Heading>
-
-                  <button
-                    type='button'
-                    onClick={toggleNewsletterModal}
-                    aria-label={t('close')}
-                    className='md:absolute md:right-8 md:top-8 pl-2 ml-1'
-                  >
-                    <CloseIcon className='size-6' aria-hidden='true' />
-                  </button>
-                </div>
-
-                <p className='mb-6 text-pretty'>
-                  {t('newsletter-modal.paragraph.first')}
-
-                  <span className='inline-block mt-2'>
-                    {t('newsletter-modal.paragraph.second')}
-                  </span>
-                </p>
-              </div>
-
-              <form onSubmit={handleSubmit} className='flex flex-col'>
-                <div className='flex flex-col md:flex-row gap-6 w-full'>
-                  <NewsletterDropdown
-                    selectedLanguage={selectedLanguage}
-                    handleLanguageSelect={handleLanguageSelect}
-                    className='justify-between md:justify-center'
-                    languages={languages}
-                  />
-
-                  <label htmlFor='newsletter-email' className='sr-only'>
-                    {t('newsletter-modal.placeholder')}
-                  </label>
-                  <input
-                    id='newsletter-email'
-                    name='email'
-                    type='email'
-                    autoComplete='email'
-                    required
-                    className='border w-full p-4'
-                    placeholder={t('newsletter-modal.placeholder')}
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                </div>
-
-                <ExternalLinkButton
-                  colors='blue'
-                  className='mt-6 self-end'
-                  as='button'
-                  type='submit'
-                >
-                  {t('newsletter-modal.button')}
-                </ExternalLinkButton>
-              </form>
-            </div>
-          </Modal>
-
-          {/* Mobile menu */}
+          <NewsletterModal
+            isOpen={openDialog === 'newsletter'}
+            onClose={closeDialog}
+          />
 
           <Modal
-            isOpen={isMenuMobileOpen}
-            toggleModal={toggleMenuMobileModal}
+            isOpen={openDialog === 'menu'}
+            onClose={closeDialog}
             aria-label={t('menu')}
             className='m-0 w-screen max-w-none h-screen supports-[height:100dvh]:h-dvh max-h-none bg-white'
           >
             <div className='relative bg-[#ffffff] w-screen h-full shadow-lg'>
               <div className='flex justify-between items-center border'>
                 <div className='border-r py-1'>
-                  <Image
-                    src='/small-qsmp-logo.png'
-                    alt='QSMP Logo'
-                    width={172}
-                    height={144}
-                    className='my-3 mx-4 xl:mx-8 h-12 w-auto'
-                  />
+                  <NavLogo />
                 </div>
 
                 <button
                   type='button'
-                  onClick={toggleMenuMobileModal}
+                  onClick={closeDialog}
                   aria-label={t('closeMenu')}
                   className='items-center px-9 py-7 border-l border-r-0'
                 >
@@ -334,8 +161,7 @@ export function Navbar({
                       href={link.href}
                       key={link.label}
                       label={link.label}
-                      arrowColor='#1F1E33'
-                      toggleMenuMobileModal={toggleMenuMobileModal}
+                      onClick={closeDialog}
                     />
                   ))}
                 </div>
@@ -344,9 +170,9 @@ export function Navbar({
                   <button
                     type='button'
                     onClick={() => {
-                      toggleMenuMobileModal()
+                      closeDialog()
                       // Open after the menu dialog has closed and handed focus back
-                      requestAnimationFrame(toggleNewsletterModal)
+                      requestAnimationFrame(() => setOpenDialog('newsletter'))
                     }}
                     className='text-xl hover:bg-[#F0F6FF] uppercase px-8 h-20 w-full flex items-center gap-2 text-[#1F1E33]'
                   >
@@ -381,5 +207,18 @@ export function Navbar({
 
       {isSticky ? <div style={{ height: navHeight }} /> : null}
     </>
+  )
+}
+
+function NavLogo() {
+  return (
+    <Image
+      src='/small-qsmp-logo.png'
+      alt='QSMP Logo'
+      // 3x the display size: the browser blurs this logo when shrinking an image only slightly larger
+      width={172}
+      height={144}
+      className='my-3 mx-4 xl:mx-8 h-12 w-auto'
+    />
   )
 }

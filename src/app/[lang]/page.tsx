@@ -12,8 +12,7 @@ export default function Home() {
     <>
       <Header />
 
-      {/* padding top 80 on mobile, 0 on desktop because of viewers component */}
-      <main id='main' className='pt-20 xl:pt-0'>
+      <main id='main'>
         <ServerStreamSection />
         <TimerSection />
         <ServerMemberSection />

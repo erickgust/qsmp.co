@@ -153,3 +153,7 @@ html {
 .tweets .react-tweet-theme [class$='_separator'] {
   display: none;
 }
+
+body:has(dialog[open]) {
+  overflow: hidden;
+}
