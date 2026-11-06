@@ -15,7 +15,6 @@ export function ExternalLinkButton<E extends React.ElementType = 'a'>({
   as,
   colors,
   children,
-  intent = 'primary',
   ...props
 }: ExternalLinkProps<E>) {
   const Component = as || 'a'
@@ -23,7 +22,7 @@ export function ExternalLinkButton<E extends React.ElementType = 'a'>({
 
   return (
     <Component
-      className={button({ colors, intent, className })}
+      className={button({ colors, className })}
       {...anchorProps}
       {...props}
     >

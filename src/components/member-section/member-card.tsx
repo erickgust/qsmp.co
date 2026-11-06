@@ -83,7 +83,7 @@ export function MemberCard({
         <div className='flex gap-2 items-center justify-start pb-5'>
           {isLive && <BroadcastIcon />}
 
-          <strong className='font-normal text-[22px] font-dm-sans leading-none'>
+          <strong className='font-normal text-[22px] leading-none'>
             {name}
           </strong>
         </div>

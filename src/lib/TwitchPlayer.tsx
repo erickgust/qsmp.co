@@ -1,13 +1,36 @@
 import React, { useEffect, useRef, useCallback, memo } from 'react'
 import useScript from './hooks/useScript'
 import usePrevious from './hooks/usePrevious'
-import {
-  TwitchWindow,
-  TwitchPlayerConstructor,
-  TwitchPlayerInstance,
-} from './types'
 
-export const objectCompareWithIgnoredKeys = (
+type TwitchPlayerInstance = {
+  play: () => void
+  pause: () => void
+  setChannel: (channel: string) => void
+  addEventListener: (event: string, callback: () => void) => void
+}
+
+type TwitchPlayerConstructor = {
+  new (
+    id: string,
+    options: {
+      channel?: string
+      autoplay?: boolean
+      muted?: boolean
+      allowfullscreen?: boolean
+      playsinline?: boolean
+      controls?: boolean
+      height?: string | number
+      width?: string | number
+    },
+  ): TwitchPlayerInstance
+  READY: string
+}
+
+type TwitchWindow = Window & {
+  Twitch?: { Player?: TwitchPlayerConstructor }
+}
+
+const objectCompareWithIgnoredKeys = (
   o1: Record<string, unknown>,
   o2: Record<string, unknown>,
   keysToIgnore: string[],
@@ -24,23 +47,18 @@ export const objectCompareWithIgnoredKeys = (
   return false
 }
 
-export const clearElementById = (id: string) => {
+const clearElementById = (id: string) => {
   const container = document.getElementById(id)
   if (container) {
     container.innerHTML = ''
   }
 }
-export interface TwitchPlayerProps extends Omit<
+interface TwitchPlayerProps extends Omit<
   React.HTMLAttributes<HTMLDivElement>,
   'onEnded' | 'onPause' | 'onPlay' | 'onPlaying'
 > {
   channel?: string
-  parent?: string | string[]
   autoplay?: boolean
-  muted?: boolean
-  allowFullscreen?: boolean
-  hideControls?: boolean
-
   play?: boolean
 
   onReady?: (player: TwitchPlayerInstance) => void
@@ -73,11 +91,7 @@ const onReadyDefault = () => null
 const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
   const {
     channel,
-    parent,
     autoplay = true,
-    muted = false,
-    allowFullscreen = true,
-    hideControls = false,
     play = false,
 
     onReady = onReadyDefault,
@@ -105,12 +119,11 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
 
       const player = new Player(id!, {
         channel,
-        parent: typeof parent === 'string' ? [parent] : parent,
         autoplay,
-        muted,
-        allowfullscreen: allowFullscreen,
+        muted: false,
+        allowfullscreen: true,
         playsinline: true,
-        controls: !hideControls,
+        controls: true,
         height: '100%',
         width: '100%',
       })
@@ -119,7 +132,7 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
 
       return player
     },
-    [channel, parent, autoplay, muted, allowFullscreen, hideControls, id],
+    [channel, autoplay, id],
   )
 
   useEffect(() => {
