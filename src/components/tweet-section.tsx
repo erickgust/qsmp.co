@@ -13,7 +13,9 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-function TwitterButton(props: React.ComponentPropsWithoutRef<'button'>) {
+type TwitterButtonProps = { className?: string; children: React.ReactNode }
+
+function TwitterButton(props: TwitterButtonProps) {
   return (
     <ExternalLinkButton
       colors='blue'
