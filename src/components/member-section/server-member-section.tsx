@@ -2,14 +2,8 @@ import { membersResponseSchema } from '@/utils/schemas/member-schema'
 import { MembersSection } from './members-section'
 import { members } from './members'
 
-async function getMembersData() {
-  const parsedData = membersResponseSchema.parse({ data: members })
-
-  return parsedData
-}
-
 export async function ServerMemberSection() {
-  const membersData = await getMembersData()
+  const membersData = membersResponseSchema.parse({ data: members })
 
   return <MembersSection membersData={membersData} />
 }

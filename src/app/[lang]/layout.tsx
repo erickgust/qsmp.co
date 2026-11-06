@@ -7,7 +7,6 @@ import { NextIntlClientProvider } from 'next-intl'
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Toaster } from 'sonner'
 
-import { FilterProvider } from '@/context/use-filter-context'
 import { routing } from '@/i18n/routing'
 import { siteUrl } from '@/lib/site-url'
 import Providers from '../providers'
@@ -83,11 +82,9 @@ export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
 
       <body>
         <NextIntlClientProvider>
-          <FilterProvider>
-            <Toaster position='top-center' />
+          <Toaster position='top-center' />
 
-            <Providers>{children}</Providers>
-          </FilterProvider>
+          <Providers>{children}</Providers>
         </NextIntlClientProvider>
       </body>
     </html>
