@@ -1,48 +1,38 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import { useTranslations } from 'next-intl'
-import { useQuery } from '@tanstack/react-query'
 import useEmblaCarousel from 'embla-carousel-react'
-import { useCallback, useRef, useState } from 'react'
+import Autoplay from 'embla-carousel-autoplay'
 import clsx from 'clsx'
 
 import { Heading } from '../ui/heading'
-import EmblaCarousel, { CarouselRef } from './carousel'
-import { CarouselNav } from './carousel-nav'
-
-import './carousel-styles.css'
 import { IconButton } from '../ui/button'
 import { ArrowBack } from '@/assets/icons/arrow-back'
 import { ArrowNext } from '@/assets/icons/arrow-next'
-import { Members } from '@/app/[lang]/page'
-import { streamResponseSchema } from '@/utils/schemas/stream-schema'
-import { defaultVideos } from './defaultVideos'
-
-export type ThumbsRef = <ViewportElement extends HTMLElement>(
-  instance: ViewportElement | null,
-) => void
+import type { StreamResponse } from '@/utils/schemas/stream-schema'
+import { Carousel } from './carousel'
+import { CarouselNav } from './carousel-nav'
 
 type StreamSectionProps = {
-  members: Members
+  streamData: StreamResponse
 }
 
-export function StreamSection({ members }: StreamSectionProps) {
+export function StreamSection({ streamData }: StreamSectionProps) {
   const t = useTranslations('stream')
 
-  const { data: streamData } = useQuery({
-    queryKey: ['stream'],
-    queryFn: async () =>
-      streamResponseSchema.parse({ type: 'youtube', data: defaultVideos }),
-    initialData: members,
-    staleTime: 1000 * 60 * 5, // 5 minutes
-  })
-
-  const [prevBtnDisabled, setPrevBtnDisabled] = useState(true)
-  const [nextBtnDisabled, setNextBtnDisabled] = useState(true)
-  const [isLoading] = useState(false)
-  const [selectedIndex, setSelectedIndex] = useState(0)
-
-  const [mobileThumbsRef, thumbsApi] = useEmblaCarousel({
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: 'center' },
+    [
+      Autoplay({
+        delay: 6000,
+        stopOnInteraction: true,
+        playOnInit: false,
+        stopOnMouseEnter: true,
+      }),
+    ],
+  )
+  const [mobileThumbsRef, mobileThumbsApi] = useEmblaCarousel({
     containScroll: 'keepSnaps',
     align: 'center',
     dragFree: true,
@@ -52,15 +42,41 @@ export function StreamSection({ members }: StreamSectionProps) {
     align: 'start',
     dragFree: true,
   })
-  const carouselRef = useRef<CarouselRef>(null)
 
-  const handleSelectIndex = useCallback((index: number) => {
-    setSelectedIndex(index)
+  const [selectedIndex, setSelectedIndex] = useState(0)
+  const [canScrollPrev, setCanScrollPrev] = useState(false)
+  const [canScrollNext, setCanScrollNext] = useState(false)
 
-    if (!carouselRef.current) return
+  useEffect(() => {
+    if (!emblaApi) return
 
-    carouselRef.current.scrollTo(index)
-  }, [])
+    const onSelect = () => {
+      const index = emblaApi.selectedScrollSnap()
+      setSelectedIndex(index)
+      setCanScrollPrev(emblaApi.canScrollPrev())
+      setCanScrollNext(emblaApi.canScrollNext())
+      mobileThumbsApi?.scrollTo(index)
+      desktopThumbsApi?.scrollTo(index)
+    }
+
+    onSelect()
+    emblaApi.on('select', onSelect).on('reInit', onSelect)
+    return () => {
+      emblaApi.off('select', onSelect).off('reInit', onSelect)
+    }
+  }, [emblaApi, mobileThumbsApi, desktopThumbsApi])
+
+  const stopAutoplay = () => emblaApi?.plugins().autoplay?.stop()
+
+  const scrollTo = (index: number) => {
+    stopAutoplay()
+    emblaApi?.scrollTo(index)
+  }
+
+  const arrowClassName = clsx(
+    'touch-manipulation z-10 disabled:opacity-50',
+    streamData.data.length === 1 && 'hidden',
+  )
 
   return (
     <section className='scroll-mt-8 py-12 md:py-16' id='streams'>
@@ -68,7 +84,7 @@ export function StreamSection({ members }: StreamSectionProps) {
         <div className='max-w-5.5xl mx-auto space-y-6'>
           <Heading className='sm:w-4/5 md:w-3/4'>{t('title')}</Heading>
 
-          {!isLoading && streamData.type === 'youtube' && (
+          {streamData.type === 'youtube' && (
             <p className='text-[#535170] hidden md:inline-block'>
               {t('paragraph.first')}
             </p>
@@ -81,9 +97,8 @@ export function StreamSection({ members }: StreamSectionProps) {
             <div ref={desktopThumbsRef} className='overflow-hidden'>
               <CarouselNav
                 items={streamData}
-                onSelectedIndex={handleSelectIndex}
+                onSelectedIndex={scrollTo}
                 selectedIndex={selectedIndex}
-                isLoading={isLoading}
               />
             </div>
           </div>
@@ -91,17 +106,11 @@ export function StreamSection({ members }: StreamSectionProps) {
       </div>
 
       <div className='relative'>
-        <EmblaCarousel
-          thumbsApi={thumbsApi}
-          desktopThumbsApi={desktopThumbsApi}
+        <Carousel
+          emblaRef={emblaRef}
+          emblaApi={emblaApi}
           slides={streamData}
-          options={{ loop: true, align: 'center' }}
-          ref={carouselRef}
           selectedIndex={selectedIndex}
-          onSelectIndex={handleSelectIndex}
-          isLoading={isLoading}
-          setPrevBtnDisabled={setPrevBtnDisabled}
-          setNextBtnDisabled={setNextBtnDisabled}
         />
 
         <div className='max-md:relative'>
@@ -111,12 +120,12 @@ export function StreamSection({ members }: StreamSectionProps) {
               label={t('previous')}
               colors='dark'
               type='button'
-              onClick={() => carouselRef.current?.scrollPrev()}
-              disabled={prevBtnDisabled}
-              className={clsx(
-                'touch-manipulation z-10 disabled:opacity-50',
-                streamData.data.length === 1 ? 'hidden' : '',
-              )}
+              onClick={() => {
+                stopAutoplay()
+                emblaApi?.scrollPrev()
+              }}
+              disabled={!canScrollPrev}
+              className={arrowClassName}
             />
           </div>
 
@@ -126,12 +135,12 @@ export function StreamSection({ members }: StreamSectionProps) {
               label={t('next')}
               colors='dark'
               type='button'
-              onClick={() => carouselRef.current?.scrollNext()}
-              disabled={nextBtnDisabled}
-              className={clsx(
-                'touch-manipulation z-10 disabled:opacity-50',
-                streamData.data.length === 1 ? 'hidden' : '',
-              )}
+              onClick={() => {
+                stopAutoplay()
+                emblaApi?.scrollNext()
+              }}
+              disabled={!canScrollNext}
+              className={arrowClassName}
             />
           </div>
 
@@ -139,7 +148,7 @@ export function StreamSection({ members }: StreamSectionProps) {
             <div ref={mobileThumbsRef} className='overflow-hidden min-w-0'>
               <CarouselNav
                 items={streamData}
-                onSelectedIndex={handleSelectIndex}
+                onSelectedIndex={scrollTo}
                 selectedIndex={selectedIndex}
               />
             </div>

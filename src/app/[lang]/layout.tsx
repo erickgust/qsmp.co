@@ -9,7 +9,6 @@ import { Toaster } from 'sonner'
 
 import { routing } from '@/i18n/routing'
 import { siteUrl } from '@/lib/site-url'
-import Providers from '../providers'
 
 const dm_sans = DM_Sans({
   subsets: ['latin'],
@@ -83,8 +82,7 @@ export default async function RootLayout({ children }: LayoutProps<'/[lang]'>) {
       <body>
         <NextIntlClientProvider>
           <Toaster position='top-center' />
-
-          <Providers>{children}</Providers>
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
