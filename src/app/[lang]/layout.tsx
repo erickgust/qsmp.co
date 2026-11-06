@@ -30,7 +30,7 @@ const pixeloidSans = localFont({
   display: 'swap',
 })
 
-const hreflang = (locale: string) => (locale === 'pt-br' ? 'pt-BR' : locale)
+const hreflang = (locale: string) => Intl.getCanonicalLocales(locale)[0]
 
 export async function generateMetadata(): Promise<Metadata> {
   const locale = await getLocale()
