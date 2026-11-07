@@ -141,10 +141,23 @@ html {
   animation: wave2 3.6s infinite;
 }
 
+@keyframes odometer-roll {
+  from {
+    transform: translateY(0);
+  }
+}
+
+.odometer-digit {
+  transition: transform 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  animation: odometer-roll 1200ms cubic-bezier(0.19, 1, 0.22, 1) backwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .signal-1,
-  .signal-2 {
+  .signal-2,
+  .odometer-digit {
     animation: none;
+    transition: none;
   }
 }
 
