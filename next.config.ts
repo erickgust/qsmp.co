@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
   images: {
     minimumCacheTTL: 60 * 60 * 24 * 7,
     qualities: [60, 75, 85],
+    remotePatterns: [new URL('https://static-cdn.jtvnw.net/**')],
   },
 }
 

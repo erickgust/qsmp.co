@@ -6,7 +6,7 @@ import Image from 'next/image'
 
 import { Navbar } from '../navbar/navbar'
 
-export function Header() {
+export function Header({ totalViewers }: { totalViewers: number }) {
   const t = useTranslations('header')
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -61,7 +61,7 @@ export function Header() {
         />
       </div>
 
-      <Navbar />
+      <Navbar totalViewers={totalViewers} />
     </header>
   )
 }

@@ -13,9 +13,7 @@ import { LanguagesDropdown } from './languages-dropdown'
 import { TotalCurrentViewers } from './total-current-viewers'
 import { NewsletterModal } from './newsletter-modal'
 
-const totalViewers = 24_056
-
-export function Navbar() {
+export function Navbar({ totalViewers }: { totalViewers: number }) {
   const t = useTranslations('nav')
   const menuItems = [
     { label: t('navlinks.streams'), href: '#streams' },
