@@ -7,8 +7,7 @@ import { YoutubeSection } from '@/components/youtube-section'
 import { ServerMemberSection } from '@/components/member-section/server-member-section'
 import { ServerStreamSection } from '@/components/stream-section/server-stream-section'
 import { getLiveStreams } from '@/lib/twitch'
-
-export const revalidate = 60
+import { LiveRefresh } from '@/components/live-refresh'
 
 export default async function Home() {
   const totalViewers = (await getLiveStreams()).reduce(
@@ -30,6 +29,7 @@ export default async function Home() {
       </main>
 
       <Footer />
+      <LiveRefresh />
     </>
   )
 }
