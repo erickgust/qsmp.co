@@ -1,9 +1,13 @@
 import { cache } from 'react'
+import { connection } from 'next/server'
 import { z } from 'zod'
 
 import { members } from '@/components/member-section/members'
 
-const tokenSchema = z.object({ access_token: z.string() })
+const tokenSchema = z.object({
+  access_token: z.string(),
+  expires_in: z.number(),
+})
 const streamsSchema = z.object({
   data: z.array(
     z.object({
@@ -34,22 +38,41 @@ const logins = members
   .filter((member) => member.channel.platform === 'twitch')
   .map((member) => twitchLogin(member.channel.url))
 
+let cachedToken: { value: string; expiresAt: number } | undefined
+let lastStreams: LiveStream[] = []
+
+async function getAccessToken(clientId: string, clientSecret: string) {
+  if (cachedToken && Date.now() < cachedToken.expiresAt) {
+    return cachedToken.value
+  }
+
+  const res = await fetch('https://id.twitch.tv/oauth2/token', {
+    method: 'POST',
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      grant_type: 'client_credentials',
+    }),
+  })
+  if (!res.ok) throw new Error(`Twitch token: ${res.status}`)
+  const { access_token, expires_in } = tokenSchema.parse(await res.json())
+
+  cachedToken = {
+    value: access_token,
+    expiresAt: Date.now() + (expires_in - 60) * 1000,
+  }
+  return access_token
+}
+
 export const getLiveStreams = cache(async (): Promise<LiveStream[]> => {
+  await connection()
+
   const clientId = process.env.TWITCH_CLIENT_ID
   const clientSecret = process.env.TWITCH_CLIENT_SECRET
   if (!clientId || !clientSecret) return []
 
   try {
-    const tokenRes = await fetch('https://id.twitch.tv/oauth2/token', {
-      method: 'POST',
-      body: new URLSearchParams({
-        client_id: clientId,
-        client_secret: clientSecret,
-        grant_type: 'client_credentials',
-      }),
-    })
-    if (!tokenRes.ok) throw new Error(`Twitch token: ${tokenRes.status}`)
-    const { access_token } = tokenSchema.parse(await tokenRes.json())
+    const access_token = await getAccessToken(clientId, clientSecret)
 
     const helix = async (path: string, param: string, values: string[]) => {
       const query = new URLSearchParams(values.map((value) => [param, value]))
@@ -66,7 +89,10 @@ export const getLiveStreams = cache(async (): Promise<LiveStream[]> => {
     const streams = streamsSchema.parse(
       await helix('streams', 'user_login', logins),
     ).data
-    if (streams.length === 0) return []
+    if (streams.length === 0) {
+      lastStreams = []
+      return lastStreams
+    }
 
     const users = usersSchema.parse(
       await helix(
@@ -79,15 +105,17 @@ export const getLiveStreams = cache(async (): Promise<LiveStream[]> => {
       users.map((user) => [user.login, user.profile_image_url]),
     )
 
-    return streams.map((stream) => ({
+    lastStreams = streams.map((stream) => ({
       login: stream.user_login,
       title: stream.title,
       viewerCount: stream.viewer_count,
       language: stream.language.toUpperCase(),
       avatar: avatars.get(stream.user_login),
     }))
+    return lastStreams
   } catch (error) {
     console.error(error)
-    return []
+    cachedToken = undefined
+    return lastStreams
   }
 })
