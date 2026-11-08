@@ -78,7 +78,7 @@ export function Carousel({
           {slides.type === 'live' &&
             slides.data.map((member, i) => (
               <Slide
-                key={i}
+                key={member.userName}
                 isSelected={i === selectedIndex}
                 media={
                   <LazyLoad

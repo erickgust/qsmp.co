@@ -38,7 +38,7 @@ export function CarouselNav({
       {type === 'live' &&
         data.map((member, index) => (
           <button
-            key={member.id}
+            key={member.userName}
             type='button'
             onClick={() => onSelectedIndex(index)}
             aria-current={index === selectedIndex ? 'true' : undefined}
