@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useTranslations } from 'next-intl'
 import useEmblaCarousel from 'embla-carousel-react'
 import Autoplay from 'embla-carousel-autoplay'
@@ -65,6 +65,22 @@ export function StreamSection({ streamData }: StreamSectionProps) {
       emblaApi.off('select', onSelect).off('reInit', onSelect)
     }
   }, [emblaApi, mobileThumbsApi, desktopThumbsApi])
+
+  const previousStreamData = useRef(streamData)
+  useEffect(() => {
+    const previous = previousStreamData.current
+    previousStreamData.current = streamData
+    if (!emblaApi || previous.type !== 'live' || streamData.type !== 'live')
+      return
+
+    const selectedLogin = previous.data[selectedIndex]?.userName
+    const newIndex = streamData.data.findIndex(
+      (stream) => stream.userName === selectedLogin,
+    )
+    if (newIndex !== -1 && newIndex !== emblaApi.selectedScrollSnap()) {
+      emblaApi.scrollTo(newIndex, true)
+    }
+  }, [streamData, emblaApi, selectedIndex])
 
   const stopAutoplay = () => emblaApi?.plugins().autoplay?.stop()
 
