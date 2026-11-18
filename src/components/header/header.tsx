@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { useTranslations } from 'next-intl'
 import Image from 'next/image'
+import clsx from 'clsx'
 
 import { Navbar } from '../navbar/navbar'
 
@@ -18,7 +19,12 @@ export function Header({ totalViewers }: { totalViewers: number }) {
 
   return (
     // mb-20 leaves room for the navbar's viewer bar, which hangs below it until xl
-    <header className='flex flex-col h-screen supports-[height:100svh]:h-svh max-xl:mb-20'>
+    <header
+      className={clsx(
+        'flex flex-col h-screen supports-[height:100svh]:h-svh',
+        totalViewers > 0 && 'max-xl:mb-20',
+      )}
+    >
       <a
         href='#main'
         className='sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-white focus:px-4 focus:py-2 font-pixel font-bold text-[#1F1E33]'

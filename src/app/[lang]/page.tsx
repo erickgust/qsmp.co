@@ -7,18 +7,11 @@ import { TweetSection } from '@/components/tweet-section'
 import { YoutubeSection } from '@/components/youtube-section'
 import { ServerMemberSection } from '@/components/member-section/server-member-section'
 import { ServerStreamSection } from '@/components/stream-section/server-stream-section'
-import { getLiveStreams } from '@/lib/twitch'
-import { LiveRefresh } from '@/components/live-refresh'
 
-export default async function Home() {
-  const totalViewers = (await getLiveStreams()).reduce(
-    (sum, stream) => sum + stream.viewerCount,
-    0,
-  )
-
+export default function Home() {
   return (
     <>
-      <Header totalViewers={totalViewers} />
+      <Header totalViewers={0} />
 
       <main id='main'>
         <ServerStreamSection />
@@ -32,7 +25,6 @@ export default async function Home() {
       </main>
 
       <Footer />
-      <LiveRefresh />
     </>
   )
 }
