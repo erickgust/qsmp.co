@@ -41,6 +41,11 @@ const logins = members
 let cachedToken: { value: string; expiresAt: number } | undefined
 let lastStreams: LiveStream[] = []
 
+const STREAMS_TTL = 30_000
+
+let streamsFetchedAt = 0
+let streamsInflight: Promise<LiveStream[]> | undefined
+
 async function getAccessToken(clientId: string, clientSecret: string) {
   if (cachedToken && Date.now() < cachedToken.expiresAt) {
     return cachedToken.value
@@ -64,13 +69,10 @@ async function getAccessToken(clientId: string, clientSecret: string) {
   return access_token
 }
 
-export const getLiveStreams = cache(async (): Promise<LiveStream[]> => {
-  await connection()
-
-  const clientId = process.env.TWITCH_CLIENT_ID
-  const clientSecret = process.env.TWITCH_CLIENT_SECRET
-  if (!clientId || !clientSecret) return []
-
+async function fetchLiveStreams(
+  clientId: string,
+  clientSecret: string,
+): Promise<LiveStream[]> {
   try {
     const access_token = await getAccessToken(clientId, clientSecret)
 
@@ -118,4 +120,20 @@ export const getLiveStreams = cache(async (): Promise<LiveStream[]> => {
     cachedToken = undefined
     return lastStreams
   }
+}
+
+export const getLiveStreams = cache(async (): Promise<LiveStream[]> => {
+  await connection()
+
+  const clientId = process.env.TWITCH_CLIENT_ID
+  const clientSecret = process.env.TWITCH_CLIENT_SECRET
+  if (!clientId || !clientSecret) return []
+
+  if (Date.now() - streamsFetchedAt < STREAMS_TTL) return lastStreams
+
+  streamsInflight ??= fetchLiveStreams(clientId, clientSecret).finally(() => {
+    streamsFetchedAt = Date.now()
+    streamsInflight = undefined
+  })
+  return streamsInflight
 })
