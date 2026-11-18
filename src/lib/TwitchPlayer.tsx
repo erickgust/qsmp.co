@@ -145,8 +145,11 @@ const TwitchPlayer: React.FC<TwitchPlayerProps> = (props) => {
       return
     }
 
+    const Player = (window as TwitchWindow).Twitch?.Player
+    if (!Player) return
+
     if (!player.current || shouldReconstructPlayer(previousProps, props)) {
-      player.current = createPlayer((window as TwitchWindow).Twitch!.Player!)
+      player.current = createPlayer(Player)
       return
     }
 
