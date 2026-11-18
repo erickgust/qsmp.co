@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import { Footer } from '@/components/footer'
 import { Header } from '@/components/header/header'
 import { SocialsSection } from '@/components/socials-section/socials-section'
@@ -24,7 +25,9 @@ export default async function Home() {
         <TimerSection />
         <ServerMemberSection />
         <YoutubeSection />
-        <TweetSection />
+        <Suspense>
+          <TweetSection />
+        </Suspense>
         <SocialsSection />
       </main>
 
