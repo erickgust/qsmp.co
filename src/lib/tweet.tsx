@@ -12,7 +12,9 @@ import {
 } from 'react-tweet'
 
 export async function Tweet({ id }: { id: string }) {
-  const data = await getTweet(id).catch(console.error)
+  const data = await getTweet(id, {
+    next: { revalidate: 60 * 60 * 24 },
+  }).catch(console.error)
   if (!data) return <TweetNotFound />
 
   const tweet = enrichTweet(data)
